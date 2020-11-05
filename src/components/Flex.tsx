@@ -1,30 +1,23 @@
-import styled from "styled-components"
-import {DimensionKeys, dimensions, DimensionsProps} from "@/css_helpers/dimensions"
-import {paddings, PaddingsProps} from "@/css_helpers/paddings"
-import {border_radius, BorderRadiusProps} from "@/css_helpers/border_radius"
-import {margins, MarginsProps} from "@/css_helpers/margins"
-import {SKELETON_ANIMATION_INFO} from "@/css_helpers/constants"
-import {positions, PositionsProps} from "@/css_helpers/positions"
+import styled, {StyledComponent} from "styled-components"
+import {DimensionKeys, dimensions, DimensionsProps} from "src/css_helpers/dimensions"
+import {SKELETON_ANIMATION_INFO} from "src/css_helpers/constants"
 import React from "react"
 
 const ignored: Array<string> = ["wrap", "x-align", "y-align"]
 const blackMagic = (Element: any, ignored: any) => (({...props}: any) => {
 	ignored.forEach((name: any) => delete props[name])
-
-	for (const name in DimensionKeys) {
-		delete props[name]
-	}
-
+	Object.keys(DimensionKeys).forEach((name: string) => delete props[name])
 	return <Element {...props}>{props.children}</Element>
 })
 
 //TODO apply black magic to other components.
 //TODO make black magic more generic.
 //TODO type exclusive alignments for vertical and horizontal
-//TODO fix the "any" issue when typed
 //TODO fix the warning on html
 const Div = styled.div``
-const Flex = styled<any & Props>(blackMagic(Div, ignored))`
+// @ts-ignore
+const RealFlex: StyledComponent<"div", any, FlexProps> =
+	styled<any>(blackMagic(Div, ignored) as StyledComponent<"div", any>)`
   display: flex;
   ${props => props["no-pointer-events"] ? "pointer-events:none" : ""};
   ${({visible}) => visible === false ? "visibility: hidden" : ""};
@@ -33,19 +26,21 @@ const Flex = styled<any & Props>(blackMagic(Div, ignored))`
   flex-direction: ${({vertical, reversed}) => `${vertical ? "column" : "row"}${reversed ? "-reverse" : ""}`};
   ${({wrap}) => wrap ? "flex-wrap: wrap" : ""};
   justify-content: ${({vertical, ...props}) => align(props[vertical ? "y-align" : "x-align"])};
+  align-content: ${({vertical, ...props}) => align(props[vertical ? "x-align" : "y-align"])};
   align-items: ${({vertical, ...props}) => align(props[vertical ? "x-align" : "y-align"])};
     
-  border: ${({bordered}) => bordered ? "1px solid black" : "medium none color"};
   border-color: ${({skeleton}) => skeleton ? "transparent" : "black"};
   ${({skeleton}) => skeleton ? SKELETON_ANIMATION_INFO : ""};
   background-color: ${({skeleton}) => skeleton ? "whitesmoke" : "transparent"};
   
   ${dimensions};
-  ${paddings};
-  ${margins};
-  ${border_radius};
-  ${positions};
 `
+//${paddings};
+//${margins};
+//${border_radius};
+//${positions};
+
+const Flex = (props: FlexProps) => <RealFlex {...props}/>
 export default Flex
 
 const align = (value: string | undefined) => {
@@ -63,18 +58,18 @@ const align = (value: string | undefined) => {
 	return "flex-start"
 }
 
-interface Props extends DimensionsProps,
-	PaddingsProps,
-	BorderRadiusProps,
-	MarginsProps,
-	PositionsProps {
-	"y-align"?: string
-	"x-align"?: string
+export interface FlexProps extends DimensionsProps
+	//PaddingsProps,
+	//BorderRadiusProps,
+	//MarginsProps,
+	//PositionsProps
+{
+	"y-align"?: "top" | "center" | "stretch" | "bottom" | "space-between" | "space-evenly" | "space-around"
+	"x-align"?: "left" | "center" | "stretch" |	"right" | "space-between" | "space-evenly" | "space-around"
 	reversed?: boolean
 	wrap?: boolean
 	vertical?: boolean
 	overflow?: string
-	bordered?: boolean
 	skeleton?: boolean
 	visible?: boolean
 	"no-pointer-events"?: boolean

@@ -19,34 +19,16 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bfc613ce-8b7c-4b3b-8556-5d9bd636f1dd" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misevi.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Button.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Div.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Flex.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/dots/Button.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/dots/Dot.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/dots/DotBoolean.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/dots/Dots.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/css_helpers/border_radius.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/css_helpers/constants.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/css_helpers/dimensions.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/css_helpers/inner_helpers.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/css_helpers/margins.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/css_helpers/paddings.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/css_helpers/positions.ts" afterDir="false" />
+    <list default="true" id="bfc613ce-8b7c-4b3b-8556-5d9bd636f1dd" name="Default Changelist" comment="Added several hacks to make tooling work correctly with styled components, since several bugs cause property inference to work in shitty ways.">
+      <change afterPath="$PROJECT_DIR$/src/stories/Flex.stories.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stories/Button.stories.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/stories/Button.stories.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stories/Button.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stories/Header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/stories/Header.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stories/button.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Flex.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Flex.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/stories/Header.stories.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/stories/Header.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/stories/Page.stories.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/stories/Page.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/stories/header.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/stories/page.css" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,7 +54,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/components/dots" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/stories" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -88,6 +70,7 @@
       <recent name="C:\projects\misevi\src\components" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\projects\misevi\src\stories" />
       <recent name="C:\projects\misevi\src\components\dots" />
       <recent name="C:\projects\misevi\src\components" />
       <recent name="C:\projects\misevi\src" />
@@ -118,8 +101,16 @@
       <updated>1604452810246</updated>
       <workItem from="1604452812467" duration="2415000" />
       <workItem from="1604461762067" duration="8086000" />
-      <workItem from="1604526054597" duration="4764000" />
+      <workItem from="1604526054597" duration="16990000" />
     </task>
+    <task id="LOCAL-00001" summary="Added several hacks to make tooling work correctly with styled components, since several bugs cause property inference to work in shitty ways.">
+      <created>1604531553548</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1604531553548</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -137,11 +128,23 @@
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Added several hacks to make tooling work correctly with styled components, since several bugs cause property inference to work in shitty ways." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added several hacks to make tooling work correctly with styled components, since several bugs cause property inference to work in shitty ways." />
+  </component>
   <component name="WindowStateProjectService">
+    <state x="309" y="45" key="#Inspections" timestamp="1604538798891">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="309" y="45" key="#Inspections/0.0.1366.728@0.0.1366.728" timestamp="1604538798891" />
     <state x="413" y="113" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1604462097200">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="413" y="113" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1366.728@0.0.1366.728" timestamp="1604462097200" />
+    <state x="275" y="99" key="Vcs.Push.Dialog.v2" timestamp="1604531558021">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="275" y="99" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1604531558021" />
     <state x="390" y="115" width="581" height="556" key="find.popup" timestamp="1604529018708">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
