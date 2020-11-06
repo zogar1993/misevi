@@ -20,18 +20,30 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bfc613ce-8b7c-4b3b-8556-5d9bd636f1dd" name="Default Changelist" comment="Added stories for Flex">
+      <change afterPath="$PROJECT_DIR$/src/stories/Templates.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Flex.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Flex.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dots/Dot.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dots/Dot.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dots/DotBoolean.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/RadioButton.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stories/Button.stories.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/stories/Button.stories.mdx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stories/Introduction.stories.mdx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/stories/Button.stories.mdx" beforeDir="false" afterPath="$PROJECT_DIR$/src/stories/Button.stories.mdx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/stories/Flex.stories.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/stories/Flex.stories.mdx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/stories/assets/code-brackets.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/stories/assets/colors.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/stories/assets/comments.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/stories/assets/direction.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/stories/assets/flow.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/stories/assets/plugin.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/stories/assets/repo.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/stories/assets/stackalt.svg" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="TypeScript JSX File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -78,13 +90,15 @@
     </key>
   </component>
   <component name="RunManager">
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="class" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -101,7 +115,8 @@
       <workItem from="1604452812467" duration="2415000" />
       <workItem from="1604461762067" duration="8086000" />
       <workItem from="1604526054597" duration="17913000" />
-      <workItem from="1604615761989" duration="2778000" />
+      <workItem from="1604615761989" duration="3450000" />
+      <workItem from="1604698968874" duration="1280000" />
     </task>
     <task id="LOCAL-00001" summary="Added several hacks to make tooling work correctly with styled components, since several bugs cause property inference to work in shitty ways.">
       <created>1604531553548</created>
@@ -117,7 +132,14 @@
       <option name="project" value="LOCAL" />
       <updated>1604557197658</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Converted button story into mdx">
+      <created>1604641789498</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1604641789498</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -138,7 +160,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Added several hacks to make tooling work correctly with styled components, since several bugs cause property inference to work in shitty ways." />
     <MESSAGE value="Added stories for Flex" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added stories for Flex" />
+    <MESSAGE value="Converted button story into mdx" />
+    <option name="LAST_COMMIT_MESSAGE" value="Converted button story into mdx" />
   </component>
   <component name="WindowStateProjectService">
     <state x="309" y="45" key="#Inspections" timestamp="1604538798891">
@@ -149,10 +172,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="413" y="113" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1366.728@0.0.1366.728" timestamp="1604462097200" />
-    <state x="275" y="99" key="Vcs.Push.Dialog.v2" timestamp="1604557201404">
+    <state x="275" y="99" key="Vcs.Push.Dialog.v2" timestamp="1604641794320">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="275" y="99" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1604557201404" />
+    <state x="275" y="99" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1604641794320" />
     <state x="504" y="280" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1604639513321">
       <screen x="0" y="0" width="1366" height="728" />
     </state>

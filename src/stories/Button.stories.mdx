@@ -1,28 +1,26 @@
 import Button from 'src/components/Button';
 import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
+import {ButtonTemplate} from "src/stories/Templates";
 
 <Meta title="Form/Button" component={Button}/>
 
-export const Template = ({text, ...args}) => <Button {...args}>{text}</Button>;
-
-
 <Canvas>
     <Story name="size small" args={{size: "small", text:"small"}}>
-        {Template.bind({})}
+        {ButtonTemplate.bind({})}
     </Story>
     <Story name="size medium" args={{size: "medium", text:"medium"}}>
-        {Template.bind({})}
+        {ButtonTemplate.bind({})}
     </Story>
     <Story name="size large" args={{size: "large", text:"large"}}>
-        {Template.bind({})}
+        {ButtonTemplate.bind({})}
     </Story>
 </Canvas>
 
 <Canvas>
     <Story name="bold" args={{bold: true, text:"bold"}}>
-        {Template.bind({})}
+        {ButtonTemplate.bind({})}
     </Story>
     <Story name="italic" args={{italic: true, text:"italic"}}>
-        {Template.bind({})}
+        {ButtonTemplate.bind({})}
     </Story>
 </Canvas>

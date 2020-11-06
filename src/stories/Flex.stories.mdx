@@ -1,0 +1,17 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
+import Flex from "src/components/Flex"
+import {FlexTemplate} from "src/stories/Templates";
+
+<Meta title="Layout/Flex" component={Flex}/>
+
+<Canvas>
+    <Story name="default">
+        {FlexTemplate.bind({})}
+    </Story>
+    <Story name="x align center" args={{"x-align": "center"}}>
+        {FlexTemplate.bind({})}
+    </Story>
+    <Story name="x align right" args={{"x-align": "right"}}>
+        {FlexTemplate.bind({})}
+    </Story>
+</Canvas>
