@@ -19,16 +19,14 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bfc613ce-8b7c-4b3b-8556-5d9bd636f1dd" name="Default Changelist" comment="Added several hacks to make tooling work correctly with styled components, since several bugs cause property inference to work in shitty ways.">
-      <change afterPath="$PROJECT_DIR$/src/stories/Flex.stories.tsx" afterDir="false" />
+    <list default="true" id="bfc613ce-8b7c-4b3b-8556-5d9bd636f1dd" name="Default Changelist" comment="Added stories for Flex">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Flex.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Flex.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stories/Header.stories.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stories/Header.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stories/Page.stories.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stories/Page.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stories/header.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stories/page.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dots/Dot.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dots/Dot.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dots/DotBoolean.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/RadioButton.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/stories/Button.stories.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/stories/Button.stories.mdx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/stories/Introduction.stories.mdx" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,6 +35,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="JupyterTrust" id="dda3e6d9-d6a8-4812-8fc6-363e90ec1ec9" />
   <component name="MacroExpansionManager">
@@ -44,6 +43,7 @@
   </component>
   <component name="ProjectId" id="1jnvjue89IwPVrqhZAbH7o1CKfV" />
   <component name="ProjectLevelVcsManager">
+    <OptionsSetting value="false" id="Update" />
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectViewState">
@@ -65,27 +65,26 @@
     <property name="ts.external.directory.path" value="C:\projects\misevi\node_modules\typescript\lib" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\projects\misevi\src\css_helpers" />
-      <recent name="C:\projects\misevi\src\components" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\projects\misevi\src\stories" />
       <recent name="C:\projects\misevi\src\components\dots" />
       <recent name="C:\projects\misevi\src\components" />
       <recent name="C:\projects\misevi\src" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\projects\misevi\src\components\dots" />
+      <recent name="C:\projects\misevi\src\components" />
+      <recent name="C:\projects\misevi\src\css_helpers" />
+    </key>
   </component>
   <component name="RunManager">
-    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="CLASS" />
-      <properties />
-      <listeners />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -101,7 +100,8 @@
       <updated>1604452810246</updated>
       <workItem from="1604452812467" duration="2415000" />
       <workItem from="1604461762067" duration="8086000" />
-      <workItem from="1604526054597" duration="16990000" />
+      <workItem from="1604526054597" duration="17913000" />
+      <workItem from="1604615761989" duration="2778000" />
     </task>
     <task id="LOCAL-00001" summary="Added several hacks to make tooling work correctly with styled components, since several bugs cause property inference to work in shitty ways.">
       <created>1604531553548</created>
@@ -110,7 +110,14 @@
       <option name="project" value="LOCAL" />
       <updated>1604531553548</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Added stories for Flex">
+      <created>1604557197658</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1604557197658</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -130,7 +137,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Added several hacks to make tooling work correctly with styled components, since several bugs cause property inference to work in shitty ways." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added several hacks to make tooling work correctly with styled components, since several bugs cause property inference to work in shitty ways." />
+    <MESSAGE value="Added stories for Flex" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added stories for Flex" />
   </component>
   <component name="WindowStateProjectService">
     <state x="309" y="45" key="#Inspections" timestamp="1604538798891">
@@ -141,13 +149,21 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="413" y="113" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1366.728@0.0.1366.728" timestamp="1604462097200" />
-    <state x="275" y="99" key="Vcs.Push.Dialog.v2" timestamp="1604531558021">
+    <state x="275" y="99" key="Vcs.Push.Dialog.v2" timestamp="1604557201404">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="275" y="99" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1604531558021" />
-    <state x="390" y="115" width="581" height="556" key="find.popup" timestamp="1604529018708">
+    <state x="275" y="99" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1604557201404" />
+    <state x="504" y="280" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1604639513321">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="390" y="115" width="581" height="556" key="find.popup/0.0.1366.728@0.0.1366.728" timestamp="1604529018708" />
+    <state x="504" y="280" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1366.728@0.0.1366.728" timestamp="1604639513321" />
+    <state x="390" y="115" width="581" height="556" key="find.popup" timestamp="1604640672831">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="390" y="115" width="581" height="556" key="find.popup/0.0.1366.728@0.0.1366.728" timestamp="1604640672831" />
+    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup" timestamp="1604640612222">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup/0.0.1366.728@0.0.1366.728" timestamp="1604640612222" />
   </component>
 </project>

@@ -14,6 +14,7 @@ const blackMagic = (Element: any, ignored: any) => (({...props}: any) => {
 //TODO make black magic more generic.
 //TODO type exclusive alignments for vertical and horizontal
 //TODO fix the warning on html
+//TODO add reversed logic
 const Div = styled.div``
 // @ts-ignore
 const RealFlex: StyledComponent<"div", any, FlexProps> =

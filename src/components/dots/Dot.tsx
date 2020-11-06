@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import React from "react"
 
-export default function Dot({onChange, ...props}: Props) {
+export default function Dot({onChange, ...props}: DotProps) {
 	return (
 		<DotElement
 			{...props}
@@ -12,7 +12,7 @@ export default function Dot({onChange, ...props}: Props) {
 	)
 }
 
-type Props = {
+type DotProps = {
 	color?: string
 	onChange?: (value: number) => void
 	onMouseEnter?: () => void
@@ -21,7 +21,7 @@ type Props = {
 	checked?: boolean
 }
 
-const DotElement = styled.input<Props>`
+const DotElement = styled.input<DotProps>`
     width: 14px;
     height: 14px;
 		box-sizing: border-box;
