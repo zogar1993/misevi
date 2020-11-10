@@ -32,7 +32,8 @@ const Square = styled.div`
   border-style: solid;
 `
 
-const Container = styled<any>(Flex)`
+const Container = styled.div`
+	display: block;
   box-sizing: border-box;
   //border-radius: 10px;
   background-color: coral;

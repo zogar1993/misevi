@@ -14,28 +14,43 @@ import {FlexTemplate} from "src/stories/Templates";
     <Story name="x align right" args={{"x-align": "right"}}>
         {FlexTemplate.bind({})}
     </Story>
+    <Story name="x align space-evenly" args={{"x-align": "space-evenly"}}>
+        {FlexTemplate.bind({})}
+    </Story>
+    <Story name="x align space-around" args={{"x-align": "space-around"}}>
+        {FlexTemplate.bind({})}
+    </Story>
+    <Story name="x align space-between" args={{"x-align": "space-between"}}>
+        {FlexTemplate.bind({})}
+    </Story>
 </Canvas>
 
 <Canvas>
     <Story name="y align top" args={{"y-align": "top"}}>
         {FlexTemplate.bind({})}
     </Story>
+</Canvas>
+
+<Canvas>
     <Story name="y align center" args={{"y-align": "center"}}>
-        {FlexTemplate.bind({})}
-    </Story>
-    <Story name="y align bottom" args={{"y-align": "right"}}>
         {FlexTemplate.bind({})}
     </Story>
 </Canvas>
 
 <Canvas>
-    <Story name="x align space-between" args={{"x-align": "space-between"}}>
+    <Story name="y align bottom" args={{"y-align": "bottom"}}>
         {FlexTemplate.bind({})}
     </Story>
-    <Story name="x align space-around" args={{"x-align": "space-around"}}>
+</Canvas>
+
+<Canvas>
+    <Story name="y align space-evenly" args={{"y-align": "space-evenly"}}>
         {FlexTemplate.bind({})}
     </Story>
-    <Story name="x align space-evenly" args={{"x-align": "space-evenly"}}>
+</Canvas>
+
+<Canvas>
+    <Story name="y align space-around" args={{"y-align": "space-around"}}>
         {FlexTemplate.bind({})}
     </Story>
 </Canvas>
@@ -44,12 +59,9 @@ import {FlexTemplate} from "src/stories/Templates";
     <Story name="y align space-between" args={{"y-align": "space-between"}}>
         {FlexTemplate.bind({})}
     </Story>
-    <Story name="y align space-around" args={{"y-align": "space-around"}}>
-        {FlexTemplate.bind({})}
-    </Story>
-    <Story name="y align space-evenly" args={{"y-align": "space-evenly"}}>
-        {FlexTemplate.bind({})}
-    </Story>
+</Canvas>
+
+<Canvas>
     <Story name="y align stretch" args={{"y-align": "stretch"}}>
         {FlexTemplate.bind({})}
     </Story>
