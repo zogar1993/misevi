@@ -1,0 +1,19 @@
+import NumberInput from "../components/NumberInput";
+import {Canvas, Meta, Story} from "@storybook/addon-docs/blocks";
+import {NumberInputTemplate} from "./Templates";
+
+<Meta title="Form/NumberInput" component={NumberInput}/>
+
+### Default
+<Canvas>
+    <Story name="with value" args={{value: 5}}>
+        {NumberInputTemplate.bind({})}
+    </Story>
+</Canvas>
+
+### Skeleton
+<Canvas>
+    <Story name="without value" args={{}}>
+        {NumberInputTemplate.bind({})}
+    </Story>
+</Canvas>
