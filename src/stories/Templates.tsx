@@ -14,6 +14,12 @@ export const FlexTemplate = ({...args}: FlexProps) =>
 	</Container>;
 
 const Square = styled.div`
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 30px;
+	font-weight: bold;
+	
   background-color: greenyellow;
   box-sizing: border-box;
   width: auto;    
@@ -40,7 +46,7 @@ const Container = styled<any>(Flex)`
 function Squares({amount}: {amount: number}) {
 	return (
 		<>
-			{Array.from(Array(amount).keys()).map(x => <Square key={x}/>)}
+			{Array.from(Array(amount).keys()).map(x => <Square key={x}>{x + 1}</Square>)}
 		</>
 	)
 }
