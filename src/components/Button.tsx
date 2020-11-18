@@ -1,5 +1,5 @@
 import styled, {StyledComponent} from "styled-components"
-import {BORDER_RADIUS} from "src/css_helpers/constants"
+import {BORDER_RADIUS} from "css_helpers/constants"
 import React from "react"
 
 const SIDE_PADDING = "8px"
@@ -40,21 +40,21 @@ const RealButton: StyledComponent<"button", any, ButtonProps> = styled(UnstyledB
     box-sizing: border-box;
     border: 1px solid darkgray;
     min-width: 65px;
-        
+
     padding-left: ${SIDE_PADDING};
     padding-right: ${SIDE_PADDING};
     padding-top: ${padding};
     padding-bottom: ${padding};
-    
+
     background-color: ${NOT_ACTIVE_BACKGROUND_COLOR};
     color: black;
     font-weight: ${({bold}) => bold ? "bold" : "normal"};
     font-style: ${({italic}) => italic ? "italic" : "normal"};
     font-family: ${({font}) => font ? font + ", " : ""}Times, serif;
     font-size: ${fontSize};
-    
+
     border-radius: ${BORDER_RADIUS};
-    
+
     // &:hover {
     // }
 `

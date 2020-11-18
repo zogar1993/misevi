@@ -1,4 +1,4 @@
-import {cssFromProps} from "./inner_helpers"
+import {cssFromProps} from "css_helpers/inner_helpers"
 
 export enum BorderRadiusKeys {
 	"border-radius",

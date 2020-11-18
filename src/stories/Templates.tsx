@@ -1,8 +1,8 @@
 import React from 'react'
-import Button, {ButtonProps} from 'src/components/Button'
-import Flex, {FlexProps} from 'src/components/Flex'
+import Button, {ButtonProps} from 'components/Button'
+import Flex, {FlexProps} from 'components/Flex'
 import styled from 'styled-components'
-import NumberInput, {NumberInputProps} from 'src/components/NumberInput'
+import NumberInput, {NumberInputProps} from 'components/NumberInput'
 
 export const ButtonTemplate = ({text, ...args}: ButtonProps & { text: string }) =>
     <Button {...args}>{text}</Button>
@@ -22,10 +22,10 @@ const Square = styled.div`
 	align-items: center;
 	font-size: 30px;
 	font-weight: bold;
-	
+
   background-color: greenyellow;
   box-sizing: border-box;
-  width: auto;    
+  width: auto;
   height: auto;
   min-height: 60px;
   min-width: 60px;
@@ -41,7 +41,7 @@ const Container = styled.div`
   //border-radius: 10px;
   background-color: coral;
   width: 220px;
-  height: 220px;  
+  height: 220px;
   border-width: 1px;
   border-color: black;
   border-style: solid;

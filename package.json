@@ -1,59 +1,76 @@
 {
-  "name": "misevi",
-  "version": "0.1.0",
-  "private": true,
+  "name": "@veritran/ui",
+  "version": "2.0.0",
+  "description": "VeriTranUI is a React library used to build user interfaces for VeriTran and its related projects. It provides the components needed to build experiences that feel integrated with VeriTran ecosystem, and can be used both client or server side.",
+  "author": "Team OMNi <team_omni@veritran.com>",
+  "publishConfig": {
+    "registry": "https://nexus-ar.veritran.net/repository/veritran-ui/"
+  },
+  "files": [
+    "dist/index.js",
+    "dist/index.js.map",
+    "dist/index.modern.js",
+    "dist/index.modern.js.map",
+    "dist/index.d.ts",
+    "dist/components",
+    "dist/icons"
+  ],
+  "main": "dist/index.js",
+  "module": "dist/index.modern.js",
+  "source": "src/index.tsx",
+  "engines": {
+    "node": ">=10"
+  },
+  "scripts": {
+    "start": "npm run storybook",
+    "build": "microbundle-crl --no-compress --format modern,cjs",
+    "prepare": "run-s build",
+    "test": "react-scripts test",
+    "test:build": "run-s build",
+    "test:lint": "eslint .",
+    "storybook": "start-storybook -p 6006 --no-dll",
+    "build-storybook": "build-storybook --no-dll",
+    "format": "prettier --write 'src/**/*.ts' './src/**/*.tsx'"
+  },
   "dependencies": {
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-scripts": "4.0.0",
-    "styled-components": "5.2.1",
-    "typescript": "4.0.5",
-    "web-vitals": "0.2.4"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "storybook": "start-storybook -p 6006 -s public --no-dll",
-    "build-storybook": "build-storybook -s public --no-dll"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+    "styled-components": "5.2.1"
   },
   "devDependencies": {
     "@babel/core": "7.12.3",
     "@storybook/addon-actions": "6.0.28",
-    "@storybook/addon-docs": "6.0.28",
+    "@storybook/addon-docs": "^6.0.28",
     "@storybook/addon-essentials": "6.0.28",
     "@storybook/addon-links": "6.0.28",
-    "@storybook/node-logger": "6.0.28",
-    "@storybook/preset-create-react-app": "3.1.4",
     "@storybook/react": "6.0.28",
     "@testing-library/jest-dom": "5.11.5",
     "@testing-library/react": "11.1.1",
-    "@testing-library/user-event": "12.1.10",
+    "@testing-library/user-event": "12.2.0",
     "@types/jest": "26.0.15",
-    "@types/node": "12.19.3",
-    "@types/react": "16.9.55",
+    "@types/node": "14.14.7",
+    "@types/react": "16.9.56",
     "@types/react-dom": "16.9.9",
     "@types/styled-components": "5.1.4",
-    "babel-loader": "8.1.0",
-    "react-is": "17.0.1"
+    "@typescript-eslint/eslint-plugin": "4.7.0",
+    "@typescript-eslint/parser": "4.7.0",
+    "babel-eslint": "10.1.0",
+    "cross-env": "7.0.2",
+    "eslint": "7.13.0",
+    "eslint-config-prettier": "6.15.0",
+    "eslint-config-standard": "16.0.1",
+    "eslint-config-standard-react": "11.0.1",
+    "eslint-plugin-import": "2.22.1",
+    "eslint-plugin-node": "11.1.0",
+    "eslint-plugin-prettier": "3.1.4",
+    "eslint-plugin-promise": "4.2.1",
+    "eslint-plugin-react": "7.21.5",
+    "eslint-plugin-standard": "4.1.0",
+    "microbundle-crl": "0.13.11",
+    "npm-run-all": "4.1.5",
+    "prettier": "2.1.2",
+    "ts-mockito": "2.6.1",
+    "typescript": "4.0.5"
   }
 }

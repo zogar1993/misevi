@@ -1,4 +1,4 @@
-import {cssFromProps} from "src/css_helpers/inner_helpers"
+import {cssFromProps} from "css_helpers/inner_helpers"
 
 export enum PaddingsKeys {
 	padding,
@@ -10,7 +10,7 @@ export enum PaddingsKeys {
 
 export const paddings = (props: PaddingsProps) => `
   box-sizing: border-box;
-  ${cssFromProps(props, Object.keys(PaddingsKeys))}  
+  ${cssFromProps(props, Object.keys(PaddingsKeys))}
 `
 
 export type PaddingsProps = {

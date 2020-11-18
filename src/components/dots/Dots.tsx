@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from "react"
-import Dot from "src/components/dots/Dot"
-import Flex from "src/components/Flex"
+import Dot from "components/dots/Dot"
+import Flex from "components/Flex"
 import styled from "styled-components"
-import Div from "src/components/Div"
+import Div from "components/Div"
 
 export default function Dots({total, value, onChange, reversed, rows, marked = 0}: Props) {
 
@@ -90,7 +90,7 @@ const DotZeroElement = styled.input<any>`
 		position: absolute;
 		${({reversed}) => reversed ? "right: -14px" : "left: -14px"};
 		${({reversed}) => reversed ? "bottom: 0px" : ""};
-		
+
     width: 14px;
     height: 14px;
 		box-sizing: border-box;
@@ -98,7 +98,7 @@ const DotZeroElement = styled.input<any>`
     border-radius: 50%;
     opacity: 0.9;
     cursor: pointer;
-    
+
     :hover {
         border: 1px solid darkred;
     }

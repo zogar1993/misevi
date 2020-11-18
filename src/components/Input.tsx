@@ -1,8 +1,8 @@
 import styled from 'styled-components'
-import {BORDER_RADIUS, SKELETON_ANIMATION_INFO} from 'src/css_helpers/constants'
-import {paddings, PaddingsProps} from 'src/css_helpers/paddings'
-import {dimensions, DimensionsProps} from 'src/css_helpers/dimensions'
-import {border_radius, BorderRadiusProps} from 'src/css_helpers/border_radius'
+import {BORDER_RADIUS, SKELETON_ANIMATION_INFO} from 'css_helpers/constants'
+import {paddings, PaddingsProps} from 'css_helpers/paddings'
+import {dimensions, DimensionsProps} from 'css_helpers/dimensions'
+import {border_radius, BorderRadiusProps} from 'css_helpers/border_radius'
 
 const animation = '{ from {font-size:150%} to {font-size:100%} }'
 
@@ -18,9 +18,9 @@ export const onValueChangeAnimation = ({'animation-seed': seed}: { 'animation-se
         animation-name: ${getAnimation(seed)};
         animation-timing-function: ease-out;
         animation-duration: 0.3s;
-        
+
         @keyframes animation1 ${animation}
-        @keyframes animation2 ${animation}  
+        @keyframes animation2 ${animation}
     `
 }
 
@@ -32,23 +32,23 @@ const Input = styled.input<InputProps>`
     font-size: 16px;
     font-family: ${({font}) => font ? `${font}, ` : ''}Times, serif;
     height: 30px;
-    
+
     ${({'text-align': align}) => align ? `text-align: ${align};` : ''};
     font-family: ${({font}) => font ? `${font}, ` : ''}Times, serif;
     -moz-appearance: textfield;
-    
+
     ::placeholder {
         opacity: ${props => props['hide-placeholder'] ? '0' : '1'};
     }
-  
+
     ${onValueChangeAnimation};
-    
+
     ${props => props.skeleton ? SKELETON_ANIMATION_INFO : ''};
     :disabled {
         background-color: whitesmoke;
         border: 1px solid transparent;
     }
-    
+
     ${paddings};
     ${dimensions};
     ${border_radius};

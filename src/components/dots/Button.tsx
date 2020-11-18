@@ -1,6 +1,6 @@
 import styled, {StyledComponent} from "styled-components"
-import {BORDER_RADIUS} from "src/css_helpers/constants"
-import {dimensions, DimensionsProps} from "src/css_helpers/dimensions"
+import {BORDER_RADIUS} from "css_helpers/constants"
+import {dimensions, DimensionsProps} from "css_helpers/dimensions"
 
 const SIDE_PADDING = "8px"
 const ACTIVE_BACKGROUND_COLOR = "#EAEAEA"
@@ -76,32 +76,32 @@ const Button = styled.button<ButtonProps>`
     min-width: 65px;
     position:relative;
     z-index: ${props => props["z-index"] || 0};
-        
+
     padding-left: ${SIDE_PADDING};
     padding-right: ${SIDE_PADDING};
     padding-top: calc(${padding} + ${({active}) => active ? "1px" : "0px"});
     padding-bottom: calc(${padding} - ${({active}) => active ? "1px" : "0px"});
-    
+
     background-color: ${backGroundColor};
     color: black;
     font-weight: ${({bold}) => bold ? "bold" : "normal"};
     font-style: ${({italic}) => italic ? "italic" : "normal"};
     font-family: ${({font}) => font ? font + ", " : ""}Times, serif;
-    font-size: ${fontSize};    
-    
+    font-size: ${fontSize};
+
     border-bottom-style: ${props => props["has-buttons-bottom"] ? "none" : "solid"};
     border-right-style: ${props => props["has-buttons-right"] ? "none" : "solid"};
-    
+
     margin-right: ${props => props["has-buttons-right"] ? 0 : MARGIN_FOR_SHADOW};
     margin-bottom: ${props => props["has-buttons-bottom"] ? 0 : MARGIN_FOR_SHADOW};
-    
+
     border-top-left-radius: ${props => props["has-buttons-top"] || props["has-buttons-left"] ? 0 : BORDER_RADIUS};
     border-top-right-radius: ${props => props["has-buttons-top"] || props["has-buttons-right"] ? 0 : BORDER_RADIUS};
     border-bottom-left-radius: ${props => props["has-buttons-bottom"] || props["has-buttons-left"] ? 0 : BORDER_RADIUS};
     border-bottom-right-radius: ${props => props["has-buttons-bottom"] || props["has-buttons-right"] ? 0 : BORDER_RADIUS};
-    
+
     box-shadow: ${shadow};
-    
+
     // &:hover {
     //     background-image: linear-gradient(-45deg, ${backGroundColor} 40%, darkgrey 50%, ${backGroundColor} 60%);
     //     animation: forward-shine 0.35s reverse;

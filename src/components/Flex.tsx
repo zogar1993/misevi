@@ -1,6 +1,6 @@
 import styled, {StyledComponent} from "styled-components"
-import {DimensionKeys, dimensions, DimensionsProps} from "src/css_helpers/dimensions"
-import {SKELETON_ANIMATION_INFO} from "src/css_helpers/constants"
+import {DimensionKeys, dimensions, DimensionsProps} from "css_helpers/dimensions"
+import {SKELETON_ANIMATION_INFO} from "css_helpers/constants"
 import React from "react"
 
 const ignored: Array<string> = ["wrap", "x-align", "y-align"]
@@ -22,18 +22,18 @@ const RealFlex: StyledComponent<"div", any, FlexProps> =
   display: flex;
   ${props => props["no-pointer-events"] ? "pointer-events:none" : ""};
   ${({visible}) => visible === false ? "visibility: hidden" : ""};
-  
+
   overflow: ${props => props.overflow || "visible"};
   flex-direction: ${({vertical, reversed}) => `${vertical ? "column" : "row"}${reversed ? "-reverse" : ""}`};
   ${({wrap}) => wrap ? "flex-wrap: wrap" : ""};
   justify-content: ${({vertical, ...props}) => align(props[vertical ? "y-align" : "x-align"])};
   align-content: ${({vertical, ...props}) => align(props[vertical ? "x-align" : "y-align"])};
   align-items: ${({vertical, ...props}) => align(props[vertical ? "x-align" : "y-align"])};
-    
+
   border-color: ${({skeleton}) => skeleton ? "transparent" : "black"};
   ${({skeleton}) => skeleton ? SKELETON_ANIMATION_INFO : ""};
   background-color: ${({skeleton}) => skeleton ? "whitesmoke" : "transparent"};
-  
+
   ${dimensions};
 `
 //${paddings};

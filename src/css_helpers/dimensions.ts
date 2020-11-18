@@ -1,4 +1,4 @@
-import {cssFromProps} from "src/css_helpers/inner_helpers"
+import {cssFromProps} from "css_helpers/inner_helpers"
 
 export enum DimensionKeys {
 	width,
@@ -14,11 +14,11 @@ export const dimensions = ({
 														 "mobile-height": mobileHeight,
 														 ...props
 													 }: DimensionsProps) => `
-    ${cssFromProps(props, Object.keys(DimensionKeys))}    
-    @media (max-width: 768px) {    
+    ${cssFromProps(props, Object.keys(DimensionKeys))}
+    @media (max-width: 768px) {
         ${mobileWidth ? `width: ${mobileWidth};` : ""};
         ${mobileHeight ? `height: ${mobileHeight};` : ""};
-    } 
+    }
 `
 
 export type DimensionsProps = CssDimensionsProps & CustomDimensionProps

@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react'
-import Input, {InputProps} from 'src/components/Input'
+import Input, {InputProps} from 'components/Input'
 
 export default function NumberInput(props: NumberInputProps) {
     const {value, onBlur, min, max, disabled} = props
