@@ -34,29 +34,31 @@ export type ButtonProps = {
   bold?: boolean
   italic?: boolean
   font?: string
+
+  onClick: (e?: any) => void
 }
 
 const RealButton: StyledComponent<"button", any, ButtonProps> = styled(UnstyledButton)`
-    box-sizing: border-box;
-    border: 1px solid darkgray;
-    min-width: 65px;
+  box-sizing: border-box;
+  border: 1px solid darkgray;
+  min-width: 65px;
 
-    padding-left: ${SIDE_PADDING};
-    padding-right: ${SIDE_PADDING};
-    padding-top: ${padding};
-    padding-bottom: ${padding};
+  padding-left: ${SIDE_PADDING};
+  padding-right: ${SIDE_PADDING};
+  padding-top: ${padding};
+  padding-bottom: ${padding};
 
-    background-color: ${NOT_ACTIVE_BACKGROUND_COLOR};
-    color: black;
-    font-weight: ${({bold}) => bold ? "bold" : "normal"};
-    font-style: ${({italic}) => italic ? "italic" : "normal"};
-    font-family: ${({font}) => font ? font + ", " : ""}Times, serif;
-    font-size: ${fontSize};
+  background-color: ${NOT_ACTIVE_BACKGROUND_COLOR};
+  color: black;
+  font-weight: ${({bold}) => bold ? "bold" : "normal"};
+  font-style: ${({italic}) => italic ? "italic" : "normal"};
+  font-family: ${({font}) => font ? font + ", " : ""}Times, serif;
+  font-size: ${fontSize};
 
-    border-radius: ${BORDER_RADIUS};
+  border-radius: ${BORDER_RADIUS};
 
     // &:hover {
     // }
 `
-export const Button = (args: ButtonProps) => <RealButton {...args} />
+export const Button = (args: ButtonProps & {children: any}) => <RealButton {...args} />
 export default Button
