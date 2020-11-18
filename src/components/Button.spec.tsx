@@ -1,6 +1,5 @@
 import React from "react"
 import {render, RenderResult} from "@testing-library/react"
-import "@testing-library/jest-dom/extend-expect"
 import Button from "components/Button"
 import userEvents from "@testing-library/user-event"
 import {anything, instance, mock, reset, verify} from "ts-mockito"
