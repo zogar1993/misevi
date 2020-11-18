@@ -1,11 +1,7 @@
 {
-  "name": "@veritran/ui",
-  "version": "2.0.0",
-  "description": "VeriTranUI is a React library used to build user interfaces for VeriTran and its related projects. It provides the components needed to build experiences that feel integrated with VeriTran ecosystem, and can be used both client or server side.",
-  "author": "Team OMNi <team_omni@veritran.com>",
-  "publishConfig": {
-    "registry": "https://nexus-ar.veritran.net/repository/veritran-ui/"
-  },
+  "name": "@misevi/ui",
+  "version": "0.0.1",
+  "description": "Misevi is a component library designed for tabletop rpg character sheets.",
   "files": [
     "dist/index.js",
     "dist/index.js.map",
