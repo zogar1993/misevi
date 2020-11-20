@@ -1,7 +1,7 @@
 import React from "react"
 import {fireEvent, render, RenderResult} from "@testing-library/react"
 import {anyNumber, instance, mock, reset, verify} from "ts-mockito"
-import TextInput from "components/TextInput"
+import Field from "components/Field"
 
 describe("Text Input should", () => {
   let screen: RenderResult
@@ -36,8 +36,10 @@ describe("Text Input should", () => {
 
   async function given_a_number_input_with({value}: { value?: string }) {
     screen = render(
-      <TextInput
+      <Field
+        type="text"
         value={value}
+        label={A_LABEL}
         onBlur={actions.onBlur}
       />)
   }
@@ -67,5 +69,6 @@ describe("Text Input should", () => {
   const getInput = () => screen.getByRole("textbox") as HTMLInputElement
 })
 
+const A_LABEL = "a_label"
 const VALID_VALUE = "valid_value"
 const ANOTHER_VALID_VALUE = "another_valid_value"

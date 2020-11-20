@@ -3,7 +3,6 @@ import {BORDER_RADIUS} from "components/css/Dimensions"
 import "components/font/Caveat.css"
 import {NoStyleInput} from "components/inner_components/NoStyleInput"
 import {SKELETON_ANIMATION_INFO} from "components/css/Skeleton"
-import {ButtonProps} from "components/Button"
 
 const animation = "{ from {font-size:150%} to {font-size:100%} }"
 
@@ -33,6 +32,7 @@ const Input = styled(NoStyleInput)<InputProps>`
     font-size: 18px;
     font-family: Caveat, Times, serif;
     height: 30px;
+    width: 100%;
 
     ${({"text-align": align}) => align ? `text-align: ${align};` : ""};
     -moz-appearance: textfield;

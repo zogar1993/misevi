@@ -1,11 +1,10 @@
 import React, {useEffect, useState} from "react"
 import Input from "components/inner_components/Input"
 
-export default function TextInput({id, name, value, onBlur, onChange, width, font}: TextInputProps) {
+export default function TextInput({id, placeholder, value, onBlur, onChange}: TextInputProps) {
   const [current, setCurrent] = useState(value)
   useEffect(() => setCurrent(value), [value])
 
-  const isEmpty = current === ""
   const handleOnChange = (e: any) => {
     const value = e.target.value
     setCurrent(value)
@@ -27,11 +26,9 @@ export default function TextInput({id, name, value, onBlur, onChange, width, fon
       onChange={handleOnChange}
       onBlur={handleOnBlur}
       type="text"
-      width={width}
-      font={isEmpty ? undefined : font}
       disabled={showSkeleton}
       skeleton={showSkeleton}
-      placeholder={name}
+      placeholder={placeholder}
       hide-placeholder={true}
       autoComplete="off"
     />
@@ -40,10 +37,8 @@ export default function TextInput({id, name, value, onBlur, onChange, width, fon
 
 export type TextInputProps = {
   id?: string
-  name?: string
+  placeholder?: string
   value?: string
   onBlur?: (value: string) => void
   onChange?: (value: string) => void
-  width?: string
-  font?: string
 }
