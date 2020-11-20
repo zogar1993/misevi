@@ -1,8 +1,9 @@
-import styled from "styled-components"
+import styled, {StyledComponent} from "styled-components"
 import {BORDER_RADIUS} from "components/css/Dimensions"
 import "components/font/Caveat.css"
 import {NoStyleInput} from "components/inner_components/NoStyleInput"
 import {SKELETON_ANIMATION_INFO} from "components/css/Skeleton"
+import {ButtonProps} from "components/Button"
 
 const animation = "{ from {font-size:150%} to {font-size:100%} }"
 
@@ -24,7 +25,7 @@ export const onValueChangeAnimation = ({"animation-seed": seed}: { "animation-se
     `
 }
 
-const Input = styled<any>(NoStyleInput)`
+const Input = styled(NoStyleInput)<InputProps>`
     padding: 5px 5px 5px 8px;
     background-color: whitesmoke;
     border-radius: ${BORDER_RADIUS};
@@ -42,7 +43,7 @@ const Input = styled<any>(NoStyleInput)`
 
     ${onValueChangeAnimation};
 
-    ${props => props.skeleton ? SKELETON_ANIMATION_INFO : ""};
+    ${({skeleton}) => skeleton ? SKELETON_ANIMATION_INFO : ""};
     :disabled {
         background-color: whitesmoke;
         border: 1px solid transparent;
@@ -50,7 +51,7 @@ const Input = styled<any>(NoStyleInput)`
 `
 export default Input
 
-export interface InputProps {
+export type InputProps = {
   "hide-placeholder"?: boolean
   skeleton?: boolean
   "animation-seed"?: number

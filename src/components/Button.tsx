@@ -1,10 +1,10 @@
-import styled, {StyledComponent} from "styled-components"
+import styled from "styled-components"
 import {BORDER_RADIUS} from "components/css/Dimensions"
 import React from "react"
+import {NoStyleButton} from "components/inner_components/NoStyleButton"
 
 const SIDE_PADDING = "8px"
 const NOT_ACTIVE_BACKGROUND_COLOR = "white"
-export const MARGIN_FOR_SHADOW = "2px"
 
 const fontSize = ({size}: ButtonProps) => {
   if (size === "small") return "12px"
@@ -18,17 +18,6 @@ const padding = ({size}: ButtonProps) => {
   return "4px"
 }
 
-const UnstyledButton: StyledComponent<"button", ButtonProps> = styled.button`
-  padding: 0;
-  border: 0;
-  line-height: 0;
-  font: inherit;
-  color: inherit;
-  background-color: transparent;
-  cursor: pointer;
-  outline: none;
-`
-
 export type ButtonProps = {
   size?: "small" | "medium" | "large"
   bold?: boolean
@@ -38,7 +27,7 @@ export type ButtonProps = {
   onClick: (e?: any) => void
 }
 
-const RealButton: StyledComponent<"button", any, ButtonProps> = styled(UnstyledButton)`
+const RealButton = styled(NoStyleButton)<ButtonProps>`
   box-sizing: border-box;
   border: 1px solid darkgray;
   min-width: 65px;
@@ -56,9 +45,6 @@ const RealButton: StyledComponent<"button", any, ButtonProps> = styled(UnstyledB
   font-size: ${fontSize};
 
   border-radius: ${BORDER_RADIUS};
-
-    // &:hover {
-    // }
 `
 export const Button = (args: ButtonProps & { children: any }) => <RealButton {...args} />
 export default Button
