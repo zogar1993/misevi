@@ -1,6 +1,6 @@
 import styled, {StyledComponent} from "styled-components"
 import {DimensionKeys, dimensions, DimensionsProps} from "css_helpers/dimensions"
-import {SKELETON_ANIMATION_INFO} from "components/css/Dimensions"
+import {SKELETON_ANIMATION_INFO} from "components/css/Skeleton"
 import React from "react"
 
 const ignored: Array<string> = ["wrap", "x-align", "y-align"]
