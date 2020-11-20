@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useState} from "react"
 import FieldLabel from "components/inner_components/FieldLabel"
 import FieldContainer from "components/inner_components/FieldContainer"
 import NumberInput from "components/NumberInput"
-import TextInput from "components/TextInput"
+import TextInput from "components/inner_components/TextInput"
 import ComboBox, {ButtonInfo, ComboBoxItem} from "components/ComboBox"
 
 export default function Field(props: FieldProps) {
@@ -48,21 +48,21 @@ export default function Field(props: FieldProps) {
 	)
 }
 
-type FieldProps = BaseProps & (TextProps | NumberProps | ComboProps)
+export type FieldProps = FieldBaseProps & (FieldTextProps | FieldNumberProps | FieldComboProps)
 
-type BaseProps = {
+export type FieldBaseProps = {
   id?: string
   label: string
   width?: string
 }
 
-type TextProps = {
+export type FieldTextProps = {
   type?: "text"
   value?: string
   onBlur?: (value: string) => void
 }
 
-type NumberProps = {
+export type FieldNumberProps = {
   type: "number"
   value?: number
   onBlur?: (value: number) => void
@@ -70,7 +70,7 @@ type NumberProps = {
   max?: number
 }
 
-type ComboProps = {
+export type FieldComboProps = {
   type: "combobox"
   value: string | null | undefined
   options: Array<ComboBoxItem>

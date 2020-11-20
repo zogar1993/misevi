@@ -4,7 +4,7 @@ const FieldLabel = styled.label<Props>`
     position: absolute;
     transition-timing-function: ease-in;
     transition: 0.2s;
-    transform: ${props => props["as-placeholder"] ? "" : "translateY(-115%) scale(0.8) translateX(-16%)"};
+    transform: ${props => props["as-placeholder"] ? "" : "translateY(-115%) scale(0.8) translateX(-12.5%)"};
     color: ${props => props["as-placeholder"] ? "grey" : "black"};
     font-family: Times, serif;
     font-size: 16px;
