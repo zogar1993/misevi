@@ -1,5 +1,5 @@
 import Button from "components/Button"
+import Field from "components/Field"
 import Flex from "components/Flex"
-import NumberInput from "components/NumberInput"
 
-export {Button, Flex, NumberInput}
+export {Button, Flex, Field}

@@ -1,4 +1,4 @@
-import styled, {StyledComponent} from "styled-components"
+import styled from "styled-components"
 import {DimensionKeys, dimensions, DimensionsProps} from "css_helpers/dimensions"
 import {SKELETON_ANIMATION_INFO} from "components/css/Skeleton"
 import React from "react"
@@ -16,9 +16,7 @@ const blackMagic = (Element: any, ignored: any) => (({...props}: any) => {
 //TODO fix the warning on html
 //TODO add reversed logic
 const Div = styled.div``
-// @ts-ignore
-const RealFlex: StyledComponent<"div", any, FlexProps> =
-  styled<any>(blackMagic(Div, ignored) as StyledComponent<"div", any>)`
+const RealFlex = styled(blackMagic(Div, ignored))<FlexProps>`
   display: flex;
   ${props => props["no-pointer-events"] ? "pointer-events:none" : ""};
   ${({visible}) => visible === false ? "visibility: hidden" : ""};
