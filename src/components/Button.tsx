@@ -18,7 +18,7 @@ const padding = ({size}: ButtonProps) => {
   return "4px"
 }
 
-const UnstyledButton:  StyledComponent<"button", ButtonProps> = styled.button`
+const UnstyledButton: StyledComponent<"button", ButtonProps> = styled.button`
   padding: 0;
   border: 0;
   line-height: 0;
@@ -60,5 +60,5 @@ const RealButton: StyledComponent<"button", any, ButtonProps> = styled(UnstyledB
     // &:hover {
     // }
 `
-export const Button = (args: ButtonProps & {children: any}) => <RealButton {...args} />
+export const Button = (args: ButtonProps & { children: any }) => <RealButton {...args} />
 export default Button

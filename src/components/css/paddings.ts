@@ -1,11 +1,11 @@
 import {cssFromProps} from "components/css/inner_helpers"
 
 export enum PaddingsKeys {
-	padding,
-	"padding-top",
-	"padding-right",
-	"padding-bottom",
-	"padding-left"
+  padding,
+  "padding-top",
+  "padding-right",
+  "padding-bottom",
+  "padding-left"
 }
 
 export const paddings = (props: PaddingsProps) => `
@@ -14,5 +14,5 @@ export const paddings = (props: PaddingsProps) => `
 `
 
 export type PaddingsProps = {
-	[key in keyof typeof PaddingsKeys]?: string
+  [key in keyof typeof PaddingsKeys]?: string
 }

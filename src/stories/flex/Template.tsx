@@ -8,7 +8,7 @@ export const FlexDistilled = (props: FlexProps) => <Flex {...props}/>
 export default function FlexTemplate({...args}: FlexProps) {
   return (
     <Container>
-      <Flex {...{width: '220px', height: '220px', wrap: true, ...args}}>
+      <Flex {...{width: "220px", height: "220px", wrap: true, ...args}}>
         <Squares amount={5}/>
       </Flex>
     </Container>
@@ -46,7 +46,7 @@ const Container = styled.div`
   border-style: solid;
 `
 
-function Squares({amount}: {amount: number}) {
+function Squares({amount}: { amount: number }) {
   return (
     <>
       {Array.from(Array(amount).keys()).map(x => <Square key={x}>{x + 1}</Square>)}

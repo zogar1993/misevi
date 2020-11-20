@@ -2,23 +2,23 @@ import styled from "styled-components"
 import React from "react"
 
 export default function Dot({onChange, ...props}: DotProps) {
-	return (
-		<DotElement
-			{...props}
-			type="radio"
-			onChange={onChange && ((e: any) => onChange(Number(e.target.value)))}
-			readOnly={onChange === undefined}
-		/>
-	)
+  return (
+    <DotElement
+      {...props}
+      type="radio"
+      onChange={onChange && ((e: any) => onChange(Number(e.target.value)))}
+      readOnly={onChange === undefined}
+    />
+  )
 }
 
 type DotProps = {
-	color?: string
-	onChange?: (value: number) => void
-	onMouseEnter?: () => void
-	onMouseLeave?: () => void
-	value?: number
-	checked?: boolean
+  color?: string
+  onChange?: (value: number) => void
+  onMouseEnter?: () => void
+  onMouseLeave?: () => void
+  value?: number
+  checked?: boolean
 }
 
 const DotElement = styled.input<DotProps>`

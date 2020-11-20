@@ -1,7 +1,7 @@
-import React from 'react'
-import NumberInput, {NumberInputProps} from 'components/NumberInput'
+import React from "react"
+import NumberInput, {NumberInputProps} from "components/NumberInput"
 
-export default function NumberInputTemplate(args: NumberInputProps){
+export default function NumberInputTemplate(args: NumberInputProps) {
   return <NumberInput {...args}/>
 }
 

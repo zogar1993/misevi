@@ -1,20 +1,20 @@
-import styled from 'styled-components'
-import {BORDER_RADIUS} from 'components/css/Dimensions'
+import styled from "styled-components"
+import {BORDER_RADIUS} from "components/css/Dimensions"
 import "components/font/Caveat.css"
 import {NoStyleInput} from "components/inner_components/NoStyleInput"
 import {SKELETON_ANIMATION_INFO} from "components/css/Skeleton"
 
-const animation = '{ from {font-size:150%} to {font-size:100%} }'
+const animation = "{ from {font-size:150%} to {font-size:100%} }"
 
 const getAnimation = (seed?: number) => {
-    if (seed === undefined) return
-    if (seed === 0) return 'none'
-    return seed % 2 ? 'animation1' : 'animation2'
+  if (seed === undefined) return
+  if (seed === 0) return "none"
+  return seed % 2 ? "animation1" : "animation2"
 }
 
-export const onValueChangeAnimation = ({'animation-seed': seed}: { 'animation-seed'?: number }) => {
-    if (seed === undefined) return ''
-    return `
+export const onValueChangeAnimation = ({"animation-seed": seed}: { "animation-seed"?: number }) => {
+  if (seed === undefined) return ""
+  return `
         animation-name: ${getAnimation(seed)};
         animation-timing-function: ease-out;
         animation-duration: 0.3s;
@@ -33,16 +33,16 @@ const Input = styled<any>(NoStyleInput)`
     font-family: Caveat, Times, serif;
     height: 30px;
 
-    ${({'text-align': align}) => align ? `text-align: ${align};` : ''};
+    ${({"text-align": align}) => align ? `text-align: ${align};` : ""};
     -moz-appearance: textfield;
 
     ::placeholder {
-        opacity: ${props => props['hide-placeholder'] ? '0' : '1'};
+        opacity: ${props => props["hide-placeholder"] ? "0" : "1"};
     }
 
     ${onValueChangeAnimation};
 
-    ${props => props.skeleton ? SKELETON_ANIMATION_INFO : ''};
+    ${props => props.skeleton ? SKELETON_ANIMATION_INFO : ""};
     :disabled {
         background-color: whitesmoke;
         border: 1px solid transparent;
@@ -51,8 +51,8 @@ const Input = styled<any>(NoStyleInput)`
 export default Input
 
 export interface InputProps {
-    'hide-placeholder'?: boolean
-    skeleton?: boolean
-    'animation-seed'?: number
-    'text-align'?: 'center'
+  "hide-placeholder"?: boolean
+  skeleton?: boolean
+  "animation-seed"?: number
+  "text-align"?: "center"
 }

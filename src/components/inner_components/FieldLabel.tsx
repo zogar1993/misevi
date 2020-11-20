@@ -15,5 +15,5 @@ const FieldLabel = styled.label<Props>`
 export default FieldLabel
 
 type Props = {
-    "as-placeholder"?: boolean
+  "as-placeholder"?: boolean
 }

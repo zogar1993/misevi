@@ -14,13 +14,13 @@ export default function Dots({total, value, onChange, reversed, rows, marked = 0
   const isMarked = useCallback((current: number) => current <= value, [value])
   const isMarkedWhenTentativeIsLower = useCallback((current: number) =>
     tentative!! < value && current > tentative!! && current <= value
-  , [tentative, value])
+    , [tentative, value])
   const wouldBeCleared = useCallback((current: number) =>
-    isMarkedWhenTentativeIsLower(current)
-  , [isMarkedWhenTentativeIsLower])
+      isMarkedWhenTentativeIsLower(current)
+    , [isMarkedWhenTentativeIsLower])
   const wouldBeMarked = useCallback((current: number) =>
     tentative!! > value && current > value && current <= tentative!!
-  , [tentative, value])
+    , [tentative, value])
 
   const getColorFor = useCallback((current: number) => {
     if (thereIsATentative()) {

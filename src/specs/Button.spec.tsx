@@ -3,6 +3,7 @@ import {render, RenderResult} from "@testing-library/react"
 import Button from "components/Button"
 import userEvents from "@testing-library/user-event"
 import {anything, instance, mock, reset, verify} from "ts-mockito"
+
 const {click} = userEvents
 
 describe("Button should", () => {

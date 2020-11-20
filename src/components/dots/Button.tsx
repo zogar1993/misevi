@@ -40,7 +40,7 @@ const shadow = ({
   } else return "none"
 }
 
-const UnstyledButton:  StyledComponent<"button", ButtonProps> = styled.button`
+const UnstyledButton: StyledComponent<"button", ButtonProps> = styled.button`
   padding: 0;
   border: 0;
   line-height: 0;
