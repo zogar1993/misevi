@@ -1,8 +1,8 @@
 import styled from 'styled-components'
-import {BORDER_RADIUS, SKELETON_ANIMATION_INFO} from 'css_helpers/constants'
-import {paddings, PaddingsProps} from 'css_helpers/paddings'
-import {dimensions, DimensionsProps} from 'css_helpers/dimensions'
-import {border_radius, BorderRadiusProps} from 'css_helpers/border_radius'
+import {BORDER_RADIUS} from 'components/css/Dimensions'
+import "components/font/Caveat.css"
+import {NoStyleInput} from "components/inner_components/NoStyleInput"
+import {SKELETON_ANIMATION_INFO} from "components/css/Skeleton"
 
 const animation = '{ from {font-size:150%} to {font-size:100%} }'
 
@@ -24,17 +24,16 @@ export const onValueChangeAnimation = ({'animation-seed': seed}: { 'animation-se
     `
 }
 
-const Input = styled.input<InputProps>`
+const Input = styled<any>(NoStyleInput)`
     padding: 5px 5px 5px 8px;
     background-color: whitesmoke;
     border-radius: ${BORDER_RADIUS};
     border: 1px solid lightgray;
-    font-size: 16px;
-    font-family: ${({font}) => font ? `${font}, ` : ''}Times, serif;
+    font-size: 18px;
+    font-family: Caveat, Times, serif;
     height: 30px;
 
     ${({'text-align': align}) => align ? `text-align: ${align};` : ''};
-    font-family: ${({font}) => font ? `${font}, ` : ''}Times, serif;
     -moz-appearance: textfield;
 
     ::placeholder {
@@ -48,18 +47,11 @@ const Input = styled.input<InputProps>`
         background-color: whitesmoke;
         border: 1px solid transparent;
     }
-
-    ${paddings};
-    ${dimensions};
-    ${border_radius};
 `
-
 export default Input
 
-export interface InputProps extends PaddingsProps, DimensionsProps, BorderRadiusProps {
-    font?: string
+export interface InputProps {
     'hide-placeholder'?: boolean
-    width?: string
     skeleton?: boolean
     'animation-seed'?: number
     'text-align'?: 'center'

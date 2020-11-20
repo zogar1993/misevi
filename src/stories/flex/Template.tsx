@@ -2,6 +2,9 @@ import Flex, {FlexProps} from "components/Flex"
 import styled from "styled-components"
 import React from "react"
 
+
+export const FlexDistilled = (props: FlexProps) => <Flex {...props}/>
+
 export default function FlexTemplate({...args}: FlexProps) {
   return (
     <Container>

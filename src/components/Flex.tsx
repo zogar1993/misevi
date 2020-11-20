@@ -1,7 +1,7 @@
 import styled, {StyledComponent} from "styled-components"
 import {DimensionKeys, dimensions, DimensionsProps} from "css_helpers/dimensions"
-import {SKELETON_ANIMATION_INFO} from "css_helpers/constants"
-import React from "react"
+import {SKELETON_ANIMATION_INFO} from "components/css/Dimensions"
+import React, {ReactNode} from "react"
 
 const ignored: Array<string> = ["wrap", "x-align", "y-align"]
 const blackMagic = (Element: any, ignored: any) => (({...props}: any) => {
@@ -41,8 +41,7 @@ const RealFlex: StyledComponent<"div", any, FlexProps> =
 //${border_radius};
 //${positions};
 
-const Flex = (props: FlexProps) => <RealFlex {...props}/>
-export default Flex
+export default RealFlex
 
 const align = (value: string | undefined) => {
 	if (value === "space-between") return "space-between"

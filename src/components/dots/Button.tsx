@@ -1,5 +1,5 @@
 import styled, {StyledComponent} from "styled-components"
-import {BORDER_RADIUS} from "css_helpers/constants"
+import {BORDER_RADIUS} from "components/css/Dimensions"
 import {dimensions, DimensionsProps} from "css_helpers/dimensions"
 
 const SIDE_PADDING = "8px"
@@ -68,8 +68,6 @@ export type ButtonProps = {
   "z-index"?: number
 } & DimensionsProps
 
-export const Buttona: StyledComponent<"button", any, ButtonProps> = styled(UnstyledButton)`
-`
 const Button = styled.button<ButtonProps>`
     box-sizing: border-box;
     border: 1px solid darkgray;

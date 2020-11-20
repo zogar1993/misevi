@@ -1,5 +1,5 @@
 import styled, {StyledComponent} from "styled-components"
-import {BORDER_RADIUS} from "css_helpers/constants"
+import {BORDER_RADIUS} from "components/css/Dimensions"
 import React from "react"
 
 const SIDE_PADDING = "8px"

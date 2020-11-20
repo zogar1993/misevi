@@ -9,10 +9,7 @@
   "engines": {
     "node": ">=10"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/zogar1993/misevi.git"
-  },
+  "repository": "git://github.com/zogar1993/misevi.git",
   "keywords": [
     "role playing game",
     "rpg",
@@ -29,8 +26,7 @@
     "dist/index.modern.js",
     "dist/index.modern.js.map",
     "dist/index.d.ts",
-    "dist/components",
-    "dist/icons"
+    "dist/components"
   ],
   "scripts": {
     "start": "npm run storybook",

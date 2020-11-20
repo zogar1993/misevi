@@ -1,0 +1,12 @@
+import {Canvas, Meta, Story} from "@storybook/addon-docs/blocks";
+import Template from "stories/dots/Template";
+import Dots from "components/dots/Dots";
+
+<Meta title="Numeric/Dots" component={Dots}/>
+
+### Default
+<Canvas>
+    <Story name="with value" args={{total: 5}}>
+        {Template.bind({})}
+    </Story>
+</Canvas>
