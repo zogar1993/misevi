@@ -4,7 +4,7 @@ import {BORDER_RADIUS, SEPARATION} from "components/css/Dimensions"
 import {SKELETON_ANIMATION_INFO} from "components/css/Skeleton"
 import Flex from "components/Flex"
 import ImageButton from "components/ImageButton"
-import close from "components/icons/close.svg"
+import close from "../icons/close.svg"
 
 export default function ComboBox(props: ComboBoxProps) {
 	const {value, options, onChange, width, font, buttons} = props

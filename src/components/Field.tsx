@@ -3,7 +3,7 @@ import FieldLabel from "components/inner_components/FieldLabel"
 import FieldContainer from "components/inner_components/FieldContainer"
 import NumberInput from "components/NumberInput"
 import TextInput from "components/inner_components/TextInput"
-import ComboBox, {ButtonInfo, ComboBoxItem} from "components/ComboBox"
+import ComboBox, {ButtonInfo, ComboBoxItem} from "components/inner_components/ComboBox"
 
 export default function Field(props: FieldProps) {
 	const [isPlaceholder, setIsPlaceholder] = useState<boolean>(false)
