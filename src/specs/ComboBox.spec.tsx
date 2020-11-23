@@ -1,8 +1,7 @@
 /* eslint camelcase: 0 */
 import React from 'react'
 import '@testing-library/jest-dom/extend-expect'
-import { fireEvent, render, RenderResult } from '@testing-library/react'
-import { getAncestorOf, getChildOf, queryChildOf } from 'sphinx/Sphinx'
+import { fireEvent, render, RenderResult, waitFor } from '@testing-library/react'
 import ComboBox, { ButtonInfo, ComboBoxItem } from '../components/inner_components/ComboBox'
 
 describe('ComboBox should', () => {
@@ -178,12 +177,12 @@ describe('ComboBox should', () => {
   }
 
   async function the_cursor_enters_the_combobox() {
-    const container = await getComboBoxContainer()
+    const container = getComboBoxContainer()
     fireEvent.mouseEnter(container)
   }
 
   async function the_cursor_leaves_the_combobox() {
-    const container = await getComboBoxContainer()
+    const container = getComboBoxContainer()
     fireEvent.mouseLeave(container)
   }
 
@@ -199,7 +198,7 @@ describe('ComboBox should', () => {
 
   async function the_button_should_be_visible(title: string) {
     const button = getButtonOfTitle(title)
-    expect(button).toBeVisible()
+    await waitFor(async () => expect(button).toBeVisible())
   }
 
   async function the_clear_button_should_be_hidden() {
@@ -222,13 +221,12 @@ describe('ComboBox should', () => {
     expect(buttonContainer).not.toBeVisible()
   }
 
-  const getButtonsContainer = async () => await getAncestorOf(queryClearButton(), { tag: 'div' })
-  const getComboBoxContainer = async () => await getAncestorOf(await getSelect(), { tag: 'div' })
+  const getButtonsContainer = async () => getClearButton().parentElement
+  const getComboBoxContainer = () => screen2.container.children[0]
   const getSelect = async () => screen2.findByRole('combobox')
-  const queryClearButton = () =>
-    queryChildOf(screen, { tag: 'button', title: 'clear' }) as HTMLButtonElement
-  const getButtonOfTitle = (title: string) =>
-    getChildOf(screen, { tag: 'button', title: title }) as HTMLButtonElement
+  const queryClearButton = () => screen2.queryByTitle('clear')
+  const getClearButton = () => screen2.getByTitle('clear')
+  const getButtonOfTitle = (title: string) => screen2.getByTitle(title)
 })
 
 const IRRELEVANT_OPTIONS = [
