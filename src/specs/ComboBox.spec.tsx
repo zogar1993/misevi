@@ -5,8 +5,7 @@ import { fireEvent, render, RenderResult, waitFor } from '@testing-library/react
 import ComboBox, { ButtonInfo, ComboBoxItem } from '../components/inner_components/ComboBox'
 
 describe('ComboBox should', () => {
-  let screen: HTMLElement
-  let screen2: RenderResult
+  let screen: RenderResult
   let _options: Array<ComboBoxItem>
   let _value: string | null | undefined
   let _onChange: (() => void) | undefined
@@ -160,10 +159,9 @@ describe('ComboBox should', () => {
   }
 
   async function the_combobox_is_rendered() {
-    screen2 = render(
+    screen = render(
       <ComboBox options={_options} value={_value} onChange={_onChange} buttons={_buttons} />
     )
-    screen = screen2.baseElement
   }
 
   async function the_select_should_display(value: string) {
@@ -222,11 +220,11 @@ describe('ComboBox should', () => {
   }
 
   const getButtonsContainer = async () => getClearButton().parentElement
-  const getComboBoxContainer = () => screen2.container.children[0]
-  const getSelect = async () => screen2.findByRole('combobox')
-  const queryClearButton = () => screen2.queryByTitle('clear')
-  const getClearButton = () => screen2.getByTitle('clear')
-  const getButtonOfTitle = (title: string) => screen2.getByTitle(title)
+  const getComboBoxContainer = () => screen.container.children[0]
+  const getSelect = async () => screen.findByRole('combobox')
+  const queryClearButton = () => screen.queryByTitle('clear')
+  const getClearButton = () => screen.getByTitle('clear')
+  const getButtonOfTitle = (title: string) => screen.getByTitle(title)
 })
 
 const IRRELEVANT_OPTIONS = [
