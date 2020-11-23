@@ -1,12 +1,13 @@
 /* eslint camelcase: 0 */
 import React from 'react'
 import '@testing-library/jest-dom/extend-expect'
-import { fireEvent, render } from '@testing-library/react'
+import {fireEvent, render, RenderResult} from '@testing-library/react'
 import { findChildOf, getAncestorOf, getChildOf, queryChildOf } from 'sphinx/Sphinx'
 import ComboBox, { ButtonInfo, ComboBoxItem } from '../components/inner_components/ComboBox'
 
-xdescribe('ComboBox should', () => {
+describe('ComboBox should', () => {
   let screen: HTMLElement
+  let screen2: RenderResult
   let _options: Array<ComboBoxItem>
   let _value: string | null | undefined
   let _onChange: (() => void) | undefined
@@ -160,9 +161,10 @@ xdescribe('ComboBox should', () => {
   }
 
   async function the_combobox_is_rendered() {
-    screen = render(
+    screen2 = render(
       <ComboBox options={_options} value={_value} onChange={_onChange} buttons={_buttons} />
-    ).baseElement
+    )
+    screen = screen2.baseElement
   }
 
   async function the_select_should_display(value: string) {
@@ -222,7 +224,7 @@ xdescribe('ComboBox should', () => {
 
   const getButtonsContainer = async () => await getAncestorOf(queryClearButton(), { tag: 'div' })
   const getComboBoxContainer = async () => await getAncestorOf(await getSelect(), { tag: 'div' })
-  const getSelect = async () => (await findChildOf(screen, { tag: 'select' })) as HTMLSelectElement
+  const getSelect = async () => screen2.findByRole('combobox')
   const queryClearButton = () =>
     queryChildOf(screen, { tag: 'button', title: 'clear' }) as HTMLButtonElement
   const getButtonOfTitle = (title: string) =>
