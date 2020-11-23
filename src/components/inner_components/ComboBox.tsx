@@ -19,6 +19,7 @@ export default function ComboBox(props: ComboBoxProps) {
       <Select
         value={value || ''}
         onChange={onChange && ((e: any) => onChange(e.target.value))}
+        readOnly={onChange === undefined}
         font={font}
         disabled={showSkeleton}
         skeleton={showSkeleton}

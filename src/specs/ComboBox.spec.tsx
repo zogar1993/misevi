@@ -1,8 +1,8 @@
 /* eslint camelcase: 0 */
 import React from 'react'
 import '@testing-library/jest-dom/extend-expect'
-import {fireEvent, render, RenderResult} from '@testing-library/react'
-import { findChildOf, getAncestorOf, getChildOf, queryChildOf } from 'sphinx/Sphinx'
+import { fireEvent, render, RenderResult } from '@testing-library/react'
+import { getAncestorOf, getChildOf, queryChildOf } from 'sphinx/Sphinx'
 import ComboBox, { ButtonInfo, ComboBoxItem } from '../components/inner_components/ComboBox'
 
 describe('ComboBox should', () => {
@@ -16,7 +16,7 @@ describe('ComboBox should', () => {
   beforeEach(() => {
     _options = []
     _value = undefined
-    _onChange = undefined
+    _onChange = () => {}
     _buttons = undefined
   })
 
@@ -169,7 +169,7 @@ describe('ComboBox should', () => {
 
   async function the_select_should_display(value: string) {
     const select = await getSelect()
-    expect(select).toHaveTextContent(value)
+    expect(select).toHaveDisplayValue(value)
   }
 
   async function the_select_should_be_disabled() {
