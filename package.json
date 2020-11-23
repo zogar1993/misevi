@@ -26,6 +26,7 @@
     "dist/index.modern.js",
     "dist/index.modern.js.map",
     "dist/index.d.ts",
+    "dist/index.css",
     "dist/components"
   ],
   "scripts": {
