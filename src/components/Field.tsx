@@ -4,7 +4,6 @@ import FieldContainer from "components/inner_components/FieldContainer"
 import NumberInput from "components/NumberInput"
 import TextInput from "components/inner_components/TextInput"
 import ComboBox, {ButtonInfo, ComboBoxItem} from "components/inner_components/ComboBox"
-import "index.css"
 
 export default function Field(props: FieldProps) {
 	const [isPlaceholder, setIsPlaceholder] = useState<boolean>(false)
