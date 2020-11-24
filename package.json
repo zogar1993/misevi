@@ -1,6 +1,6 @@
 {
   "name": "misevi",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "Misevi is a component library designed for creating tabletop rpg character sheets.",
   "license": "MIT",
   "main": "dist/index.js",
@@ -31,7 +31,7 @@
   ],
   "scripts": {
     "start": "npm run storybook",
-    "build": "microbundle-crl --css-modules true --no-compress --format modern,cjs",
+    "build": "microbundle-crl --css-modules false --no-compress --format modern,cjs",
     "prepare": "run-s build",
     "test": "react-scripts test",
     "test:build": "run-s build",
