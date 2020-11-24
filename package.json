@@ -31,7 +31,7 @@
   ],
   "scripts": {
     "start": "npm run storybook",
-    "build": "microbundle-crl --no-compress --format modern,cjs",
+    "build": "microbundle-crl --css-modules true --no-compress --format modern,cjs",
     "prepare": "run-s build",
     "test": "react-scripts test",
     "test:build": "run-s build",
