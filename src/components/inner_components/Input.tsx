@@ -2,6 +2,7 @@ import styled from "styled-components"
 import {BORDER_RADIUS} from "components/css/Dimensions"
 import {NoStyleInput} from "components/inner_components/NoStyleInput"
 import {SKELETON_ANIMATION_INFO} from "components/css/Skeleton"
+import '../../style/Caveat.css'
 
 const animation = "{ from {font-size:150%} to {font-size:100%} }"
 

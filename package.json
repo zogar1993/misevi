@@ -1,6 +1,6 @@
 {
   "name": "misevi",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "Misevi is a component library designed for creating tabletop rpg character sheets.",
   "license": "MIT",
   "main": "dist/index.js",
@@ -27,7 +27,7 @@
     "dist/index.modern.js.map",
     "dist/index.d.ts",
     "dist/index.css",
-    "dist/components"
+    "dist/components/*"
   ],
   "scripts": {
     "start": "npm run storybook",
