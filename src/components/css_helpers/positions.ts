@@ -1,4 +1,4 @@
-import {cssFromProps} from "components/css/inner_helpers"
+import {cssFromProps} from "components/css_helpers/inner_helpers"
 
 export enum PositionKeys {
   position,

@@ -1,4 +1,4 @@
-import "style/Caveat.css"
+import "styles/Caveat.css"
 
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },

@@ -1,6 +1,6 @@
 import styled from "styled-components"
-import {dimensions, DimensionsProps} from "css_helpers/dimensions"
-import {positions, PositionsProps} from "components/css/positions"
+import {dimensions, DimensionsProps} from "components/css_helpers/dimensions"
+import {positions, PositionsProps} from "components/css_helpers/positions"
 
 const Div = styled.div<DimensionsProps &
   PositionsProps &

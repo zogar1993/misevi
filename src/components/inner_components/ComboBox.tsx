@@ -5,9 +5,10 @@ import { SKELETON_ANIMATION_INFO } from 'components/css/Skeleton'
 import Flex from 'components/Flex'
 import ImageButton from 'components/ImageButton'
 import close from '../icons/close.svg'
+import {CAVEAT} from "components/css/Fonts"
 
 export default function ComboBox(props: ComboBoxProps) {
-  const { value, options, onChange, width, font, buttons } = props
+  const { value, options, onChange, width, buttons } = props
   const [hovering, setHovering] = useState(false)
   const onMouseEnter = useCallback(() => setHovering(true), [])
   const onMouseLeave = useCallback(() => setHovering(false), [])
@@ -20,28 +21,26 @@ export default function ComboBox(props: ComboBoxProps) {
         value={value || ''}
         onChange={onChange && ((e: any) => onChange(e.target.value))}
         readOnly={onChange === undefined}
-        font={font}
         disabled={showSkeleton}
         skeleton={showSkeleton}
       >
         <Option disabled hidden value={''} />
-        {showSkeleton
-          ? null
-          : options.map((item) => (
-              <Option key={item.code} value={item.code} font={font}>
-                {item.name}
-              </Option>
-            ))}
+        {showSkeleton ? null :
+          options.map((item) => (
+            <Option key={item.code} value={item.code}>
+              {item.name}
+            </Option>
+          ))}
       </Select>
       <Flex
         style={{ position: 'absolute', right: '9px' }}
         y-align='center'
         visible={hovering && isNotLoading}
       >
-        {buttons === undefined
-          ? null
-          : buttons.map((x) => <ComboboxImageButton key={x.name} props={props} {...x} />)}
-        {onChange === undefined ? null : (
+        {buttons === undefined ? null :
+          buttons.map((x) => <ComboboxImageButton key={x.name} props={props} {...x} />)
+        }
+        {onChange === undefined ? null :
           <ImageButton
             src={close}
             name='clear'
@@ -50,7 +49,7 @@ export default function ComboBox(props: ComboBoxProps) {
             onClick={() => onChange(null)}
             visible={value !== null}
           />
-        )}
+        }
       </Flex>
     </ComboBoxContainer>
   )
@@ -63,7 +62,6 @@ export type ComboBoxProps = {
   onChange?: (value: string | null) => void
   buttons?: Array<ButtonInfo>
   width?: string
-  font?: string
 }
 
 export type ButtonInfo = {
@@ -80,7 +78,7 @@ export type ComboBoxItem = {
 }
 
 const Select = styled.select<any>`
-  font-family: ${({ font }) => (font ? `${font}, ` : '')}Times, serif;
+  font-family: ${CAVEAT}, Times, serif;
   font-size: 16px;
   background-color: whitesmoke;
   padding: 5px 5px 5px 8px;
@@ -101,7 +99,7 @@ const Select = styled.select<any>`
 `
 
 const Option = styled.option<any>`
-  font-family: ${({ font }) => (font ? `${font}, ` : '')}Times, serif;
+  font-family: ${CAVEAT}, Times, serif;
   font-size: 16px;
   background-color: whitesmoke;
   padding: 5px 5px 5px 8px;

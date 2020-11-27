@@ -1,6 +1,6 @@
 import styled, {StyledComponent} from "styled-components"
 import {BORDER_RADIUS} from "components/css/Dimensions"
-import {dimensions, DimensionsProps} from "css_helpers/dimensions"
+import {dimensions, DimensionsProps} from "components/css_helpers/dimensions"
 
 const SIDE_PADDING = "8px"
 const ACTIVE_BACKGROUND_COLOR = "#EAEAEA"

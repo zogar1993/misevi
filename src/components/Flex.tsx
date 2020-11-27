@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import {DimensionKeys, dimensions, DimensionsProps} from "css_helpers/dimensions"
+import {DimensionKeys, dimensions, DimensionsProps} from "components/css_helpers/dimensions"
 import {SKELETON_ANIMATION_INFO} from "components/css/Skeleton"
 import React from "react"
 

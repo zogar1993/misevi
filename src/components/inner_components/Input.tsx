@@ -2,7 +2,7 @@ import styled from "styled-components"
 import {BORDER_RADIUS} from "components/css/Dimensions"
 import {NoStyleInput} from "components/inner_components/NoStyleInput"
 import {SKELETON_ANIMATION_INFO} from "components/css/Skeleton"
-import '../../styles/Caveat.css'
+import {CAVEAT} from "components/css/Fonts"
 
 const animation = "{ from {font-size:150%} to {font-size:100%} }"
 
@@ -30,7 +30,7 @@ const Input = styled(NoStyleInput)<InputProps>`
     border-radius: ${BORDER_RADIUS};
     border: 1px solid lightgray;
     font-size: 18px;
-    font-family: Caveat, Times, serif;
+    font-family: ${CAVEAT}, Times, serif;
     height: 30px;
     width: 100%;
 
