@@ -13,7 +13,7 @@ const external = [
 
 const plugins = [
   typescript(),
-  postcss({extract: 'styles/Caveat.css'}),
+  postcss(),
   url({
     limit: 5 * 1024, // inline files smaller than 5k
     publicPath: '',
