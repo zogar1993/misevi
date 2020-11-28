@@ -2,7 +2,7 @@ import styled from "styled-components"
 import {BORDER_RADIUS} from "components/css/Dimensions"
 import {NoStyleInput} from "components/inner_components/NoStyleInput"
 import {SKELETON_ANIMATION_INFO} from "components/css/Skeleton"
-import {CAVEAT} from "components/css/Fonts"
+import {HANDWRITTEN_FONT, FONT_SIZE} from "components/css/Fonts"
 
 const animation = "{ from {font-size:150%} to {font-size:100%} }"
 
@@ -29,8 +29,8 @@ const Input = styled(NoStyleInput)<InputProps>`
     background-color: whitesmoke;
     border-radius: ${BORDER_RADIUS};
     border: 1px solid lightgray;
-    font-size: 18px;
-    font-family: ${CAVEAT}, Times, serif;
+    font-size: ${FONT_SIZE};
+    font-family: ${HANDWRITTEN_FONT}, Times, serif;
     height: 30px;
     width: 100%;
 

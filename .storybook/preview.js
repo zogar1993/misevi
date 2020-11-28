@@ -1,4 +1,4 @@
-import "styles/Caveat.css"
+import "styles/HandWrittenFont.css"
 
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },

@@ -5,7 +5,7 @@ import { SKELETON_ANIMATION_INFO } from 'components/css/Skeleton'
 import Flex from 'components/Flex'
 import ImageButton from 'components/ImageButton'
 import close from '../icons/close.svg'
-import {CAVEAT} from "components/css/Fonts"
+import {HANDWRITTEN_FONT} from "components/css/Fonts"
 
 export default function ComboBox(props: ComboBoxProps) {
   const { value, options, onChange, width, buttons } = props
@@ -78,7 +78,7 @@ export type ComboBoxItem = {
 }
 
 const Select = styled.select<any>`
-  font-family: ${CAVEAT}, Times, serif;
+  font-family: ${HANDWRITTEN_FONT}, Times, serif;
   font-size: 16px;
   background-color: whitesmoke;
   padding: 5px 5px 5px 8px;
@@ -99,7 +99,7 @@ const Select = styled.select<any>`
 `
 
 const Option = styled.option<any>`
-  font-family: ${CAVEAT}, Times, serif;
+  font-family: ${HANDWRITTEN_FONT}, Times, serif;
   font-size: 16px;
   background-color: whitesmoke;
   padding: 5px 5px 5px 8px;
