@@ -3,7 +3,7 @@ import { fireEvent, render, RenderResult } from '@testing-library/react'
 import { anyNumber, instance, mock, reset, verify } from 'ts-mockito'
 import Field  from 'components/Field'
 
-describe('Text Input should', () => {
+describe('Text Field should', () => {
   let screen: RenderResult
   let actionsMock = mock<{ onBlur: (value: string) => void, onChange: (value: string) => void }>()
   let actions = instance(actionsMock)
@@ -86,11 +86,7 @@ describe('Text Input should', () => {
                                      value = ''
                                    }: { label?: string, value?: string }) {
     screen = render(
-      <Field
-        label={label}
-        value={value}
-        onBlur={actions.onBlur}
-      />//TODO add onChange
+      <Field label={label} value={value} onBlur={actions.onBlur}/>//TODO add onChange
     )
   }
   function given_a_text_input() {
