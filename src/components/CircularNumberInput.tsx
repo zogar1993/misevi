@@ -6,11 +6,13 @@ export default function CircularNumberInput(props: NumberInputProps) {
         <NumberInput
             {...props}
             text-align="center"
-            width="26px"
-            height="26px"
-            border-radius="50px"
-            padding-left="0px"
-            padding-right="0px"
         />
     )
 }
+
+/*
+width="26px"
+height="26px"
+border-radius="50px"
+padding-left="0px"
+padding-right="0px"*/

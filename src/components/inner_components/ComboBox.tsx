@@ -6,6 +6,7 @@ import Flex from 'components/Flex'
 import ImageButton from 'components/ImageButton'
 import close from '../icons/close.svg'
 import {HANDWRITTEN_FONT} from "components/css/Fonts"
+import { NoStyleSelect } from 'components/inner_components/NoStyleSelect'
 
 export default function ComboBox(props: ComboBoxProps) {
   const { value, options, onChange, width, buttons } = props
@@ -77,7 +78,7 @@ export type ComboBoxItem = {
   to?: number
 }
 
-const Select = styled.select<any>`
+const Select = styled(NoStyleSelect)<any>`
   font-family: ${HANDWRITTEN_FONT}, Times, serif;
   font-size: 16px;
   background-color: whitesmoke;
