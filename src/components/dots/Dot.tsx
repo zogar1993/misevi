@@ -1,5 +1,6 @@
 import styled from "styled-components"
 import React from "react"
+import { NoStyleInput } from 'components/inner_components/NoStyleInput'
 
 export default function Dot({onChange, ...props}: DotProps) {
   return (
@@ -21,7 +22,7 @@ type DotProps = {
   checked?: boolean
 }
 
-const DotElement = styled.input<DotProps>`
+const DotElement = styled(NoStyleInput)<DotProps>`
     width: 14px;
     height: 14px;
 		box-sizing: border-box;

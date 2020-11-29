@@ -1,4 +1,3 @@
-/* eslint camelcase: 0 */
 import React from 'react'
 import '@testing-library/jest-dom/extend-expect'
 import { fireEvent, render, RenderResult, waitFor } from '@testing-library/react'
