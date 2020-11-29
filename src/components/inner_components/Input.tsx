@@ -26,13 +26,15 @@ export const onValueChangeAnimation = ({"animation-seed": seed}: { "animation-se
 
 const Input = styled(NoStyleInput)<InputProps>`
     padding: 5px 5px 5px 8px;
-    background-color: whitesmoke;
-    border-radius: ${BORDER_RADIUS};
     border: 1px solid lightgray;
-    font-size: ${FONT_SIZE};
+    background-color: whitesmoke;
+
     font-family: ${HANDWRITTEN_FONT}, Times, serif;
-    height: 30px;
+    font-size: ${FONT_SIZE};
+
     width: 100%;
+    height: 30px;
+    border-radius: ${BORDER_RADIUS};
 
     ${({"text-align": align}) => align ? `text-align: ${align};` : ""};
     -moz-appearance: textfield;

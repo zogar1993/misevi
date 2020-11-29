@@ -5,7 +5,7 @@ import { SKELETON_ANIMATION_INFO } from 'components/css/Skeleton'
 import Flex from 'components/Flex'
 import ImageButton from 'components/ImageButton'
 import close from '../icons/close.svg'
-import {HANDWRITTEN_FONT} from "components/css/Fonts"
+import { FONT_SIZE, HANDWRITTEN_FONT } from 'components/css/Fonts'
 import { NoStyleSelect } from 'components/inner_components/NoStyleSelect'
 
 export default function ComboBox(props: ComboBoxProps) {
@@ -79,14 +79,16 @@ export type ComboBoxItem = {
 }
 
 const Select = styled(NoStyleSelect)<any>`
-  font-family: ${HANDWRITTEN_FONT}, Times, serif;
-  font-size: 16px;
-  background-color: whitesmoke;
   padding: 5px 5px 5px 8px;
-  border-radius: ${BORDER_RADIUS};
-  border: 1px solid lightgrey;
+  border: 1px solid lightgray;
+  background-color: whitesmoke;
+
+  font-family: ${HANDWRITTEN_FONT}, Times, serif;
+  font-size: ${FONT_SIZE};
+
   width: 100%;
   height: 30px;
+  border-radius: ${BORDER_RADIUS};
 
   :hover {
     border: 1px solid dodgerblue;

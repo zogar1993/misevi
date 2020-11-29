@@ -2,6 +2,7 @@ import styled from "styled-components"
 import {dimensions, DimensionsProps} from "components/css_helpers/dimensions"
 import React from "react"
 import {margins, MarginsProps} from "components/css_helpers/margins"
+import { NoStyleButton } from 'components/inner_components/NoStyleButton'
 
 export default function ImageButton({src, name, width, height, "margin-right": marginRight, onClick, visible}: {
   src?: any
@@ -35,7 +36,7 @@ const Img = styled.img<DimensionsProps>`
 	}
   ${dimensions};
 `
-const Button = styled.button<{ $visible?: boolean } & MarginsProps>`
+const Button = styled(NoStyleButton)<{ $visible?: boolean } & MarginsProps>`
   ${({$visible}) => $visible === false ? "display: none" : ""};
   ${margins};
 `

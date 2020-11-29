@@ -1,0 +1,26 @@
+import {Canvas, Meta, Story} from "@storybook/addon-docs/blocks";
+import {Template, ComboboxStoryTypes} from "./ComboboxTemplate";
+import Field from 'components/Field'
+
+<Meta title="Form/Combobox" component={ComboboxStoryTypes}/>
+
+### Default
+<Canvas>
+    <Story name="with value" args={{label: "label", value: "mono", options: [{code: "mono", name: "Trapper"}]}}>
+        {Template.bind({})}
+    </Story>
+</Canvas>
+
+### Skeleton
+<Canvas>
+    <Story name="without value" args={{label: "label", options: [{code: "mono", name: "Trapper"}]}}>
+        {Template.bind({})}
+    </Story>
+</Canvas>
+
+<Canvas>
+  <Story name="b">
+    <Field type="text" label={"text"} value="Trapper" />
+  </Story>
+</Canvas>
+
