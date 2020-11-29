@@ -3,7 +3,7 @@ import { fireEvent, render, RenderResult } from '@testing-library/react'
 import {anyNumber, instance, mock, reset, verify} from "ts-mockito"
 import Field from 'components/Field'
 
-describe("Number Field should", () => {
+describe("Number Input should", () => {
   let screen: RenderResult
     let actionsMock = mock<{ onBlur: (value: number) => void }>()
     let actions = instance(actionsMock)
@@ -73,6 +73,7 @@ describe("Number Field should", () => {
     async function given_a_number_input_with({value, max, min}: { value?: number, min?: number, max?: number }) {
         screen = render(
             <Field
+                label={A_LABEL}
                 type="number"
                 value={value}
                 min={min}
@@ -122,3 +123,4 @@ const VALID_VALUE = 42
 const ANOTHER_VALID_VALUE = 43
 const VALUE_ABOVE_MAX = 60
 const VALUE_BELOW_MIN = 25
+const A_LABEL = 'a_label'

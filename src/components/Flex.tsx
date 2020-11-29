@@ -2,6 +2,10 @@ import styled from "styled-components"
 import {DimensionKeys, dimensions, DimensionsProps} from "components/css_helpers/dimensions"
 import {SKELETON_ANIMATION_INFO} from "components/css/Skeleton"
 import React from "react"
+import { paddings, PaddingsProps } from 'components/css_helpers/paddings'
+import { positions, PositionsProps } from 'components/css_helpers/positions'
+import { margins, MarginsProps } from 'components/css_helpers/margins'
+import { border_radius, BorderRadiusProps } from 'components/css_helpers/border_radius'
 
 const ignored: Array<string> = ["wrap", "x-align", "y-align"]
 const blackMagic = (Element: any, ignored: any) => (({...props}: any) => {
@@ -33,11 +37,11 @@ const RealFlex = styled(blackMagic(Div, ignored))<FlexProps>`
   background-color: ${({skeleton}) => skeleton ? "whitesmoke" : "transparent"};
 
   ${dimensions};
+  ${paddings};
+  ${margins};
+  ${border_radius};
+  ${positions};
 `
-//${paddings};
-//${margins};
-//${border_radius};
-//${positions};
 
 export default RealFlex
 
@@ -56,12 +60,9 @@ const align = (value: string | undefined) => {
   return "flex-start"
 }
 
-export interface FlexProps extends DimensionsProps
-  //PaddingsProps,
-  //BorderRadiusProps,
-  //MarginsProps,
-  //PositionsProps
-{
+export type  FlexProps = FlexPropsBase & DimensionsProps & PaddingsProps &
+  BorderRadiusProps & MarginsProps & PositionsProps
+export type FlexPropsBase = {
   "y-align"?: "top" | "center" | "stretch" | "bottom" | "space-between" | "space-evenly" | "space-around"
   "x-align"?: "left" | "center" | "stretch" | "right" | "space-between" | "space-evenly" | "space-around"
   reversed?: boolean
