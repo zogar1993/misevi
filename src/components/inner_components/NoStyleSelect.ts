@@ -8,8 +8,6 @@ export const NoStyleSelect = styled.select`
   border: 0;
   margin: 0;
   padding: 0;
-  line-height: 20px;
-  overflow: visible;
 
   ::-webkit-inner-spin-button{
       -webkit-appearance: none;
@@ -21,3 +19,4 @@ export const NoStyleSelect = styled.select`
       margin: 0;
   }
 `
+//TODO En moz se le agrega un espacio al principio

@@ -79,9 +79,10 @@ export type ComboBoxItem = {
 }
 
 const Select = styled(NoStyleSelect)<any>`
-  padding: 5px 5px 5px 8px;
+  padding: 0 5px 0 8px;
   border: 1px solid lightgray;
   background-color: whitesmoke;
+  line-height: 22px;
 
   font-family: ${HANDWRITTEN_FONT}, Times, serif;
   font-size: ${FONT_SIZE};
