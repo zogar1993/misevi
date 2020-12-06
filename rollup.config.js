@@ -3,6 +3,7 @@ import url from 'rollup-plugin-url'
 import pkg from "./package.json"
 import {terser} from "rollup-plugin-terser";
 import postcss from "rollup-plugin-postcss";
+import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 
 const extensions = [".js", ".jsx", ".ts", ".tsx"];
 const input = "src/index.tsx";
@@ -12,6 +13,7 @@ const external = [
 ];
 
 const plugins = [
+  peerDepsExternal(),
   typescript(),
   postcss(),
   url({
