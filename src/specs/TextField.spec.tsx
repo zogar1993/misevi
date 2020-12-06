@@ -2,6 +2,8 @@ import React from 'react'
 import { fireEvent, render, RenderResult } from '@testing-library/react'
 import { anyNumber, instance, mock, reset, verify } from 'ts-mockito'
 import Field  from 'components/Field'
+import "@testing-library/jest-dom/extend-expect"
+//TODO should go somewhere where it is taken into account since it is not working on setupTests.
 
 describe('Text Field should', () => {
   let screen: RenderResult
