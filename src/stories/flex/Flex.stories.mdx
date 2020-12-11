@@ -1,5 +1,6 @@
 import {Canvas, Meta, Story} from '@storybook/addon-docs/blocks';
 import Template, {FlexDistilled} from "./Template";
+import "stories/Story.css"
 
 <Meta title="Layout/Flex" component={FlexDistilled}/>
 
@@ -28,39 +29,21 @@ import Template, {FlexDistilled} from "./Template";
     <Story name="y align top" args={{"y-align": "top"}}>
         {Template.bind({})}
     </Story>
-</Canvas>
-
-<Canvas>
     <Story name="y align center" args={{"y-align": "center"}}>
         {Template.bind({})}
     </Story>
-</Canvas>
-
-<Canvas>
     <Story name="y align bottom" args={{"y-align": "bottom"}}>
         {Template.bind({})}
     </Story>
-</Canvas>
-
-<Canvas>
     <Story name="y align space-evenly" args={{"y-align": "space-evenly"}}>
         {Template.bind({})}
     </Story>
-</Canvas>
-
-<Canvas>
     <Story name="y align space-around" args={{"y-align": "space-around"}}>
         {Template.bind({})}
     </Story>
-</Canvas>
-
-<Canvas>
     <Story name="y align space-between" args={{"y-align": "space-between"}}>
         {Template.bind({})}
     </Story>
-</Canvas>
-
-<Canvas>
     <Story name="y align stretch" args={{"y-align": "stretch"}}>
         {Template.bind({})}
     </Story>
