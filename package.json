@@ -33,7 +33,7 @@
     "build": "npm run build:ts",
     "build:ts": "npx rollup -c",
     "build:clean": "rm -rf ./dist/*",
-    "test": "jest --env=jsdom",
+    "test": "jest",
     "storybook": "start-storybook -p 6006 --no-dll",
     "build-storybook": "build-storybook --no-dll",
     "format": "prettier --write 'src/**/*.ts' './src/**/*.tsx'"
