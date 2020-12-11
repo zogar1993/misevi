@@ -1,17 +1,15 @@
-import Flex, {FlexProps} from "components/Flex"
+import UnboxedFlex, {FlexProps} from "components/Flex"
 import styled from "styled-components"
 import React from "react"
 
 
 export const FlexDistilled = (props: FlexProps) => <Flex {...props}/>
 
-export default function FlexTemplate({...args}: FlexProps) {
+export default function FlexTemplate({width, height, ...args}: FlexProps) {
   return (
-    <Container>
-      <Flex {...{width: "220px", height: "220px", wrap: true, ...args}}>
-        <Squares amount={5}/>
-      </Flex>
-    </Container>
+    <Flex {...{width: width || "220px", height: height || "220px", wrap: true, ...args}}>
+      <Squares amount={5}/>
+    </Flex>
   )
 }
 
@@ -34,13 +32,13 @@ const Square = styled.div`
   border-style: solid;
 `
 
-const Container = styled.div`
-	display: block;
+function Flex(props: FlexProps) {
+  return <FlexElement {...props}/>
+}
+
+const FlexElement = styled(UnboxedFlex)`
   box-sizing: border-box;
-  //border-radius: 10px;
   background-color: coral;
-  width: 220px;
-  height: 220px;
   border-width: 1px;
   border-color: black;
   border-style: solid;
