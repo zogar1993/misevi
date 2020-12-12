@@ -1,0 +1,26 @@
+import {Canvas, Meta, Story} from "@storybook/addon-docs/blocks";
+import Template from "./RadioButtonTemplate";
+import { DotProps } from 'components/inner_components/Dot'
+
+<Meta title="Form/RadioButton" component={DotProps}/>
+
+### Checked
+<Canvas>
+    <Story name="checked" args={{checked: true}}>
+        {Template.bind({})}
+    </Story>
+</Canvas>
+
+### Unchecked
+<Canvas>
+  <Story name="unchecked" args={{checked: false}}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+### Skeleton
+<Canvas>
+  <Story name="skeleton" args={{checked: undefined}}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
