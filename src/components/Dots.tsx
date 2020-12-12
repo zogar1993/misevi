@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import Dot from 'components/dots/Dot'
+import Dot from 'components/inner_components/Dot'
 import Flex from 'components/Flex'
 import styled from 'styled-components'
 import Div from 'components/inner_components/Div'

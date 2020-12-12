@@ -1,19 +1,23 @@
 import styled from "styled-components"
 import React from "react"
 import { NoStyleInput } from 'components/inner_components/NoStyleInput'
+import { SKELETON_ANIMATION_INFO } from 'components/css/Skeleton'
 
-export default function Dot({onChange, ...props}: DotProps) {
+export default function Dot({onChange, checked, ...props}: DotProps) {
+  const showSkeleton = checked === undefined
   return (
     <DotElement
       {...props}
-      type="radio"
+      checked={checked === true}
+      skeleton={showSkeleton}
+      disabled={showSkeleton}
       onChange={onChange && ((e: any) => onChange(Number(e.target.value)))}
       readOnly={onChange === undefined}
     />
   )
 }
 
-type DotProps = {
+export type DotProps = {
   color?: string
   onChange?: (value: number) => void
   onMouseEnter?: () => void
@@ -22,15 +26,21 @@ type DotProps = {
   checked?: boolean
 }
 
-const DotElement = styled(NoStyleInput)<DotProps>`
-    width: 14px;
-    height: 14px;
-		box-sizing: border-box;
-    border: 1px solid black;
-    border-radius: 50%;
-    background-color: ${({color}) => color || "black"};
-    opacity: 0.9;
-    :hover {
-        border: 1px solid dodgerblue;
-    }
+const DotElement = styled(NoStyleInput).attrs(() => ({
+  type: "radio"
+}))<DotProps & {skeleton: boolean}>`
+  width: 14px;
+  height: 14px;
+  box-sizing: border-box;
+  border: 1px solid black;
+  border-radius: 50%;
+  background-color: ${({color}) => color || "black"};
+  :hover {
+      border: 1px solid dodgerblue;
+  }
+  ${({skeleton}) => skeleton ? SKELETON_ANIMATION_INFO : ""};
+
+  :disabled {
+    border: 1px solid transparent;
+  }
 `
