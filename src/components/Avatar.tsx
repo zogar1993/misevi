@@ -30,10 +30,13 @@ async function changeDisplayedImage(e: React.ChangeEvent<HTMLInputElement>,
 }
 
 async function encode(file: File): Promise<string> {
-  const data = await file.arrayBuffer()
-  const binary = new Uint8Array(data)
-  const binaryString = binary.join('')
-  return btoa(binaryString)
+  const promise = new Promise<string>((resolve, reject) => {
+    const reader = new FileReader()
+    reader.onload = ev => resolve(ev.target!.result as string)
+    reader.onerror = reject
+    reader.readAsDataURL(file)
+  })
+  return await promise
 }
 
 async function createThumbnail(file: File) {
