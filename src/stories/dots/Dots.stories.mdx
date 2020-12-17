@@ -4,9 +4,23 @@ import Dots from "components/Dots";
 
 <Meta title="Numeric/Dots" component={Dots}/>
 
-### Default
+### Lacking Advancement
 <Canvas>
-    <Story name="with value" args={{total: 5, value: 2}}>
-        {Template.bind({})}
-    </Story>
+  <Story name="Lacking Advancement" args={{total: 5, value: 1, advances: 2}}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+### Even
+<Canvas>
+  <Story name="Even" args={{total: 5, value: 2, advances: 2}}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+### Over Advancing
+<Canvas>
+  <Story name="Over Advancing" args={{total: 5, value: 3, advances: 2}}>
+    {Template.bind({})}
+  </Story>
 </Canvas>

@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import Div from 'components/inner_components/Div'
 import { NoStyleInput } from 'components/inner_components/NoStyleInput'
 
-export default function Dots({ total, value, onChange, reversed, rows, marked = 0 }: DotsProps) {
+export default function Dots({ total, value, onChange, reversed, rows, advances = 0 }: DotsProps) {
   const [tentative, setTentative] = useState<number | null>(null)
   const [showDotZero, setShowDotZero] = useState(false)
   useEffect(() => setTentative(null), [value])
@@ -13,6 +13,7 @@ export default function Dots({ total, value, onChange, reversed, rows, marked = 
 
   const thereIsATentative = useCallback(() => tentative !== null, [tentative])
   const isMarked = useCallback((current: number) => current <= value, [value])
+  const isAdvance = useCallback((current: number) => current <= advances, [advances])
   const isMarkedWhenTentativeIsLower = useCallback((current: number) =>
     tentative!! < value && current > tentative!! && current <= value
     , [tentative, value])
@@ -28,7 +29,10 @@ export default function Dots({ total, value, onChange, reversed, rows, marked = 
       if (wouldBeCleared(current)) return 'lightgray'
       if (wouldBeMarked(current)) return 'dimgray'
     }
-    return isMarked(current) ? 'black' : 'white'
+
+    if (isAdvance(current))
+      return isMarked(current) ? 'black' : 'palegreen'
+    return isMarked(current) ? 'darkred' : 'white'
   }, [thereIsATentative, wouldBeCleared, wouldBeMarked, isMarked])
 
   const width = (rows ? total / rows : total) * 14 + 'px'
@@ -69,7 +73,7 @@ export default function Dots({ total, value, onChange, reversed, rows, marked = 
               value={current}
               onChange={onChange}
               checked={current === value}
-              color={marked > value && marked >= current ? 'dodgerblue' : getColorFor(current)}
+              color={getColorFor(current)}
               onMouseEnter={() => setTentative(current)}
               onMouseLeave={() => setTentative(null)}
               key={current}
@@ -87,7 +91,7 @@ export interface DotsProps {
   onChange?: (value: number) => void
   reversed?: boolean
   rows?: number
-  marked?: number
+  advances?: number
 }
 
 const DotZeroElement = styled(NoStyleInput)<any>`
