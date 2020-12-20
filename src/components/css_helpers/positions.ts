@@ -13,5 +13,9 @@ export const positions = (props: PositionsProps) => `
 `
 
 export type PositionsProps = {
-  [key in keyof typeof PositionKeys]?: string
+  position?: string
+  top?: string
+  right?: string
+  bottom?: string
+  left?: string
 }

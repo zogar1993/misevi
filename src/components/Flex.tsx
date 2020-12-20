@@ -15,7 +15,6 @@ const blackMagic = (Element: any, ignored: any) => (({...props}: any) => {
 
 //TODO apply black magic to other components.
 //TODO make black magic more generic.
-//TODO fix the warning on html
 //TODO add reversed logic
 const Div = styled.div``
 const RealFlex = styled(blackMagic(Div, ignored))<FlexProps>`

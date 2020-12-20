@@ -12,5 +12,9 @@ export const margins = (props: MarginsProps) => `
     ${cssFromProps(props, Object.keys(MarginsKeys))}
 `
 export type MarginsProps = {
-  [key in keyof typeof MarginsKeys]?: string
+  margin?: string
+  "margin-top"?: string
+  "margin-right"?: string
+  "margin-bottom"?: string
+  "margin-left"?: string
 }

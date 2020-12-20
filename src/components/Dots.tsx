@@ -65,6 +65,7 @@ export default function Dots({ total, value, onChange, reversed, rows, advances 
         onMouseEnter={() => setShowDotZero(true)}
         onMouseLeave={() => setShowDotZero(false)}
         wrap
+        margin-bottom="1px"
       >
         <DotZero {...{ value, reversed, tentative, setTentative, onChange }} />
         {

@@ -14,5 +14,9 @@ export const paddings = (props: PaddingsProps) => `
 `
 
 export type PaddingsProps = {
-  [key in keyof typeof PaddingsKeys]?: string
+  padding?: string
+  "padding-top"?: string
+  "padding-right"?: string
+  "padding-bottom"?: string
+  "padding-left"?: string
 }

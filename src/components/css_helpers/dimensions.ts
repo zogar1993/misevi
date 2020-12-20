@@ -29,6 +29,12 @@ type CssDimensionsProps = {
 }
 
 type CustomDimensionProps = {
+  width?: string
+  height?: string
+  "min-width"?: string
+  "min-height"?: string
+  "max-width"?: string
+  "max-height"?: string
   "mobile-width"?: string
   "mobile-height"?: string
 }
