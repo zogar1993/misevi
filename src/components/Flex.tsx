@@ -5,7 +5,6 @@ import React from "react"
 import { paddings, PaddingsProps } from 'components/css_helpers/paddings'
 import { positions, PositionsProps } from 'components/css_helpers/positions'
 import { margins, MarginsProps } from 'components/css_helpers/margins'
-import { border_radius, BorderRadiusProps } from 'components/css_helpers/border_radius'
 
 const ignored: Array<string> = ["wrap", "x-align", "y-align"]
 const blackMagic = (Element: any, ignored: any) => (({...props}: any) => {
@@ -16,16 +15,15 @@ const blackMagic = (Element: any, ignored: any) => (({...props}: any) => {
 
 //TODO apply black magic to other components.
 //TODO make black magic more generic.
-//TODO type exclusive alignments for vertical and horizontal
 //TODO fix the warning on html
 //TODO add reversed logic
 const Div = styled.div``
 const RealFlex = styled(blackMagic(Div, ignored))<FlexProps>`
   display: flex;
-  ${props => props["no-pointer-events"] ? "pointer-events:none" : ""};
+  ${props => props["no-pointer-events"] ? "pointer-events: none" : ""};
   ${({visible}) => visible === false ? "visibility: hidden" : ""};
 
-  overflow: ${props => props.overflow || "visible"};
+  overflow: ${({ overflow }) => overflow || "visible"};
   flex-direction: ${({vertical, reversed}) => `${vertical ? "column" : "row"}${reversed ? "-reverse" : ""}`};
   ${({wrap}) => wrap ? "flex-wrap: wrap" : ""};
   justify-content: ${({vertical, ...props}) => align(props[vertical ? "y-align" : "x-align"])};
@@ -39,7 +37,6 @@ const RealFlex = styled(blackMagic(Div, ignored))<FlexProps>`
   ${dimensions};
   ${paddings};
   ${margins};
-  ${border_radius};
   ${positions};
 `
 
@@ -61,10 +58,10 @@ const align = (value: string | undefined) => {
 }
 
 export type  FlexProps = FlexPropsBase & DimensionsProps & PaddingsProps &
-  BorderRadiusProps & MarginsProps & PositionsProps
+  MarginsProps & PositionsProps
 export type FlexPropsBase = {
-  "y-align"?: "top" | "center" | "stretch" | "bottom" | "space-between" | "space-evenly" | "space-around"
-  "x-align"?: "left" | "center" | "stretch" | "right" | "space-between" | "space-evenly" | "space-around"
+  "y-align"?: "top" | "center" | "stretch" | "bottom" | Spaced
+  "x-align"?: "left" | "center" | "stretch" | "right" | Spaced
   reversed?: boolean
   wrap?: boolean
   vertical?: boolean
@@ -73,3 +70,5 @@ export type FlexPropsBase = {
   visible?: boolean
   "no-pointer-events"?: boolean
 }
+
+type Spaced = "space-between" | "space-evenly" | "space-around"

@@ -4,6 +4,9 @@ import "stories/Story.css"
 
 <Meta title="Layout/Flex" component={FlexDistilled}/>
 
+- *x-align=stretch* should not be used when not *vertical*.
+- *y-align=stretch* should not be used when *vertical*.
+
 <Canvas>
     <Story name="y align left" args={{"x-align": "left"}}>
         {Template.bind({})}
