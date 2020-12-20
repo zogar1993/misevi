@@ -3,9 +3,10 @@ import styled from 'styled-components'
 import { BORDER_RADIUS } from 'components/css/Dimensions'
 import { dimensions, DimensionsProps } from 'components/css_helpers/dimensions'
 import Flex from 'components/Flex'
+import Button from 'components/Button'
 
 export default function ButtonsGroup(props: ButtonsGroupProps) {
-	const {items, selected, onChange, small, large, bold, font, width, columns} = props
+	const {items, selected, onChange, bold, width, columns, size} = props
 	return (
 		<Flex
 			wrap
@@ -19,23 +20,21 @@ export default function ButtonsGroup(props: ButtonsGroupProps) {
 		>
 			{
 				items.map((item, index) =>
-					<Button
+					<ButtonItem
 						key={item.code}
 						onClick={() => onChange(item.code)}
 						active={selected === item.code}
 						width={columns ? `calc((100% - ${MARGIN_FOR_SHADOW}) / ${columns})` : undefined}
-						font={font}
 						has-buttons-top={columns === undefined ? false : index >= columns}
 						has-buttons-right={columns === undefined ? index < items.length - 1 : index % columns !== columns - 1}
 						has-buttons-bottom={columns === undefined ? false : index <= items.length - columns - 1}
 						has-buttons-left={columns === undefined ? index > 0 : index % columns !== 0}
 						z-index={items.length - index}
-						small={small}
-						large={large}
 						bold={bold}
+            size={size}
 					>
 						{item.name}
-					</Button>
+					</ButtonItem>
 				)
 			}
 		</Flex>
@@ -51,12 +50,10 @@ type ButtonsGroupProps = {
 	"x-align"?: string
 	"y-align"?: string
 	width?: string
+  size?: "small" | "medium" | "large"
 
-	small?: boolean
-	large?: boolean
 	bold?: boolean
 	italic?: boolean
-	font?: string
 }
 
 type Item = {
@@ -71,12 +68,6 @@ export const MARGIN_FOR_SHADOW = "2px"
 
 const backGroundColor = ({active}: Props) =>
   active ? ACTIVE_BACKGROUND_COLOR : NOT_ACTIVE_BACKGROUND_COLOR
-
-const fontSize = ({small, large}: Props) => {
-  if (small) return "12px"
-  if (large) return "16px"
-  return "14px"
-}
 
 const padding = ({small, large}: Props) => {
   if (small) return "2px"
@@ -102,7 +93,7 @@ const shadow = ({
   } else return "none"
 }
 
-const Button = styled.button<Props>`
+const ButtonItem = styled(Button)<Props>`
   box-sizing: border-box;
   border: 1px solid darkgray;
   min-width: 65px;
@@ -119,8 +110,6 @@ const Button = styled.button<Props>`
   color: black;
   font-weight: ${({bold}) => bold ? "bold" : "normal"};
   font-style: ${({italic}) => italic ? "italic" : "normal"};
-  font-family: ${({font}) => font ? `${font}, ` : ""}Times, serif;
-  font-size: ${fontSize};
 
   border-bottom-style: ${props => props["has-buttons-bottom"] ? "none" : "solid"};
   border-right-style: ${props => props["has-buttons-right"] ? "none" : "solid"};
