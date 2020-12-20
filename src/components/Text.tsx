@@ -1,7 +1,7 @@
 import React, {ReactNode} from "react"
 import Flex from 'components/Flex'
 import { DimensionsProps } from 'components/css_helpers/dimensions'
-import Span from 'components/Span'
+import Span from 'components/inner_components/Span'
 import styled from 'styled-components'
 import { BORDER_RADIUS } from 'components/css/Dimensions'
 
@@ -18,14 +18,13 @@ const Container = styled(Flex)`
 `
 
 interface Props extends DimensionsProps {
-    children: ReactNode
-    font?: string
-    small?: boolean
-    large?: boolean
-    bold?: boolean
-    color?: string
-    "x-align"?: string
-    "y-align"?: string
-    bordered?: boolean
-    tooltip?: string
+  children: ReactNode
+  font?: string
+  size?: "small" | "medium" | "large"
+  bold?: boolean
+  color?: string
+  "x-align"?: string
+  "y-align"?: string
+  bordered?: boolean
+  tooltip?: string
 }
