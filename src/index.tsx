@@ -7,5 +7,6 @@ import './styles/HandWrittenFont.css'
 import RadioButton from 'components/RadioButton'
 import ButtonsGroup from 'components/ButtonsGroup'
 import Text from 'components/Text'
+import Avatar from 'components/Avatar'
 
-export { Button, ButtonsGroup, Flex, Field, CircularNumberInput, Dots, RadioButton, Text }
+export {Button, ButtonsGroup, Flex, Field, CircularNumberInput, Dots, RadioButton, Text, Avatar}
