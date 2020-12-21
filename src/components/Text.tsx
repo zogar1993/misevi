@@ -1,14 +1,14 @@
 import React, {ReactNode} from "react"
-import Flex from 'components/Flex'
+import Flex, { XAlignType, YAlignType } from 'components/Flex'
 import { DimensionsProps } from 'components/css_helpers/dimensions'
 import Span from 'components/inner_components/Span'
 import styled from 'styled-components'
 import { BORDER_RADIUS } from 'components/css/Dimensions'
 
-export default function Text({children, ...props}: Props) {
+export default function Text({children, tooltip, ...props}: Props) {
     return (
         <Container {...props} skeleton={children === undefined}>
-            <Span {...props} title={props.tooltip}>{children}</Span>
+            <Span {...props} title={tooltip}>{children}</Span>
         </Container>
     )
 }
@@ -23,8 +23,8 @@ interface Props extends DimensionsProps {
   size?: "small" | "medium" | "large"
   bold?: boolean
   color?: string
-  "x-align"?: string
-  "y-align"?: string
+  "x-align"?: XAlignType
+  "y-align"?: YAlignType
   bordered?: boolean
   tooltip?: string
 }

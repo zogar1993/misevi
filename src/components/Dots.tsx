@@ -62,8 +62,6 @@ export default function Dots({ total, value, onChange, reversed, rows, advances 
         width="100%"
         height="100%"
         reversed={reversed}
-        onMouseEnter={() => setShowDotZero(true)}
-        onMouseLeave={() => setShowDotZero(false)}
         wrap
         margin-bottom="1px"
       >

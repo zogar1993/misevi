@@ -2,7 +2,7 @@ import React from "react"
 import styled from 'styled-components'
 import { BORDER_RADIUS } from 'components/css/Dimensions'
 import { dimensions, DimensionsProps } from 'components/css_helpers/dimensions'
-import Flex from 'components/Flex'
+import Flex, { XAlignType, YAlignType } from 'components/Flex'
 import Button from 'components/Button'
 
 export default function ButtonsGroup(props: ButtonsGroupProps) {
@@ -47,8 +47,8 @@ type ButtonsGroupProps = {
 	onChange: (code: string) => void
 
 	columns?: number
-	"x-align"?: string
-	"y-align"?: string
+	"x-align"?: XAlignType
+	"y-align"?: YAlignType
 	width?: string
   size?: "small" | "medium" | "large"
 

@@ -1,6 +1,6 @@
 import {cssFromProps} from "components/css_helpers/inner_helpers"
 
-export enum PositionKeys {
+export enum PositionsKeys {
   position,
   top,
   right,
@@ -9,7 +9,7 @@ export enum PositionKeys {
 }
 
 export const positions = (props: PositionsProps) => `
-    ${cssFromProps(props, Object.keys(PositionKeys))}
+    ${cssFromProps(props, Object.keys(PositionsKeys))}
 `
 
 export type PositionsProps = {
