@@ -1,15 +1,15 @@
 import {cssFromProps} from "components/css_helpers/inner_helpers"
 
-export enum MarginsKeys {
-  margin,
+export const MARGINS = Object.freeze([
+  "margin",
   "margin-top",
   "margin-right",
   "margin-bottom",
   "margin-left",
-}
+])
 
 export const margins = (props: MarginsProps) => `
-    ${cssFromProps(props, Object.keys(MarginsKeys))}
+    ${cssFromProps(props, MARGINS)}
 `
 export type MarginsProps = {
   margin?: string

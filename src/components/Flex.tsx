@@ -1,33 +1,29 @@
 import styled, { StyledComponent } from 'styled-components'
-import {DimensionKeys, dimensions, DimensionsProps} from "components/css_helpers/dimensions"
+import {DIMENSIONS, dimensions, DimensionsProps} from "components/css_helpers/dimensions"
 import {SKELETON_ANIMATION_INFO} from "components/css/Skeleton"
 import React from "react"
-import { paddings, PaddingsKeys, PaddingsProps } from 'components/css_helpers/paddings'
-import { PositionsKeys, positions, PositionsProps } from 'components/css_helpers/positions'
-import { margins, MarginsKeys, MarginsProps } from 'components/css_helpers/margins'
-import { Flex } from 'index'
+import { paddings, PADDINGS, PaddingsProps } from 'components/css_helpers/paddings'
+import { POSITIONS, positions, PositionsProps } from 'components/css_helpers/positions'
+import { margins, MARGINS, MarginsProps } from 'components/css_helpers/margins'
 
 const ignored: Array<string> = ["wrap", "x-align", "y-align"]
 
-const removeHtmlProperties =
-  <
-    T extends StyledComponent<U, any, W>,
-    U extends string | React.ComponentType<any>,
-    W extends object,
-  >(Element: T, ignored: Array<string>) => (({...props}: W & React.HTMLAttributes<HTMLElement>) => {
+const removeHtmlProperties =  <W extends object>(
+  Element: StyledComponent<string | React.ComponentType<any>, any, W>, ignored: Array<string>
+) => (({...props}: W & React.HTMLAttributes<HTMLElement>) => {
   const args = props as any
   ignored.forEach((name: any) => delete args[name])
-  Object.keys(DimensionKeys).forEach((name: string) => delete args[name])
-  Object.keys(PaddingsKeys).forEach((name: string) => delete args[name])
-  Object.keys(MarginsKeys).forEach((name: string) => delete args[name])
-  Object.keys(PositionsKeys).forEach((name: string) => delete args[name])
+  DIMENSIONS.forEach((name: string) => delete args[name])
+  PADDINGS.forEach((name: string) => delete args[name])
+  MARGINS.forEach((name: string) => delete args[name])
+  POSITIONS.forEach((name: string) => delete args[name])
   return <Element {...args}>{args.children}</Element>
 })
 
 //TODO apply black magic to other components.
 //TODO add reversed logic
 const Div = styled.div``
-const RealFlex = styled(removeHtmlProperties(Div, ignored))<FlexProps>`
+const RealFlex = styled(removeHtmlProperties<FlexProps>(Div, ignored))<FlexProps>`
   display: flex;
   ${props => props["no-pointer-events"] ? "pointer-events: none" : ""};
   ${({visible}) => visible === false ? "visibility: hidden" : ""};

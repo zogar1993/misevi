@@ -1,15 +1,15 @@
 import {cssFromProps} from "components/css_helpers/inner_helpers"
 
-export enum PositionsKeys {
-  position,
-  top,
-  right,
-  bottom,
-  left,
-}
+export const POSITIONS = Object.freeze([
+  "position",
+  "top",
+  "right",
+  "bottom",
+  "left",
+])
 
 export const positions = (props: PositionsProps) => `
-    ${cssFromProps(props, Object.keys(PositionsKeys))}
+    ${cssFromProps(props, POSITIONS)}
 `
 
 export type PositionsProps = {

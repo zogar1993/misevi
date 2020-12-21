@@ -1,13 +1,13 @@
 import {cssFromProps} from "components/css_helpers/inner_helpers"
 
-export enum DimensionKeys {
-  width,
-  height,
+export const DIMENSIONS = Object.freeze([
+  "width",
+  "height",
   "min-width",
   "min-height",
   "max-width",
   "max-height",
-}
+])
 
 //TODO separate into height and width
 export const dimensions = ({
@@ -15,20 +15,14 @@ export const dimensions = ({
                              "mobile-height": mobileHeight,
                              ...props
                            }: DimensionsProps) => `
-    ${cssFromProps(props, Object.keys(DimensionKeys))}
+    ${cssFromProps(props, DIMENSIONS)}
     @media (max-width: 768px) {
         ${mobileWidth ? `width: ${mobileWidth};` : ""};
         ${mobileHeight ? `height: ${mobileHeight};` : ""};
     }
 `
 
-export type DimensionsProps = CssDimensionsProps & CustomDimensionProps
-
-type CssDimensionsProps = {
-  [key in keyof typeof DimensionKeys]?: string
-}
-
-type CustomDimensionProps = {
+export type DimensionsProps = {
   width?: string
   height?: string
   "min-width"?: string

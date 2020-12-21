@@ -12,10 +12,10 @@ export default function Avatar({onChange, src, alt, width = '135px', height = '1
   const handleOnChange = async (e: React.ChangeEvent<HTMLInputElement>) =>
     await changeDisplayedImage(e, setImageShowed, onChange)
   return (
-    <label>
+    <Label width={width} height={height}>
       <Input type="file" onChange={handleOnChange}/>
       <Image src={imageShowed} alt={alt} width={width} height={height} skeleton={showSkeleton}/>
-    </label>
+    </Label>
   )
 }
 
@@ -79,4 +79,10 @@ const Image = styled.img<{ width?: string, height?: string, skeleton: boolean }>
 
 const Input = styled.input`
   display: none;
+`
+
+const Label = styled.label<{ width?: string, height?: string }>`
+  all: unset;
+  width: ${x => x.width};
+  height: ${x => x.height};
 `
