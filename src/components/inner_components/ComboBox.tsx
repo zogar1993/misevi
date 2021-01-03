@@ -36,7 +36,6 @@ export default function ComboBox(props: ComboBoxProps) {
 
   //TODO fix tests for this
   //TODO add animations
-  //TODO tab should autoselect if 1
   //TODO move between options
   return (
     <ComboBoxContainer
