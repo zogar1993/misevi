@@ -7,14 +7,21 @@ export function Template({ type, ...args }: FieldBaseProps & FieldComboProps) {
 
 function Field(props: FieldBaseProps & FieldComboProps) {
   const [value, setValue] = useState(props.value || null)
-  return <FieldUnboxed {...props} value={value} onChange={(value: string|null) => setValue(value)}/>
+
+  const onChange = (value: string|null) => {
+    props.onChange && props.onChange(value)
+    setValue(value)
+  }
+
+  return <FieldUnboxed {...props} value={value} onChange={onChange}/>
 }
 
 export function ComboboxStoryTypes(props: FieldBaseProps & FieldComboProps) {
 
 }
 
-export const items = [{code: "apothecary", name: "Apothecary"},
+export const items = [
+  {code: "apothecary", name: "Apothecary"},
   {code: "apostle", name: "Apostle"},
   {code: "hexer", name: "Hexer"}]
 
