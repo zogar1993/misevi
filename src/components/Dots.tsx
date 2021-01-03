@@ -103,7 +103,6 @@ const DotZeroElement = styled(NoStyleInput)<any>`
 		box-sizing: border-box;
     border: 1px solid black;
     border-radius: 50%;
-    opacity: 0.9;
     cursor: pointer;
 
     :hover {

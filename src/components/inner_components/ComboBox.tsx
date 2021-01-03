@@ -168,6 +168,7 @@ const Options = styled.ul<{open: boolean, width?: string}>`
   max-height: calc(${OPTION_HEIGHT} * 5 + 2px);
   overflow-y: auto;
   overflow-x: hidden;
+  z-index: 20;
 `
 
 const Option = styled.li`
