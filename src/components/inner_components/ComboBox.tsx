@@ -34,6 +34,28 @@ export default function ComboBox(props: ComboBoxProps) {
     setVisibleOptions(visibleOptions)
   }, [text, options, value])
 
+  useEffect(() => {
+    if (!focused) {
+      if (text === '') {
+        setIsError(false)
+      } else {
+        const option = options.find(x => x.name === text)
+        setIsError(option === undefined)
+      }
+    }
+  }, [text, focused, options])
+
+  useEffect(() => {
+    if (!focused) {
+      if (text === '') {
+        setIsError(false)
+      } else {
+        const option = options.find(x => x.name === text)
+        setIsError(option === undefined)
+      }
+    }
+  }, [text, focused, options])
+
   //TODO fix tests
   //TODO add animations
   //TODO move between options
@@ -57,15 +79,14 @@ export default function ComboBox(props: ComboBoxProps) {
           const loweredText = text.trim().toLowerCase()
           const option = options.find(x => x.name.toLowerCase() === loweredText)
           if (option) {
-            setIsError(false)
             if (option.code !== value)
               onChange!(option.code)
-          } else if (loweredText === ''){
-            setIsError(false)
+            else
+              setText(option.name)
+          } else if (loweredText === '') {
             if (value !== null)
               onChange!(null)
-          } else
-            setIsError(true)
+          }
 
           setFocused(false)
         }}
@@ -89,7 +110,10 @@ export default function ComboBox(props: ComboBoxProps) {
             <Option
               key={item.code}
               onClick={() => {
-                onChange!(item.code)
+                if (item.code !== value)
+                  onChange!(item.code)
+                else
+                  setText(item.name)
                 setHoveringOptions(false)
               }}
             >
@@ -112,9 +136,9 @@ export default function ComboBox(props: ComboBoxProps) {
             width='12px'
             height='12px'
             onClick={() => {
-              if (value !== null)
+              if (value !== null) {
                 onChange(null)
-              else {
+              } else {
                 setText('')
                 onTextChange && onTextChange('')
               }
@@ -198,6 +222,7 @@ const ButtonsContainer = styled(Flex)`
 
 const TextInput = styled(Input)<{error: boolean}>`
   ${({error}) => error ? 'border: 1px solid red' : ''};
+  transition: 0.4s ease-in;//TODO HACK THAT PREVENTS RED FROM SHOWING
 `
 
 function ComboboxImageButton({ name, src, onClick, props }: ButtonInfo & { props: ComboBoxProps }) {
