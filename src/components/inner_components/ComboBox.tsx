@@ -11,6 +11,7 @@ import Input from "components/inner_components/Input"
 export default function ComboBox(props: ComboBoxProps) {
   const { value, options, onChange, width, buttons, id } = props
   const [hovering, setHovering] = useState(false)
+  const [hoveringOptions, setHoveringOptions] = useState(false)
   const [open, setOpen] = useState(false)
   const ref = useRef<HTMLInputElement>(null)
   const showSkeleton = value === undefined
@@ -36,7 +37,11 @@ export default function ComboBox(props: ComboBoxProps) {
   //TODO fix tests for this
 
   return (
-    <ComboBoxContainer $width={width} onMouseEnter={() => setHovering(true)} onMouseLeave={() => setHovering(false)}>
+    <ComboBoxContainer
+      $width={width}
+      onMouseEnter={() => setHovering(true)}
+      onMouseLeave={() => setHovering(false)}
+    >
       <Input
         id={id}
         ref={ref}
@@ -48,6 +53,7 @@ export default function ComboBox(props: ComboBoxProps) {
           const option = options.find(x => x.name.toLowerCase() === loweredText)
           if (option && option.code !== value)
             onChange && onChange(option.code)
+          setOpen(false)
         }}
         onFocus={() => {
           ref.current?.select()
@@ -57,13 +63,19 @@ export default function ComboBox(props: ComboBoxProps) {
         skeleton={showSkeleton}
         type="text"
       />
-      <Options open={open && visibleOptions.length > 0} width={width}>
+      <Options
+        width={width}
+        open={(open || hoveringOptions) && visibleOptions.length > 0}
+        onMouseEnter={() => setHoveringOptions(true)}
+        onMouseLeave={() => setHoveringOptions(false)}
+      >
         {showSkeleton ? null :
           visibleOptions.map((item) => (
             <Option
               key={item.code}
               onClick={() => {
                 onChange!(item.code)
+                setHoveringOptions(false)
                 setOpen(false)
               }}
             >
@@ -87,8 +99,6 @@ export default function ComboBox(props: ComboBoxProps) {
             height='12px'
             onClick={() => {
               onChange(null)
-              setOpen(false)
-              ref.current?.blur()
             }}
             visible={value !== null}
           />
