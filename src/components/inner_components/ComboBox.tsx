@@ -16,9 +16,8 @@ export default function ComboBox(props: ComboBoxProps) {
   const showSkeleton = value === undefined
   const isNotLoading = value !== undefined
   const [text, setText] = useState('')
-
+  const [visibleOptions, setVisibleOptions] = useState<Array<ComboBoxItem>>([])
   useEffect(() => {
-    console.log("effect with value " + value)
     if (value) {
       const option = options.find(x => x.code === value)
       if (option !== undefined)
@@ -26,6 +25,13 @@ export default function ComboBox(props: ComboBoxProps) {
     } else
       setText('')
   }, [value])
+
+  useEffect(() => {
+    const loweredText = text.toLowerCase()
+    const visibleOptions = options
+      .filter(x => x.name.toLowerCase().includes(loweredText))
+    setVisibleOptions(visibleOptions)
+  }, [text, options, value])
 
   //TODO fix tests for this
 
@@ -43,14 +49,17 @@ export default function ComboBox(props: ComboBoxProps) {
           if (option && option.code !== value)
             onChange && onChange(option.code)
         }}
-        onFocus={() => setOpen(true)}
+        onFocus={() => {
+          ref.current?.select()
+          setOpen(true)
+        }}
         readOnly={onChange === undefined}
         skeleton={showSkeleton}
         type="text"
       />
-      <Options open={open} width={width}>
+      <Options open={open && visibleOptions.length > 0} width={width}>
         {showSkeleton ? null :
-          options.map((item) => (
+          visibleOptions.map((item) => (
             <Option
               key={item.code}
               onClick={() => {
