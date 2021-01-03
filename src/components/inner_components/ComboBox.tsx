@@ -8,7 +8,7 @@ import { HANDWRITTEN_FONT } from 'components/css/Fonts'
 import Input from "components/inner_components/Input"
 
 export default function ComboBox(props: ComboBoxProps) {
-  const { value, options, onChange, width, buttons, id } = props
+  const { value, options, onChange, onTextChange, width, buttons, id } = props
   const [hovering, setHovering] = useState(false)
   const [hoveringOptions, setHoveringOptions] = useState(false)
   const [focused, setFocused] = useState(false)
@@ -34,7 +34,7 @@ export default function ComboBox(props: ComboBoxProps) {
     setVisibleOptions(visibleOptions)
   }, [text, options, value])
 
-  //TODO fix tests for this
+  //TODO fix tests
   //TODO add animations
   //TODO move between options
   return (
@@ -48,7 +48,11 @@ export default function ComboBox(props: ComboBoxProps) {
         ref={ref}
         value={text}
         disabled={showSkeleton}
-        onChange={(e) => setText(e.target.value)}
+        onChange={(e) => {
+          const text = e.target.value
+          setText(text)
+          onTextChange && onTextChange(text)
+        }}
         onBlur={() => {
           const loweredText = text.trim().toLowerCase()
           const option = options.find(x => x.name.toLowerCase() === loweredText)
@@ -110,8 +114,10 @@ export default function ComboBox(props: ComboBoxProps) {
             onClick={() => {
               if (value !== null)
                 onChange(null)
-              else
+              else {
                 setText('')
+                onTextChange && onTextChange('')
+              }
             }}
             visible={text !== ''}
           />
@@ -126,6 +132,7 @@ export type ComboBoxProps = {
   value: string | null | undefined
   options: Array<ComboBoxItem>
   onChange?: (value: string | null) => void
+  onTextChange?: (value: string) => void
   buttons?: Array<ButtonInfo>
   width?: string
 }

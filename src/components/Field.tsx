@@ -8,8 +8,8 @@ import ComboBox, {ButtonInfo, ComboBoxItem} from "components/inner_components/Co
 export default function Field(props: FieldProps) {
   const {label, width, value} = props
 	const [isPlaceholder, setIsPlaceholder] = useState<boolean>(false)
-  const onChange = useCallback((value: string) => {
-    setIsPlaceholder(value === "" || value === null)
+  const onTextChange = useCallback((value: string) => {
+    setIsPlaceholder(value === "")
   }, [])
 	useEffect(() => {
 		setIsPlaceholder(value === "" || value === null)
@@ -33,6 +33,7 @@ export default function Field(props: FieldProps) {
 						value={props.value}
 						options={props.options}
 						onChange={props.onChange}
+            onTextChange={onTextChange}
 						buttons={props.buttons}
 					/>
 					:
@@ -41,7 +42,7 @@ export default function Field(props: FieldProps) {
 						placeholder={label}
 						value={props.value}
 						onBlur={props.onBlur}
-						onChange={onChange}
+						onChange={onTextChange}
 					/>
 			}
 		</FieldContainer>
