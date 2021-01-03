@@ -23,5 +23,16 @@ export function ComboboxStoryTypes(props: FieldBaseProps & FieldComboProps) {
 export const items = [
   {code: "apothecary", name: "Apothecary"},
   {code: "apostle", name: "Apostle"},
-  {code: "hexer", name: "Hexer"}]
+  {code: "hexer", name: "Hexer"}
+]
+
+export const long_items = [
+  {code: "apothecary", name: "Apothecary"},
+  {code: "apostle", name: "Apostle"},
+  {code: "hexer", name: "Hexer"},
+  {code: "satire", name: "Satire"},
+  {code: "seer", name: "Seer"},
+  {code: "trapper", name: "Trapper"},
+  {code: "zoroastrian", name: "Zoroastrian"}
+]
 

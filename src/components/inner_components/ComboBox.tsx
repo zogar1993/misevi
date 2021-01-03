@@ -36,7 +36,6 @@ export default function ComboBox(props: ComboBoxProps) {
 
   //TODO fix tests for this
   //TODO add animations
-  //TODO add cap on options
   //TODO tab should autoselect if 1
   //TODO move between options
   return (
@@ -145,6 +144,8 @@ export type ComboBoxItem = {
   to?: number
 }
 
+const OPTION_HEIGHT = '23px'
+
 const Options = styled.ul<{open: boolean, width?: string}>`
   margin: 0;
   padding: 0;
@@ -158,10 +159,15 @@ const Options = styled.ul<{open: boolean, width?: string}>`
   width: ${({width}) => width || '100%'};
   ${({open}) => open ? '' : 'display: none'};
   transition: 0.2s;
+  max-height: calc(${OPTION_HEIGHT} * 5 + 2px);
+  overflow-y: auto;
+  overflow-x: hidden;
 `
 
 const Option = styled.li`
+  box-sizing: border-box;
   font-family: ${HANDWRITTEN_FONT}, Times, serif;
+  height: 23px;
   font-size: 13px;
   padding: 3px 5px 3px 8px;
   border-radius: ${BORDER_RADIUS};

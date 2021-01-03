@@ -1,18 +1,25 @@
 import {Canvas, Meta, Story} from "@storybook/addon-docs/blocks";
-import {Template, ComboboxStoryTypes, items} from "./ComboboxTemplate";
+import {Template, ComboboxStoryTypes, items, long_items} from "./ComboboxTemplate";
 
 <Meta title="Form/Combobox" component={ComboboxStoryTypes}/>
 
 ### Default
 <Canvas>
-    <Story name="with value" args={{label: "label", value: "apostle", options: items}}>
-        {Template.bind({})}
-    </Story>
+  <Story name="with value" args={{label: "label", value: "apostle", options: items}}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+### Long Dropdown
+<Canvas>
+  <Story name="long dropdown" args={{label: "label", value: null, options: long_items}}>
+    {Template.bind({})}
+  </Story>
 </Canvas>
 
 ### Skeleton
 <Canvas>
-    <Story name="without value" args={{label: "label", options: items}}>
+    <Story name="skeleton" args={{label: "label", options: items}}>
         {Template.bind({})}
     </Story>
 </Canvas>
