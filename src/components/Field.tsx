@@ -59,7 +59,7 @@ export type FieldBaseProps = {
 export type FieldTextProps = {
   type?: "text"
   value?: string
-  onBlur?: (value: string) => void
+  onBlur?: (value: string | null) => void
 }
 
 export type FieldNumberProps = {

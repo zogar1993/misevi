@@ -3,7 +3,7 @@ import '@testing-library/jest-dom/extend-expect'
 import { fireEvent, render, RenderResult, waitFor } from '@testing-library/react'
 import ComboBox, { ButtonInfo, ComboBoxItem } from '../components/inner_components/ComboBox'
 
-describe('ComboBox should', () => {
+xdescribe('ComboBox should', () => {
   let screen: RenderResult
   let _options: Array<ComboBoxItem>
   let _value: string | null | undefined

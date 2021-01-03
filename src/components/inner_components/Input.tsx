@@ -3,6 +3,7 @@ import {BORDER_RADIUS} from "components/css/Dimensions"
 import {NoStyleInput} from "components/inner_components/NoStyleInput"
 import {SKELETON_ANIMATION_INFO} from "components/css/Skeleton"
 import {HANDWRITTEN_FONT, FONT_SIZE} from "components/css/Fonts"
+import React from "react"
 
 const animation = "{ from {font-size:150%} to {font-size:100%} }"
 
@@ -24,7 +25,9 @@ export const onValueChangeAnimation = ({"animation-seed": seed}: { "animation-se
     `
 }
 
-const Input = styled(NoStyleInput)<InputProps>`
+const Input =  styled(NoStyleInput).attrs<InputProps>(() => ({
+    autoComplete: "off"
+}))<InputProps>`
     padding: 5px 5px 5px 8px;
     border: 1px solid lightgray;
     background-color: whitesmoke;
@@ -40,7 +43,7 @@ const Input = styled(NoStyleInput)<InputProps>`
     -moz-appearance: textfield;
 
     ::placeholder {
-        opacity: ${props => props["hide-placeholder"] ? "0" : "1"};
+        opacity: 0;
     }
 
     ${onValueChangeAnimation};
@@ -54,7 +57,6 @@ const Input = styled(NoStyleInput)<InputProps>`
 export default Input
 
 export type InputProps = {
-  "hide-placeholder"?: boolean
   skeleton?: boolean
   "animation-seed"?: number
   "text-align"?: "center"

@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from "react"
+import React, {ForwardedRef, forwardRef, useEffect, useState} from "react"
 import Input from "components/inner_components/Input"
 
-export default function TextInput({id, placeholder, value, onBlur, onChange}: TextInputProps) {
+const TextInput = forwardRef(({id, placeholder, value, onBlur, onChange, ...props}: TextInputProps, ref: ForwardedRef<HTMLInputElement>) => {
   const [current, setCurrent] = useState(value)
   useEffect(() => setCurrent(value), [value])
 
@@ -13,6 +13,7 @@ export default function TextInput({id, placeholder, value, onBlur, onChange}: Te
   const handleOnBlur = () => {
     if (current === undefined) return
     if (onBlur === undefined) return
+    alert(value !== current)
     if (value !== current)
       onBlur(current)
   }
@@ -30,10 +31,12 @@ export default function TextInput({id, placeholder, value, onBlur, onChange}: Te
       skeleton={showSkeleton}
       placeholder={placeholder}
       hide-placeholder={true}
-      autoComplete="off"
+      ref={ref}
+      {...props}
     />
   )
-}
+})
+export default TextInput
 
 export type TextInputProps = {
   id?: string
@@ -41,4 +44,7 @@ export type TextInputProps = {
   value?: string
   onBlur?: (value: string) => void
   onChange?: (value: string) => void
+  onFocus?: () => void
+  disabled?: boolean
+  readOnly?: boolean
 }

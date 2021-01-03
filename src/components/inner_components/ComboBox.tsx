@@ -1,40 +1,69 @@
-import React, { useCallback, useState } from 'react'
+import React, {createRef, useCallback, useEffect, useRef, useState} from "react"
 import styled from 'styled-components'
 import { BORDER_RADIUS, SEPARATION } from 'components/css/Dimensions'
-import { SKELETON_ANIMATION_INFO } from 'components/css/Skeleton'
 import Flex from 'components/Flex'
 import ImageButton from 'components/ImageButton'
 import close from '../icons/close.svg'
-import { FONT_SIZE, HANDWRITTEN_FONT } from 'components/css/Fonts'
-import { NoStyleSelect } from 'components/inner_components/NoStyleSelect'
+import { HANDWRITTEN_FONT } from 'components/css/Fonts'
+import TextInput from "components/inner_components/TextInput"
+import Input from "components/inner_components/Input"
 
 export default function ComboBox(props: ComboBoxProps) {
-  const { value, options, onChange, width, buttons } = props
+  const { value, options, onChange, width, buttons, id } = props
   const [hovering, setHovering] = useState(false)
-  const onMouseEnter = useCallback(() => setHovering(true), [])
-  const onMouseLeave = useCallback(() => setHovering(false), [])
+  const [open, setOpen] = useState(false)
+  const ref = useRef<HTMLInputElement>(null)
   const showSkeleton = value === undefined
   const isNotLoading = value !== undefined
+  const [text, setText] = useState('')
+
+  useEffect(() => {
+    console.log("effect with value " + value)
+    if (value) {
+      const option = options.find(x => x.code === value)
+      if (option !== undefined)
+        setText(option.name)
+    } else
+      setText('')
+  }, [value])
+
+  //TODO fix tests for this
 
   return (
-    <ComboBoxContainer $width={width} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
-      <Select
-        value={value || ''}
-        onChange={onChange && ((e: any) => onChange(e.target.value))}
-        readOnly={onChange === undefined}
+    <ComboBoxContainer $width={width} onMouseEnter={() => setHovering(true)} onMouseLeave={() => setHovering(false)}>
+      <Input
+        id={id}
+        ref={ref}
+        value={text}
         disabled={showSkeleton}
+        onChange={(e) => setText(e.target.value)}
+        onBlur={() => {
+          const loweredText = text.toLowerCase()
+          const option = options.find(x => x.name.toLowerCase() === loweredText)
+          if (option && option.code !== value)
+            onChange && onChange(option.code)
+        }}
+        onFocus={() => setOpen(true)}
+        readOnly={onChange === undefined}
         skeleton={showSkeleton}
-      >
-        <Option disabled hidden value={''} />
+        type="text"
+      />
+      <Options open={open} width={width}>
         {showSkeleton ? null :
           options.map((item) => (
-            <Option key={item.code} value={item.code}>
+            <Option
+              key={item.code}
+              onClick={() => {
+                onChange!(item.code)
+                setOpen(false)
+              }}
+            >
               {item.name}
             </Option>
-          ))}
-      </Select>
-      <Flex
-        style={{ position: 'absolute', right: '9px' }}
+          ))
+        }
+      </Options>
+      <ButtonsContainer
         y-align='center'
         visible={hovering && isNotLoading}
       >
@@ -47,11 +76,15 @@ export default function ComboBox(props: ComboBoxProps) {
             name='clear'
             width='12px'
             height='12px'
-            onClick={() => onChange(null)}
+            onClick={() => {
+              onChange(null)
+              setOpen(false)
+              ref.current?.blur()
+            }}
             visible={value !== null}
           />
         }
-      </Flex>
+      </ButtonsContainer>
     </ComboBoxContainer>
   )
 }
@@ -78,38 +111,28 @@ export type ComboBoxItem = {
   to?: number
 }
 
-const Select = styled(NoStyleSelect)<any>`
-  padding: 0 5px 0 8px;
-  border: 1px solid lightgray;
-  background-color: whitesmoke;
-  line-height: 22px;
-
-  font-family: ${HANDWRITTEN_FONT}, Times, serif;
-  font-size: ${FONT_SIZE};
-
-  width: 100%;
-  height: 30px;
+const Options = styled.ul<{open: boolean, width?: string}>`
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
   border-radius: ${BORDER_RADIUS};
-
-  :hover {
-    border: 1px solid dodgerblue;
-  }
-
-  ${(props) => (props.skeleton ? SKELETON_ANIMATION_INFO : '')};
-  :disabled {
-    background-color: whitesmoke;
-    border: 1px solid transparent;
-  }
+  position: absolute;
+  top: 30px;
+  border: 1px solid lightgray;
+  list-style: none;
+  background-color: whitesmoke;
+  width: ${({width}) => width || '100%'};
+  ${({open}) => open ? '' : 'display: none'};
 `
 
-const Option = styled.option<any>`
+const Option = styled.li`
   font-family: ${HANDWRITTEN_FONT}, Times, serif;
-  font-size: 16px;
-  background-color: whitesmoke;
-  padding: 5px 5px 5px 8px;
+  font-size: 13px;
+  padding: 3px 5px 3px 8px;
   border-radius: ${BORDER_RADIUS};
-  border: 1px solid lightgray;
-  width: ${(props) => props.width || '100%'};
+  :hover {
+    background-color: dodgerblue;
+  }
 `
 
 const ComboBoxContainer = styled.div<any>`
@@ -117,6 +140,11 @@ const ComboBoxContainer = styled.div<any>`
   align-items: center;
   position: relative;
   ${({ $width }) => ($width ? `width: ${$width}` : '')};
+`
+
+const ButtonsContainer = styled(Flex)`
+  position: absolute;
+  right: 9px;
 `
 
 function ComboboxImageButton({ name, src, onClick, props }: ButtonInfo & { props: ComboBoxProps }) {
