@@ -6,13 +6,13 @@ import TextInput from "components/inner_components/TextInput"
 import ComboBox, {ButtonInfo, ComboBoxItem} from "components/inner_components/ComboBox"
 
 export default function Field(props: FieldProps) {
+  const {label, width, value} = props
 	const [isPlaceholder, setIsPlaceholder] = useState<boolean>(false)
   const onChange = useCallback((value: string) => {
-    setIsPlaceholder(value === "")
+    setIsPlaceholder(value === "" || value === null)
   }, [])
-	const {label, width, value} = props
 	useEffect(() => {
-		setIsPlaceholder(value === "")
+		setIsPlaceholder(value === "" || value === null)
 	}, [value])
 	const id = props.id || label
 	return (

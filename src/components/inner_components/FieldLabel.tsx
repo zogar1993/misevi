@@ -1,16 +1,16 @@
 import styled from "styled-components"
 
 const FieldLabel = styled.label<Props>`
-    position: absolute;
-    transition-timing-function: ease-in;
-    transition: 0.2s;
-    transform: ${props => props["as-placeholder"] ? "" : "translateY(-115%) scale(0.8) translateX(-12.5%)"};
-    color: ${props => props["as-placeholder"] ? "grey" : "black"};
-    font-family: Times, serif;
-    font-size: 16px;
-    padding-left: 8px;
-    margin-top: 4.5px;
-    user-select: none;
+  position: absolute;
+  transition-timing-function: ease-in;
+  transition: 0.2s;
+  font-size: ${props => props["as-placeholder"] ? '16px' : "11px"};
+  color: ${props => props["as-placeholder"] ? "grey" : "black"};
+  font-family: Times, serif;
+  top: ${props => props["as-placeholder"] ? '21px' : "2px"};
+  left: 9px;
+  user-select: none;
+  z-index: 2;
 `
 export default FieldLabel
 

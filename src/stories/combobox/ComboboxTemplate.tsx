@@ -6,7 +6,7 @@ export function Template({ type, ...args }: FieldBaseProps & FieldComboProps) {
 }
 
 function Field(props: FieldBaseProps & FieldComboProps) {
-  const [value, setValue] = useState(props.value || null)
+  const [value, setValue] = useState(props.value)
 
   const onChange = (value: string|null) => {
     props.onChange && props.onChange(value)

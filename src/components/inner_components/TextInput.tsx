@@ -13,7 +13,6 @@ const TextInput = forwardRef(({id, placeholder, value, onBlur, onChange, ...prop
   const handleOnBlur = () => {
     if (current === undefined) return
     if (onBlur === undefined) return
-    alert(value !== current)
     if (value !== current)
       onBlur(current)
   }
