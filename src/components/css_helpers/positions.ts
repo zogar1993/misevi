@@ -1,4 +1,4 @@
-import {cssFromProps} from "components/css_helpers/inner_helpers"
+import {cssFromProps} from './inner_helpers'
 
 export const POSITIONS = Object.freeze([
   "position",

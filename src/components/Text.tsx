@@ -1,9 +1,9 @@
 import React, {ReactNode} from "react"
-import Flex, { XAlignType, YAlignType } from 'components/Flex'
-import { DimensionsProps } from 'components/css_helpers/dimensions'
-import Span from 'components/inner_components/Span'
+import Flex, { XAlignType, YAlignType } from './Flex'
+import { DimensionsProps } from './css_helpers/dimensions'
+import Span from './inner_components/Span'
 import styled from 'styled-components'
-import { BORDER_RADIUS } from 'components/css/Dimensions'
+import { BORDER_RADIUS } from './css/Dimensions'
 
 export default function Text({children, tooltip, mode, ...props}: TextProps) {
     return (

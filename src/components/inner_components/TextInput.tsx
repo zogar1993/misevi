@@ -1,5 +1,5 @@
 import React, {ForwardedRef, forwardRef, useEffect, useState} from "react"
-import Input from "components/inner_components/Input"
+import Input from "./Input"
 
 const TextInput = forwardRef(({id, placeholder, value, onBlur, onChange, ...props}: TextInputProps, ref: ForwardedRef<HTMLInputElement>) => {
   const [current, setCurrent] = useState(value)

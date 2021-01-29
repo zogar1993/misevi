@@ -1,10 +1,10 @@
 import styled, { StyledComponent } from 'styled-components'
-import {DIMENSIONS, dimensions, DimensionsProps} from "components/css_helpers/dimensions"
-import {SKELETON_ANIMATION_INFO} from "components/css/Skeleton"
+import {DIMENSIONS, dimensions, DimensionsProps} from "./css_helpers/dimensions"
+import {SKELETON_ANIMATION_INFO} from "./css/Skeleton"
 import React from "react"
-import { paddings, PADDINGS, PaddingsProps } from 'components/css_helpers/paddings'
-import { POSITIONS, positions, PositionsProps } from 'components/css_helpers/positions'
-import { margins, MARGINS, MarginsProps } from 'components/css_helpers/margins'
+import { paddings, PADDINGS, PaddingsProps } from './css_helpers/paddings'
+import { POSITIONS, positions, PositionsProps } from './css_helpers/positions'
+import { margins, MARGINS, MarginsProps } from './css_helpers/margins'
 
 const ignored: Array<string> = ["wrap", "x-align", "y-align"]
 

@@ -1,9 +1,9 @@
 import React, {useCallback, useEffect, useState} from "react"
-import FieldLabel from "components/inner_components/FieldLabel"
-import FieldContainer from "components/inner_components/FieldContainer"
-import NumberInput from "components/NumberInput"
-import TextInput from "components/inner_components/TextInput"
-import ComboBox, {ButtonInfo, ComboBoxItem} from "components/inner_components/ComboBox"
+import FieldLabel from "./inner_components/FieldLabel"
+import FieldContainer from "./inner_components/FieldContainer"
+import NumberInput from "./NumberInput"
+import TextInput from "./inner_components/TextInput"
+import ComboBox, {ButtonInfo, ComboBoxItem} from "./inner_components/ComboBox"
 
 export default function Field(props: FieldProps) {
   const {label, width, value} = props

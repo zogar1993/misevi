@@ -1,9 +1,9 @@
 import React from "react"
 import styled from 'styled-components'
-import { BORDER_RADIUS } from 'components/css/Dimensions'
-import { dimensions, DimensionsProps } from 'components/css_helpers/dimensions'
-import Flex, { XAlignType, YAlignType } from 'components/Flex'
-import Button from 'components/Button'
+import { BORDER_RADIUS } from './css/Dimensions'
+import { dimensions, DimensionsProps } from './css_helpers/dimensions'
+import Flex, { XAlignType, YAlignType } from './Flex'
+import Button from './Button'
 
 export default function ButtonsGroup(props: ButtonsGroupProps) {
 	const {items, selected, onChange, bold, width, columns, size} = props

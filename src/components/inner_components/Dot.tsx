@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import React from "react"
-import { NoStyleInput } from 'components/inner_components/NoStyleInput'
-import { SKELETON_ANIMATION_INFO } from 'components/css/Skeleton'
+import { NoStyleInput } from './NoStyleInput'
+import { SKELETON_ANIMATION_INFO } from '../css/Skeleton'
 
 export default function Dot({onChange, checked, ...props}: DotProps) {
   const showSkeleton = checked === undefined

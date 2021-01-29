@@ -1,7 +1,7 @@
 import styled from "styled-components"
-import {BORDER_RADIUS} from "components/css/Dimensions"
+import {BORDER_RADIUS} from "./css/Dimensions"
 import React from "react"
-import {NoStyleButton} from "components/inner_components/NoStyleButton"
+import {NoStyleButton} from "./inner_components/NoStyleButton"
 
 const SIDE_PADDING = "8px"
 const NOT_ACTIVE_BACKGROUND_COLOR = "white"

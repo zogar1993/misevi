@@ -1,11 +1,11 @@
 import React, {useEffect, useRef, useState} from "react"
 import styled from 'styled-components'
-import { BORDER_RADIUS, SEPARATION } from 'components/css/Dimensions'
-import Flex from 'components/Flex'
-import ImageButton from 'components/ImageButton'
+import { BORDER_RADIUS, SEPARATION } from '../css/Dimensions'
+import Flex from '../Flex'
+import ImageButton from '../ImageButton'
 import close from '../icons/close.svg'
-import { HANDWRITTEN_FONT } from 'components/css/Fonts'
-import Input from "components/inner_components/Input"
+import { HANDWRITTEN_FONT } from '../css/Fonts'
+import Input from "./Input"
 
 export default function ComboBox(props: ComboBoxProps) {
   const { value, options, onChange, onTextChange, width, buttons, id } = props

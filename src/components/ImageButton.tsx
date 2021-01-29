@@ -1,8 +1,8 @@
 import styled from "styled-components"
-import {dimensions, DimensionsProps} from "components/css_helpers/dimensions"
+import {dimensions, DimensionsProps} from "./css_helpers/dimensions"
 import React from "react"
-import {margins, MarginsProps} from "components/css_helpers/margins"
-import { NoStyleButton } from 'components/inner_components/NoStyleButton'
+import {margins, MarginsProps} from "./css_helpers/margins"
+import { NoStyleButton } from './inner_components/NoStyleButton'
 
 export default function ImageButton({src, name, width, height, "margin-right": marginRight, onClick, visible}: {
   src?: any

@@ -1,5 +1,5 @@
 import React from "react"
-import NumberInput, {NumberInputProps} from "components/NumberInput"
+import NumberInput, {NumberInputProps} from "./NumberInput"
 import styled from 'styled-components'
 
 const CircularNumberInput = styled(NumberInput)<NumberInputProps>`

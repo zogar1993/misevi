@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 import { BORDER_RADIUS, SEPARATION } from 'components/css/Dimensions'
-import Flex from 'components/Flex'
+import Flex from './Flex'
 
 export default function TagInput({name, values, onAdd, onDelete}: Props) {
   //{values.map(x => <Tag><Centerer>{x}</Centerer></Tag>)}

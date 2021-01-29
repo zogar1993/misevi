@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { HANDWRITTEN_FONT } from 'components/css/Fonts'
+import { HANDWRITTEN_FONT } from '../css/Fonts'
 
 const Span = styled.span<Props>`
   font-family: ${({handwritten}) => handwritten ? `${HANDWRITTEN_FONT}, ` : ""}Times, serif;

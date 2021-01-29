@@ -1,4 +1,4 @@
-import {cssFromProps} from "components/css_helpers/inner_helpers"
+import {cssFromProps} from './inner_helpers'
 
 export const DIMENSIONS = Object.freeze([
   "width",

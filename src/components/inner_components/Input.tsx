@@ -1,8 +1,8 @@
 import styled from "styled-components"
-import {BORDER_RADIUS} from "components/css/Dimensions"
-import {NoStyleInput} from "components/inner_components/NoStyleInput"
-import {SKELETON_ANIMATION_INFO} from "components/css/Skeleton"
-import {HANDWRITTEN_FONT, FONT_SIZE} from "components/css/Fonts"
+import {BORDER_RADIUS} from "../css/Dimensions"
+import {NoStyleInput} from "./NoStyleInput"
+import {SKELETON_ANIMATION_INFO} from "../css/Skeleton"
+import {HANDWRITTEN_FONT, FONT_SIZE} from "../css/Fonts"
 import React from "react"
 
 const animation = "{ from {font-size:150%} to {font-size:100%} }"

@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import Dot from 'components/inner_components/Dot'
-import Flex from 'components/Flex'
+import Dot from './inner_components/Dot'
+import Flex from './Flex'
 import styled from 'styled-components'
-import Div from 'components/inner_components/Div'
-import { NoStyleInput } from 'components/inner_components/NoStyleInput'
+import Div from './inner_components/Div'
+import { NoStyleInput } from './inner_components/NoStyleInput'
 
 export default function Dots({ total, value, onChange, reversed, rows, advances = 0 }: DotsProps) {
   const [tentative, setTentative] = useState<number | null>(null)

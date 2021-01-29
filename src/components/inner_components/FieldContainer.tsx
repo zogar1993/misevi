@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import {INPUT_HEIGHT} from "components/css/Dimensions"
+import {INPUT_HEIGHT} from "../css/Dimensions"
 
 const FieldContainer = styled.div<any>`
   position: relative;
