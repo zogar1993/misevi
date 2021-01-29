@@ -34,6 +34,7 @@ export type TextProps = {
   bordered?: boolean
   tooltip?: string
   mode?: TextMode
+  handwritten?: boolean
 } & DimensionsProps
 
 type TextMode =  "default" | "positive" | "negative"
