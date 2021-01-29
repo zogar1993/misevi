@@ -85,9 +85,10 @@ describe('Text Field should', () => {
                                      label = A_LABEL,
                                      value = ''
                                    }: { label?: string, value?: string }) {
-    // @ts-ignore
-    screen = render(<Field label={label} value={value} onBlur={actions.onBlur}/>//TODO add onChange
-    )//TODO onBlur should not show type failure
+
+    screen = render(
+      <Field label={label} value={value} onBlur={actions.onBlur}/>//TODO add onChange
+    )
   }
   function given_a_text_input() {
     given_a_text_input_with({})

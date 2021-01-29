@@ -110,6 +110,7 @@ const ButtonItem = styled(Button)<Props>`
   color: black;
   font-weight: ${({bold}) => bold ? "bold" : "normal"};
   font-style: ${({italic}) => italic ? "italic" : "normal"};
+  font-family: Almendra SC, Times, serif;
 
   border-bottom-style: ${props => props["has-buttons-bottom"] ? "none" : "solid"};
   border-right-style: ${props => props["has-buttons-right"] ? "none" : "solid"};
