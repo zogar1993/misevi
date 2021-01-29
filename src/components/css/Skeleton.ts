@@ -1,4 +1,6 @@
-export const SKELETON_ANIMATION_INFO = `
+import { css } from 'styled-components'
+
+export const SKELETON_ANIMATION_CSS = css`
     cursor: wait;
     background-image: linear-gradient(-45deg, gainsboro 40%, white 50%, gainsboro 60%);
     animation: moving-box 1s reverse infinite;

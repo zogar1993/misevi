@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import {BORDER_RADIUS} from "../css/Dimensions"
 import {NoStyleInput} from "./NoStyleInput"
-import {SKELETON_ANIMATION_INFO} from "../css/Skeleton"
+import {SKELETON_ANIMATION_CSS} from "../css/Skeleton"
 import {HANDWRITTEN_FONT, FONT_SIZE} from "../css/Fonts"
 import React from "react"
 
@@ -48,7 +48,7 @@ const Input =  styled(NoStyleInput).attrs<InputProps>(() => ({
 
     ${onValueChangeAnimation};
 
-    ${({skeleton}) => skeleton ? SKELETON_ANIMATION_INFO : ""};
+    ${({skeleton}) => skeleton ? SKELETON_ANIMATION_CSS : ""};
     :disabled {
         background-color: whitesmoke;
         border: 1px solid transparent;

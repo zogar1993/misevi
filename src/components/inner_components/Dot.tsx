@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import React from "react"
 import { NoStyleInput } from './NoStyleInput'
-import { SKELETON_ANIMATION_INFO } from '../css/Skeleton'
+import { SKELETON_ANIMATION_CSS } from '../css/Skeleton'
 
 export default function Dot({onChange, checked, ...props}: DotProps) {
   const showSkeleton = checked === undefined
@@ -38,7 +38,7 @@ const DotElement = styled(NoStyleInput).attrs(() => ({
   :hover {
       border: 1px solid dodgerblue;
   }
-  ${({skeleton}) => skeleton ? SKELETON_ANIMATION_INFO : ""};
+  ${({skeleton}) => skeleton ? SKELETON_ANIMATION_CSS : ""};
 
   :disabled {
     border: 1px solid transparent;

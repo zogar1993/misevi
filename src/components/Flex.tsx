@@ -1,6 +1,6 @@
 import styled, { StyledComponent } from 'styled-components'
 import {DIMENSIONS, dimensions, DimensionsProps} from "./css_helpers/dimensions"
-import {SKELETON_ANIMATION_INFO} from "./css/Skeleton"
+import {SKELETON_ANIMATION_CSS} from "./css/Skeleton"
 import React from "react"
 import { paddings, PADDINGS, PaddingsProps } from './css_helpers/paddings'
 import { POSITIONS, positions, PositionsProps } from './css_helpers/positions'
@@ -36,7 +36,7 @@ const RealFlex = styled(removeHtmlProperties<FlexProps>(Div, ignored))<FlexProps
   align-items: ${({vertical, ...props}) => align(props[vertical ? "x-align" : "y-align"])};
 
   border-color: ${({skeleton}) => skeleton ? "transparent" : "black"};
-  ${({skeleton}) => skeleton ? SKELETON_ANIMATION_INFO : ""};
+  ${({skeleton}) => skeleton ? SKELETON_ANIMATION_CSS : ""};
   background-color: ${({skeleton}) => skeleton ? "whitesmoke" : "transparent"};
 
   ${dimensions};

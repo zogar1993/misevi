@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import {BORDER_RADIUS} from './css/Dimensions'
 import Resizer from 'react-image-file-resizer'
 import bandit from './icons/bandit.png'
-import {SKELETON_ANIMATION_INFO} from './css/Skeleton'
+import {SKELETON_ANIMATION_CSS} from './css/Skeleton'
 
 export default function Avatar({onChange, src, alt, width = '135px', height = '135px'}: AvatarProps) {
   const [imageShowed, setImageShowed] = useState<string>('')
@@ -74,7 +74,7 @@ const Image = styled.img<{ width?: string, height?: string, skeleton: boolean }>
   object-fit: scale-down;
   cursor: pointer;
   border: none;
-  ${x => x.skeleton ? SKELETON_ANIMATION_INFO : ''}
+  ${x => x.skeleton ? SKELETON_ANIMATION_CSS : ''}
 `
 
 const Input = styled.input`
