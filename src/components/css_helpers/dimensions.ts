@@ -1,34 +1,11 @@
-import {cssFromProps} from './inner_helpers'
+import { heights, HEIGHTS, HeightsProps } from 'components/css_helpers/heights'
+import { widths, WIDTHS, WidthsProps } from 'components/css_helpers/widths'
 
-export const DIMENSIONS = Object.freeze([
-  "width",
-  "height",
-  "min-width",
-  "min-height",
-  "max-width",
-  "max-height",
-])
+export const DIMENSIONS = Object.freeze([...WIDTHS, ...HEIGHTS])
 
-//TODO separate into height and width
-export const dimensions = ({
-                             "mobile-width": mobileWidth,
-                             "mobile-height": mobileHeight,
-                             ...props
-                           }: DimensionsProps) => `
-    ${cssFromProps(props, DIMENSIONS)}
-    @media (max-width: 768px) {
-        ${mobileWidth ? `width: ${mobileWidth};` : ""};
-        ${mobileHeight ? `height: ${mobileHeight};` : ""};
-    }
+export const dimensions = (props: DimensionsProps) => `
+    ${widths(props)}
+    ${heights(props)}
 `
 
-export type DimensionsProps = {
-  width?: string
-  height?: string
-  "min-width"?: string
-  "min-height"?: string
-  "max-width"?: string
-  "max-height"?: string
-  "mobile-width"?: string
-  "mobile-height"?: string
-}
+export type DimensionsProps = WidthsProps & HeightsProps
