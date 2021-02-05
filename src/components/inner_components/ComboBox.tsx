@@ -7,6 +7,8 @@ import close from '../icons/close.svg'
 import { HANDWRITTEN_FONT } from '../css/Fonts'
 import Input from "./Input"
 
+//TODO add animations
+//TODO move between options
 export default function ComboBox(props: ComboBoxProps) {
   const { value, options, onChange, onTextChange, width, buttons, id } = props
   const [hovering, setHovering] = useState(false)
@@ -60,9 +62,6 @@ export default function ComboBox(props: ComboBoxProps) {
     }
   }, [text, focused, options])
 
-  //TODO fix tests
-  //TODO add animations
-  //TODO move between options
   return (
     <ComboBoxContainer
       $width={width}
