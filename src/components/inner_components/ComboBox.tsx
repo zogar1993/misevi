@@ -13,11 +13,13 @@ export default function ComboBox(props: ComboBoxProps) {
   const [hoveringOptions, setHoveringOptions] = useState(false)
   const [focused, setFocused] = useState(false)
   const [isError, setIsError] = useState(false)
+  const [text, setText] = useState('')
+  const [visibleOptions, setVisibleOptions] = useState<Array<ComboBoxItem>>([])
   const ref = useRef<HTMLInputElement>(null)
   const showSkeleton = value === undefined
   const isNotLoading = value !== undefined
-  const [text, setText] = useState('')
-  const [visibleOptions, setVisibleOptions] = useState<Array<ComboBoxItem>>([])
+
+  //text
   useEffect(() => {
     if (value) {
       const option = options.find(x => x.code === value)
@@ -27,6 +29,7 @@ export default function ComboBox(props: ComboBoxProps) {
       setText('')
   }, [value])
 
+  //search
   useEffect(() => {
     const loweredText = text.toLowerCase()
     const visibleOptions = options
@@ -34,6 +37,7 @@ export default function ComboBox(props: ComboBoxProps) {
     setVisibleOptions(visibleOptions)
   }, [text, options, value])
 
+  //error
   useEffect(() => {
     if (!focused) {
       if (text === '') {
@@ -98,6 +102,7 @@ export default function ComboBox(props: ComboBoxProps) {
         skeleton={showSkeleton}
         error={isError}
         type="text"
+        role="combobox"
       />
       <Options
         width={width}
@@ -176,7 +181,7 @@ export type ComboBoxItem = {
 
 const OPTION_HEIGHT = '23px'
 
-const Options = styled.ul<{open: boolean, width?: string}>`
+const Options = styled.ol<{open: boolean, width?: string}>`
   margin: 0;
   padding: 0;
   box-sizing: border-box;

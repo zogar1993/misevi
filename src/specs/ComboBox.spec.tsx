@@ -3,7 +3,7 @@ import '@testing-library/jest-dom/extend-expect'
 import { fireEvent, render, RenderResult, waitFor } from '@testing-library/react'
 import ComboBox, { ButtonInfo, ComboBoxItem } from '../components/inner_components/ComboBox'
 
-xdescribe('ComboBox should', () => {
+describe('ComboBox should', () => {
   let screen: RenderResult
   let _options: Array<ComboBoxItem>
   let _value: string | null | undefined
@@ -164,12 +164,12 @@ xdescribe('ComboBox should', () => {
   }
 
   async function the_select_should_display(value: string) {
-    const select = await getSelect()
+    const select = await getCombobox()
     expect(select).toHaveDisplayValue(value)
   }
 
   async function the_select_should_be_disabled() {
-    const select = await getSelect()
+    const select = await getCombobox()
     expect(select).toBeDisabled()
   }
 
@@ -184,7 +184,7 @@ xdescribe('ComboBox should', () => {
   }
 
   async function the_select_should_be_enabled() {
-    const select = await getSelect()
+    const select = await getCombobox()
     expect(select).toBeEnabled()
   }
 
@@ -220,7 +220,7 @@ xdescribe('ComboBox should', () => {
 
   const getButtonsContainer = async () => getClearButton().parentElement
   const getComboBoxContainer = () => screen.container.children[0]
-  const getSelect = async () => screen.findByRole('combobox')
+  const getCombobox = async () => screen.findByRole('combobox')
   const queryClearButton = () => screen.queryByTitle('clear')
   const getClearButton = () => screen.getByTitle('clear')
   const getButtonOfTitle = (title: string) => screen.getByTitle(title)
