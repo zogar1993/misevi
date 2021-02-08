@@ -203,8 +203,8 @@ function OptionsPopup(
             }
             break
           case "Escape":
-            //setHighlighted(null)
-            //e.preventDefault()
+            setHighlighted(null)
+            e.preventDefault()
             break
         }
       }
@@ -284,13 +284,13 @@ const Option = styled.li<{highlighted: boolean}>`
   font-family: ${HANDWRITTEN_FONT}, Times, serif;
   height: ${OPTION_HEIGHT}px;
   font-size: 13px;
-  padding: 3px 5px 3px 8px;
+  padding: 1px 5px 3px 8px;
   border-radius: ${BORDER_RADIUS};
-  ${({highlighted}) => highlighted ? 'background-color: dodgerblue' : ''};
+  border: 1px solid ${({highlighted}) => highlighted ? 'dodgerblue' : 'transparent'};
   :hover {
     background-color: dodgerblue;
   }
-  transition: 0.2s;
+  transition: background-color 0.2s;
 `
 
 const ComboBoxContainer = styled.div<{$width?: string}>`
