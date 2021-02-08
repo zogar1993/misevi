@@ -8,6 +8,10 @@ import { HANDWRITTEN_FONT } from '../css/Fonts'
 import Input from './Input'
 
 //TODO add animations
+//TODO add text visualization of highlighted
+//TODO clear with esc
+//TODO select and clear with enter
+//TODO add selectedd siplay for option
 export default function ComboBox(props: ComboBoxProps) {
   const { value, options, onChange, onTextChange, width, buttons, id } = props
   const [text, setText] = useState('')
@@ -16,7 +20,8 @@ export default function ComboBox(props: ComboBoxProps) {
   const [hovering, setHovering] = useState(false)
   const [highlighted, setHighlighted] = useState<ComboBoxItem | null>(null)
   const [visibleOptions, setVisibleOptions] = useState<Array<ComboBoxItem>>([])
-  const ref = useRef<HTMLInputElement>(null)
+  const refInput = useRef<HTMLInputElement>(null)
+  const refOptions = useRef<HTMLOListElement>(null)
   const showSkeleton = value === undefined
   const isNotLoading = value !== undefined
   const open = focused && options.length > 0
@@ -26,6 +31,29 @@ export default function ComboBox(props: ComboBoxProps) {
   //  setText(text)
   //  onTextChange && onTextChange(text)
   //}, [onTextChange])
+
+  const findOptionByText = useCallback(() => {
+    return options.find(x => insensitiveCompare(text, x.name))
+  }, [text, options])
+
+  const setOption = useCallback((option: ComboBoxItem) => {
+    if (option.code !== value)
+      onChange && onChange(option.code)
+    else
+      setText(option.name)
+  }, [value, onChange])
+
+  const onLoseFocus = useCallback(() => {
+    const option = findOptionByText()
+    if (option) {
+      setOption(option)
+    } else if (text.trim() === '') {
+      if (value !== null)
+        onChange && onChange(null)
+    }
+
+    setFocused(false)
+  }, [value, text, onChange, setOption, findOptionByText])
 
   //text
   useEffect(() => {
@@ -43,24 +71,19 @@ export default function ComboBox(props: ComboBoxProps) {
 
   //search
   useEffect(() => {
-    const loweredText = text.toLowerCase()
-    const visibleOptions = options
-      .filter(x => x.name.toLowerCase().includes(loweredText))
+    const visibleOptions = options.filter(x => insensitiveCompare(text, x.name))
     setVisibleOptions(visibleOptions)
   }, [text, options, value])
 
   //error
   useEffect(() => {
     if (!focused) {
-      if (text === '') {
+      if (text === '')
         setIsError(false)
-      } else {
-        //TODO falta comparar casing? hacer una abstraccion para la busqueda?
-        const option = options.find(x => x.name === text)
-        setIsError(option === undefined)
-      }
+      else
+        setIsError(findOptionByText() === undefined)
     }
-  }, [text, focused, options])
+  }, [text, focused, findOptionByText])
 
   //key presses
   useEffect(() => {
@@ -71,7 +94,7 @@ export default function ComboBox(props: ComboBoxProps) {
             const index = highlighted ? visibleOptions.indexOf(highlighted) - 1 : visibleOptions.length - 1
             if (index >= 0) {
               setHighlighted(visibleOptions[index])
-              scrollToItemOfIndex(index, ref.current!)
+              scrollToItemOfIndex(index, refOptions.current!)
             }
             e.preventDefault()
             break
@@ -80,7 +103,7 @@ export default function ComboBox(props: ComboBoxProps) {
             const index = highlighted ? visibleOptions.indexOf(highlighted) + 1 : 0
             if (index < visibleOptions.length) {
               setHighlighted(visibleOptions[index])
-              scrollToItemOfIndex(index, ref.current!)
+              scrollToItemOfIndex(index, refOptions.current!)
             }
             e.preventDefault()
             break
@@ -89,13 +112,13 @@ export default function ComboBox(props: ComboBoxProps) {
             if (highlighted) {
               onChange && onChange(highlighted.code)
               setHighlighted(null)
-              ref.current?.blur()
+              refOptions.current?.blur()
               e.preventDefault()
             }
             break
           case 'Escape':
             if (highlighted) setHighlighted(null)
-            else ref.current?.blur()
+            else refOptions.current?.blur()
             e.preventDefault()
             break
         }
@@ -115,7 +138,7 @@ export default function ComboBox(props: ComboBoxProps) {
     >
       <TextInput
         id={id}
-        ref={ref}
+        ref={refInput}
         value={text}
         disabled={showSkeleton}
         onChange={(e) => {
@@ -123,9 +146,9 @@ export default function ComboBox(props: ComboBoxProps) {
           setText(text)
           onTextChange && onTextChange(text)
         }}
-        onBlur={() => onLoseFocus({ text, setText, setFocused, ...props })}
+        onBlur={onLoseFocus}
         onFocus={() => {
-          ref.current?.select()
+          refInput.current?.select()
           setFocused(true)
         }}
         readOnly={onChange === undefined}
@@ -134,13 +157,23 @@ export default function ComboBox(props: ComboBoxProps) {
         type="text"
         role="combobox"
       />
-      <OptionsPopup
-        {...props}
-        setText={setText}
-        options={visibleOptions}
-        highlighted={highlighted}
+      <Options
+        width={width}
         open={open}
-      />
+        ref={refOptions}
+      >
+        {
+          options.map((item) => (
+            <Option
+              key={item.code}
+              onMouseDown={() => setOption(item)}
+              highlighted={item === highlighted}
+            >
+              {item.name}
+            </Option>
+          ))
+        }
+      </Options>
       <ButtonsContainer
         y-align='center'
         visible={hovering && isNotLoading}
@@ -168,24 +201,6 @@ export default function ComboBox(props: ComboBoxProps) {
       </ButtonsContainer>
     </ComboBoxContainer>
   )
-}
-
-const onLoseFocus = (
-  { text, value, options, onChange, setText, setFocused }:
-    ComboBoxProps & { text: string, setText: (text: string) => void, setFocused: (value: boolean) => void }) => {
-  const loweredText = text.trim().toLowerCase()
-  const option = options.find(x => x.name.toLowerCase() === loweredText)
-  if (option) {
-    if (option.code !== value)
-      onChange!(option.code)
-    else
-      setText(option.name)//is same, show correct casing
-  } else if (loweredText === '') {
-    if (value !== null)
-      onChange!(null)
-  }
-
-  setFocused(false)
 }
 
 export type ComboBoxProps = {
@@ -222,52 +237,6 @@ function ComboboxImageButton({ name, src, onClick, props }: ButtonInfo & { props
       margin-right={SEPARATION}
     />
   )
-}
-
-//TODO add text visualization of highlighted
-//TODO clear with esc
-//TODO select and clear with enter
-//TODO add selectedd siplay for option
-function OptionsPopup(
-  { width, value, onChange, open, options, highlighted, setText }:
-    ComboBoxProps & { options: Array<ComboBoxItem>, open: boolean, setText: (text: string) => void, highlighted: ComboBoxItem | null }) {
-  const ref = useRef<HTMLOListElement>(null)
-
-  return (
-    <Options
-      width={width}
-      open={open}
-      ref={ref}
-    >
-      {
-        options.map((item) => (
-          <Option
-            key={item.code}
-            onMouseDown={() => {
-              if (item.code !== value)
-                onChange!(item.code)
-              else
-                setText(item.name)
-            }}
-            highlighted={item === highlighted}
-          >
-            {item.name}
-          </Option>
-        ))
-      }
-    </Options>
-  )
-}
-
-function scrollToItemOfIndex(index: number, element: HTMLElement) {
-  const scroll = element.scrollTop
-  if (index * OPTION_HEIGHT < scroll)
-    element.scrollTop = index * OPTION_HEIGHT
-  else {
-    const upperVisibleIndex = index + 1 - MAX_OPTION_AMOUNT
-    if (upperVisibleIndex * OPTION_HEIGHT > scroll)
-      element.scrollTop = upperVisibleIndex * OPTION_HEIGHT
-  }
 }
 
 const OPTION_HEIGHT = 23
@@ -325,3 +294,18 @@ const ButtonsContainer = styled(Flex)`
 const TextInput = styled(Input)<{ error: boolean }>`
   ${({ error }) => error ? 'border: 1px solid red' : ''};
 `
+
+function scrollToItemOfIndex(index: number, element: HTMLElement) {
+  const scroll = element.scrollTop
+  if (index * OPTION_HEIGHT < scroll)
+    element.scrollTop = index * OPTION_HEIGHT
+  else {
+    const upperVisibleIndex = index + 1 - MAX_OPTION_AMOUNT
+    if (upperVisibleIndex * OPTION_HEIGHT > scroll)
+      element.scrollTop = upperVisibleIndex * OPTION_HEIGHT
+  }
+}
+
+function insensitiveCompare(a: string, b: string) {
+  return a.localeCompare(b, undefined, { sensitivity: 'base' }) === 0
+}
