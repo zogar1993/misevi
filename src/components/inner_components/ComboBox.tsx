@@ -1,33 +1,45 @@
-import React, { Props, useEffect, useRef, useState } from 'react'
+import React, { Props, useCallback, useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { BORDER_RADIUS, SEPARATION } from '../css/Dimensions'
 import Flex from '../Flex'
 import ImageButton from '../ImageButton'
 import close from '../icons/close.svg'
 import { HANDWRITTEN_FONT } from '../css/Fonts'
-import Input from "./Input"
+import Input from './Input'
 
 //TODO add animations
 export default function ComboBox(props: ComboBoxProps) {
   const { value, options, onChange, onTextChange, width, buttons, id } = props
-  const [hovering, setHovering] = useState(false)
+  const [text, setText] = useState('')
   const [focused, setFocused] = useState(false)
   const [isError, setIsError] = useState(false)
-  const [text, setText] = useState('')
+  const [hovering, setHovering] = useState(false)
+  const [highlighted, setHighlighted] = useState<ComboBoxItem | null>(null)
   const [visibleOptions, setVisibleOptions] = useState<Array<ComboBoxItem>>([])
   const ref = useRef<HTMLInputElement>(null)
   const showSkeleton = value === undefined
   const isNotLoading = value !== undefined
+  const open = focused && options.length > 0
+
+  //TODO Not needed now, look check at setText usages to see if this is better.
+  //const changeText = useCallback((text: string) => {
+  //  setText(text)
+  //  onTextChange && onTextChange(text)
+  //}, [onTextChange])
 
   //text
   useEffect(() => {
-    if (value) {
+    if (highlighted) {
+      //TODO Check how it should work
+      //setText(highlighted.name)
+      //onTextChange && onTextChange(text)
+    } else if (value) {
       const option = options.find(x => x.code === value)
       if (option !== undefined)
         setText(option.name)
     } else
       setText('')
-  }, [value])
+  }, [value, highlighted])
 
   //search
   useEffect(() => {
@@ -49,6 +61,48 @@ export default function ComboBox(props: ComboBoxProps) {
     }
   }, [text, focused, options])
 
+  //key presses
+  useEffect(() => {
+    if (open) {
+      const handleOnKeyDown = (e: any) => {
+        switch (e.key) {
+          case 'ArrowUp': {
+            const index = highlighted ? options.indexOf(highlighted) - 1 : options.length - 1
+            if (index >= 0) {
+              setHighlighted(options[index])
+              scrollToItemOfIndex(index, ref.current!)
+            }
+            e.preventDefault()
+            break
+          }
+          case 'ArrowDown': {
+            const index = highlighted ? options.indexOf(highlighted) + 1 : 0
+            if (index < options.length) {
+              setHighlighted(options[index])
+              scrollToItemOfIndex(index, ref.current!)
+            }
+            e.preventDefault()
+            break
+          }
+          case 'Enter':
+            if (highlighted) {
+              onChange && onChange(highlighted.code)
+              e.preventDefault()
+            }
+            break
+          case 'Escape':
+            setHighlighted(null)
+            e.preventDefault()
+            break
+        }
+      }
+      document.body.addEventListener('keydown', handleOnKeyDown)
+      return () => document.body.removeEventListener('keydown', handleOnKeyDown)
+    } else {
+      setHighlighted(null)
+    }
+  }, [open, options, onChange, highlighted])
+
   return (
     <ComboBoxContainer
       $width={width}
@@ -65,7 +119,7 @@ export default function ComboBox(props: ComboBoxProps) {
           setText(text)
           onTextChange && onTextChange(text)
         }}
-        onBlur={() => onLoseFocus({text, setText, setFocused, ...props})}
+        onBlur={() => onLoseFocus({ text, setText, setFocused, ...props })}
         onFocus={() => {
           ref.current?.select()
           setFocused(true)
@@ -78,9 +132,10 @@ export default function ComboBox(props: ComboBoxProps) {
       />
       <OptionsPopup
         {...props}
-        focused={focused}
-        options={visibleOptions}
         setText={setText}
+        options={visibleOptions}
+        highlighted={highlighted}
+        open={open}
       />
       <ButtonsContainer
         y-align='center'
@@ -112,8 +167,8 @@ export default function ComboBox(props: ComboBoxProps) {
 }
 
 const onLoseFocus = (
-  {text, value, options, onChange, setText, setFocused}:
-    ComboBoxProps & {text: string, setText: (text: string) => void, setFocused: (value: boolean) => void}) => {
+  { text, value, options, onChange, setText, setFocused }:
+    ComboBoxProps & { text: string, setText: (text: string) => void, setFocused: (value: boolean) => void }) => {
   const loweredText = text.trim().toLowerCase()
   const option = options.find(x => x.name.toLowerCase() === loweredText)
   if (option) {
@@ -168,54 +223,11 @@ function ComboboxImageButton({ name, src, onClick, props }: ButtonInfo & { props
 //TODO add visualization of highlighted
 //TODO clear with esc
 //TODO select and clear with enter
+//TODO add selectedd siplay for option
 function OptionsPopup(
-  {width, value, onChange, focused, options, setText}:
-    ComboBoxProps & {options: Array<ComboBoxItem>, focused: boolean, setText: (text: string) => void}) {
-  const [highlighted, setHighlighted] = useState<ComboBoxItem | null>(null)
-  const open = (focused) && options.length > 0
+  { width, value, onChange, open, options, highlighted, setText }:
+    ComboBoxProps & { options: Array<ComboBoxItem>, open: boolean, setText: (text: string) => void, highlighted: ComboBoxItem | null }) {
   const ref = useRef<HTMLOListElement>(null)
-
-  //key presses
-  useEffect(() => {
-    if (open) {
-      const handleOnKeyDown = (e: any) => {
-        switch (e.key) {
-          case "ArrowUp": {
-            const index = highlighted ? options.indexOf(highlighted) - 1 : options.length - 1
-            if (index >= 0) {
-              setHighlighted(options[index])
-              scrollToItemOfIndex(index, ref.current!)
-            }
-            e.preventDefault()
-            break
-          }
-          case "ArrowDown": {
-            const index = highlighted ? options.indexOf(highlighted) + 1 : 0
-            if (index < options.length) {
-              setHighlighted(options[index])
-              scrollToItemOfIndex(index, ref.current!)
-            }
-            e.preventDefault()
-            break
-          }
-          case "Enter":
-            if (highlighted) {
-              onChange && onChange(highlighted.code)
-              e.preventDefault()
-            }
-            break
-          case "Escape":
-            setHighlighted(null)
-            e.preventDefault()
-            break
-        }
-      }
-      document.body.addEventListener("keydown", handleOnKeyDown)
-      return () => document.body.removeEventListener("keydown", handleOnKeyDown)
-    } else {
-      setHighlighted(null)
-    }
-  }, [open, options, onChange, highlighted])
 
   return (
     <Options
@@ -258,7 +270,7 @@ const OPTION_HEIGHT = 23
 const MAX_OPTION_AMOUNT = 5
 const BORDER_WIDTH = 1
 
-const Options = styled.ol<{open: boolean, width?: string}>`
+const Options = styled.ol<{ open: boolean, width?: string }>`
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -268,8 +280,8 @@ const Options = styled.ol<{open: boolean, width?: string}>`
   border: ${BORDER_WIDTH}px solid lightgray;
   list-style: none;
   background-color: whitesmoke;
-  width: ${({width}) => width || '100%'};
-  ${({open}) => open ? '' : 'display: none'};
+  width: ${({ width }) => width || '100%'};
+  ${({ open }) => open ? '' : 'display: none'};
   transition: 0.2s;
   max-height: calc(${OPTION_HEIGHT}px * ${MAX_OPTION_AMOUNT} + ${BORDER_WIDTH}px * 2);
   overflow-y: auto;
@@ -278,21 +290,23 @@ const Options = styled.ol<{open: boolean, width?: string}>`
   scroll-behavior: smooth;
 `
 
-const Option = styled.li<{highlighted: boolean}>`
+const Option = styled.li<{ highlighted: boolean }>`
   box-sizing: border-box;
   font-family: ${HANDWRITTEN_FONT}, Times, serif;
   height: ${OPTION_HEIGHT}px;
   font-size: 13px;
   padding: 1px 5px 3px 8px;
   border-radius: ${BORDER_RADIUS};
-  border: 1px solid ${({highlighted}) => highlighted ? 'dodgerblue' : 'transparent'};
+  border: 1px solid ${({ highlighted }) => highlighted ? 'dodgerblue' : 'transparent'};
+
   :hover {
     background-color: dodgerblue;
   }
+
   transition: background-color 0.2s;
 `
 
-const ComboBoxContainer = styled.div<{$width?: string}>`
+const ComboBoxContainer = styled.div<{ $width?: string }>`
   display: flex;
   align-items: center;
   position: relative;
@@ -304,7 +318,6 @@ const ButtonsContainer = styled(Flex)`
   right: 9px;
 `
 
-const TextInput = styled(Input)<{error: boolean}>`
-  ${({error}) => error ? 'border: 1px solid red' : ''};
-  transition: 0.4s ease-in;//TODO HACK THAT PREVENTS RED FROM SHOWING
+const TextInput = styled(Input)<{ error: boolean }>`
+  ${({ error }) => error ? 'border: 1px solid red' : ''};
 `

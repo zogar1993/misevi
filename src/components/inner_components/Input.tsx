@@ -1,11 +1,11 @@
-import styled from "styled-components"
+import styled, { css } from 'styled-components'
 import {BORDER_RADIUS} from "../css/Dimensions"
 import {NoStyleInput} from "./NoStyleInput"
 import {SKELETON_ANIMATION_CSS} from "../css/Skeleton"
 import {HANDWRITTEN_FONT, FONT_SIZE} from "../css/Fonts"
 import React from "react"
 
-const animation = "{ from {font-size:150%} to {font-size:100%} }"
+const animation = css`{ from {font-size:150%} to {font-size:100%} }`
 
 const getAnimation = (seed?: number) => {
   if (seed === undefined) return
@@ -15,7 +15,7 @@ const getAnimation = (seed?: number) => {
 
 export const onValueChangeAnimation = ({"animation-seed": seed}: { "animation-seed"?: number }) => {
   if (seed === undefined) return ""
-  return `
+  return css`
         animation-name: ${getAnimation(seed)};
         animation-timing-function: ease-out;
         animation-duration: 0.3s;
