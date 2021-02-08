@@ -26,11 +26,10 @@ export default function ComboBox(props: ComboBoxProps) {
   const isNotLoading = value !== undefined
   const open = focused && options.length > 0
 
-  //TODO Not needed now, look check at setText usages to see if this is better.
-  //const changeText = useCallback((text: string) => {
-  //  setText(text)
-  //  onTextChange && onTextChange(text)
-  //}, [onTextChange])
+  const setTextAndNotify = useCallback((text: string) => {
+    setText(text)
+    onTextChange && onTextChange(text)
+  }, [onTextChange])
 
   const findOptionByText = useCallback(() => {
     return options.find(x => insensitiveCompare(text, x.name))
@@ -40,8 +39,8 @@ export default function ComboBox(props: ComboBoxProps) {
     if (option.code !== value)
       onChange && onChange(option.code)
     else
-      setText(option.name)
-  }, [value, onChange])
+      setTextAndNotify(option.name)
+  }, [value, onChange, setTextAndNotify])
 
   const onLoseFocus = useCallback(() => {
     const option = findOptionByText()
@@ -78,7 +77,7 @@ export default function ComboBox(props: ComboBoxProps) {
   //error
   useEffect(() => {
     if (!focused) {
-      if (text === '')
+      if (text.trim() === '')
         setIsError(false)
       else
         setIsError(findOptionByText() === undefined)
@@ -141,11 +140,7 @@ export default function ComboBox(props: ComboBoxProps) {
         ref={refInput}
         value={text}
         disabled={showSkeleton}
-        onChange={(e) => {
-          const text = e.target.value
-          setText(text)
-          onTextChange && onTextChange(text)
-        }}
+        onChange={(e) => setTextAndNotify(e.target.value)}
         onBlur={onLoseFocus}
         onFocus={() => {
           refInput.current?.select()
@@ -191,8 +186,7 @@ export default function ComboBox(props: ComboBoxProps) {
               if (value !== null) {
                 onChange(null)
               } else {
-                setText('')
-                onTextChange && onTextChange('')
+                setTextAndNotify('')
               }
             }}
             visible={text !== ''}
