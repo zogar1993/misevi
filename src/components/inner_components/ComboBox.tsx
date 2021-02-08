@@ -55,6 +55,7 @@ export default function ComboBox(props: ComboBoxProps) {
       if (text === '') {
         setIsError(false)
       } else {
+        //TODO falta comparar casing? hacer una abstraccion para la busqueda?
         const option = options.find(x => x.name === text)
         setIsError(option === undefined)
       }
@@ -67,18 +68,18 @@ export default function ComboBox(props: ComboBoxProps) {
       const handleOnKeyDown = (e: any) => {
         switch (e.key) {
           case 'ArrowUp': {
-            const index = highlighted ? options.indexOf(highlighted) - 1 : options.length - 1
+            const index = highlighted ? visibleOptions.indexOf(highlighted) - 1 : visibleOptions.length - 1
             if (index >= 0) {
-              setHighlighted(options[index])
+              setHighlighted(visibleOptions[index])
               scrollToItemOfIndex(index, ref.current!)
             }
             e.preventDefault()
             break
           }
           case 'ArrowDown': {
-            const index = highlighted ? options.indexOf(highlighted) + 1 : 0
-            if (index < options.length) {
-              setHighlighted(options[index])
+            const index = highlighted ? visibleOptions.indexOf(highlighted) + 1 : 0
+            if (index < visibleOptions.length) {
+              setHighlighted(visibleOptions[index])
               scrollToItemOfIndex(index, ref.current!)
             }
             e.preventDefault()
@@ -87,11 +88,14 @@ export default function ComboBox(props: ComboBoxProps) {
           case 'Enter':
             if (highlighted) {
               onChange && onChange(highlighted.code)
+              setHighlighted(null)
+              ref.current?.blur()
               e.preventDefault()
             }
             break
           case 'Escape':
-            setHighlighted(null)
+            if (highlighted) setHighlighted(null)
+            else ref.current?.blur()
             e.preventDefault()
             break
         }
@@ -101,7 +105,7 @@ export default function ComboBox(props: ComboBoxProps) {
     } else {
       setHighlighted(null)
     }
-  }, [open, options, onChange, highlighted])
+  }, [open, visibleOptions, onChange, highlighted])
 
   return (
     <ComboBoxContainer
@@ -175,7 +179,7 @@ const onLoseFocus = (
     if (option.code !== value)
       onChange!(option.code)
     else
-      setText(option.name)
+      setText(option.name)//is same, show correct casing
   } else if (loweredText === '') {
     if (value !== null)
       onChange!(null)
@@ -220,7 +224,7 @@ function ComboboxImageButton({ name, src, onClick, props }: ButtonInfo & { props
   )
 }
 
-//TODO add visualization of highlighted
+//TODO add text visualization of highlighted
 //TODO clear with esc
 //TODO select and clear with enter
 //TODO add selectedd siplay for option
