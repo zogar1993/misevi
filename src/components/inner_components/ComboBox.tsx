@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from "react"
+import React, { Props, useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { BORDER_RADIUS, SEPARATION } from '../css/Dimensions'
 import Flex from '../Flex'
@@ -8,11 +8,9 @@ import { HANDWRITTEN_FONT } from '../css/Fonts'
 import Input from "./Input"
 
 //TODO add animations
-//TODO move between options
 export default function ComboBox(props: ComboBoxProps) {
   const { value, options, onChange, onTextChange, width, buttons, id } = props
   const [hovering, setHovering] = useState(false)
-  const [hoveringOptions, setHoveringOptions] = useState(false)
   const [focused, setFocused] = useState(false)
   const [isError, setIsError] = useState(false)
   const [text, setText] = useState('')
@@ -51,17 +49,6 @@ export default function ComboBox(props: ComboBoxProps) {
     }
   }, [text, focused, options])
 
-  useEffect(() => {
-    if (!focused) {
-      if (text === '') {
-        setIsError(false)
-      } else {
-        const option = options.find(x => x.name === text)
-        setIsError(option === undefined)
-      }
-    }
-  }, [text, focused, options])
-
   return (
     <ComboBoxContainer
       $width={width}
@@ -78,21 +65,7 @@ export default function ComboBox(props: ComboBoxProps) {
           setText(text)
           onTextChange && onTextChange(text)
         }}
-        onBlur={() => {
-          const loweredText = text.trim().toLowerCase()
-          const option = options.find(x => x.name.toLowerCase() === loweredText)
-          if (option) {
-            if (option.code !== value)
-              onChange!(option.code)
-            else
-              setText(option.name)
-          } else if (loweredText === '') {
-            if (value !== null)
-              onChange!(null)
-          }
-
-          setFocused(false)
-        }}
+        onBlur={() => onLoseFocus({text, setText, setFocused, ...props})}
         onFocus={() => {
           ref.current?.select()
           setFocused(true)
@@ -103,29 +76,12 @@ export default function ComboBox(props: ComboBoxProps) {
         type="text"
         role="combobox"
       />
-      <Options
-        width={width}
-        open={(focused || hoveringOptions) && visibleOptions.length > 0}
-        onMouseEnter={() => setHoveringOptions(true)}
-        onMouseLeave={() => setHoveringOptions(false)}
-      >
-        {showSkeleton ? null :
-          visibleOptions.map((item) => (
-            <Option
-              key={item.code}
-              onClick={() => {
-                if (item.code !== value)
-                  onChange!(item.code)
-                else
-                  setText(item.name)
-                setHoveringOptions(false)
-              }}
-            >
-              {item.name}
-            </Option>
-          ))
-        }
-      </Options>
+      <OptionsPopup
+        {...props}
+        focused={focused}
+        options={visibleOptions}
+        setText={setText}
+      />
       <ButtonsContainer
         y-align='center'
         visible={hovering && isNotLoading}
@@ -155,6 +111,24 @@ export default function ComboBox(props: ComboBoxProps) {
   )
 }
 
+const onLoseFocus = (
+  {text, value, options, onChange, setText, setFocused}:
+    ComboBoxProps & {text: string, setText: (text: string) => void, setFocused: (value: boolean) => void}) => {
+  const loweredText = text.trim().toLowerCase()
+  const option = options.find(x => x.name.toLowerCase() === loweredText)
+  if (option) {
+    if (option.code !== value)
+      onChange!(option.code)
+    else
+      setText(option.name)
+  } else if (loweredText === '') {
+    if (value !== null)
+      onChange!(null)
+  }
+
+  setFocused(false)
+}
+
 export type ComboBoxProps = {
   id?: string
   value: string | null | undefined
@@ -178,7 +152,112 @@ export type ComboBoxItem = {
   to?: number
 }
 
-const OPTION_HEIGHT = '23px'
+function ComboboxImageButton({ name, src, onClick, props }: ButtonInfo & { props: ComboBoxProps }) {
+  return (
+    <ImageButton
+      src={src}
+      name={name}
+      width='18px'
+      height='18px'
+      onClick={() => onClick(props)}
+      margin-right={SEPARATION}
+    />
+  )
+}
+
+function OptionsPopup(
+  {width, value, onChange, focused, options, setText}:
+    ComboBoxProps & {options: Array<ComboBoxItem>, focused: boolean, setText: (text: string) => void}) {
+  const [highlighted, setHighlighted] = useState<ComboBoxItem | null>(null)
+  const [hoveringOptions, setHoveringOptions] = useState(false)
+  const open = (focused || hoveringOptions) && options.length > 0
+  const ref = useRef<HTMLOListElement>(null)
+
+  //key presses
+  useEffect(() => {
+    if (open) {
+      const handleOnKeyDown = (e: any) => {
+        switch (e.key) {
+          case "ArrowUp": {
+            const index = highlighted ? options.indexOf(highlighted) - 1 : options.length - 1
+            if (index >= 0) {
+              setHighlighted(options[index])
+              scrollToItemOfIndex(index, ref.current!)
+            }
+            e.preventDefault()
+            break
+          }
+          case "ArrowDown": {
+            const index = highlighted ? options.indexOf(highlighted) + 1 : 0
+            if (index < options.length) {
+              setHighlighted(options[index])
+              scrollToItemOfIndex(index, ref.current!)
+            }
+            e.preventDefault()
+            break
+          }
+          case "Enter":
+            if (highlighted) {
+              onChange && onChange(highlighted.code)
+              e.preventDefault()
+            }
+            break
+          case "Escape":
+            //setHighlighted(null)
+            //e.preventDefault()
+            break
+        }
+      }
+      document.body.addEventListener("keydown", handleOnKeyDown)
+      return () => document.body.removeEventListener("keydown", handleOnKeyDown)
+    } else {
+      setHighlighted(null)
+    }
+  }, [open, options, onChange, highlighted])
+
+  return (
+    <Options
+      width={width}
+      open={open}
+      onMouseEnter={() => setHoveringOptions(true)}
+      onMouseLeave={() => setHoveringOptions(false)}
+      ref={ref}
+    >
+      {
+        options.map((item) => (
+          <Option
+            key={item.code}
+            onClick={() => {
+              if (item.code !== value)
+                onChange!(item.code)
+              else
+                setText(item.name)
+              setHoveringOptions(false)
+            }}
+            highlighted={item === highlighted}
+          >
+            {item.name}
+          </Option>
+        ))
+      }
+    </Options>
+  )
+}
+
+function scrollToItemOfIndex(index: number, element: HTMLElement) {
+  const scroll = element.scrollTop
+  if (index * OPTION_HEIGHT < scroll)
+    element.scrollTop = index * OPTION_HEIGHT
+  else {
+    const upperVisibleIndex = index + 1 - MAX_OPTION_AMOUNT
+    if (upperVisibleIndex * OPTION_HEIGHT > scroll)
+      element.scrollTop = upperVisibleIndex * OPTION_HEIGHT
+  }
+}
+
+const OPTION_HEIGHT = 23
+const MAX_OPTION_AMOUNT = 5
+const BORDER_WIDTH = 1
 
 const Options = styled.ol<{open: boolean, width?: string}>`
   margin: 0;
@@ -187,25 +266,27 @@ const Options = styled.ol<{open: boolean, width?: string}>`
   border-radius: ${BORDER_RADIUS};
   position: absolute;
   top: 30px;
-  border: 1px solid lightgray;
+  border: ${BORDER_WIDTH}px solid lightgray;
   list-style: none;
   background-color: whitesmoke;
   width: ${({width}) => width || '100%'};
   ${({open}) => open ? '' : 'display: none'};
   transition: 0.2s;
-  max-height: calc(${OPTION_HEIGHT} * 5 + 2px);
+  max-height: calc(${OPTION_HEIGHT}px * ${MAX_OPTION_AMOUNT} + ${BORDER_WIDTH}px * 2);
   overflow-y: auto;
   overflow-x: hidden;
   z-index: 20;
+  scroll-behavior: smooth;
 `
 
-const Option = styled.li`
+const Option = styled.li<{highlighted: boolean}>`
   box-sizing: border-box;
   font-family: ${HANDWRITTEN_FONT}, Times, serif;
-  height: 23px;
+  height: ${OPTION_HEIGHT}px;
   font-size: 13px;
   padding: 3px 5px 3px 8px;
   border-radius: ${BORDER_RADIUS};
+  ${({highlighted}) => highlighted ? 'background-color: dodgerblue' : ''};
   :hover {
     background-color: dodgerblue;
   }
@@ -228,16 +309,3 @@ const TextInput = styled(Input)<{error: boolean}>`
   ${({error}) => error ? 'border: 1px solid red' : ''};
   transition: 0.4s ease-in;//TODO HACK THAT PREVENTS RED FROM SHOWING
 `
-
-function ComboboxImageButton({ name, src, onClick, props }: ButtonInfo & { props: ComboBoxProps }) {
-  return (
-    <ImageButton
-      src={src}
-      name={name}
-      width='18px'
-      height='18px'
-      onClick={() => onClick(props)}
-      margin-right={SEPARATION}
-    />
-  )
-}
