@@ -165,12 +165,14 @@ function ComboboxImageButton({ name, src, onClick, props }: ButtonInfo & { props
   )
 }
 
+//TODO add visualization of highlighted
+//TODO clear with esc
+//TODO select and clear with enter
 function OptionsPopup(
   {width, value, onChange, focused, options, setText}:
     ComboBoxProps & {options: Array<ComboBoxItem>, focused: boolean, setText: (text: string) => void}) {
   const [highlighted, setHighlighted] = useState<ComboBoxItem | null>(null)
-  const [hoveringOptions, setHoveringOptions] = useState(false)
-  const open = (focused || hoveringOptions) && options.length > 0
+  const open = (focused) && options.length > 0
   const ref = useRef<HTMLOListElement>(null)
 
   //key presses
@@ -219,20 +221,17 @@ function OptionsPopup(
     <Options
       width={width}
       open={open}
-      onMouseEnter={() => setHoveringOptions(true)}
-      onMouseLeave={() => setHoveringOptions(false)}
       ref={ref}
     >
       {
         options.map((item) => (
           <Option
             key={item.code}
-            onClick={() => {
+            onMouseDown={() => {
               if (item.code !== value)
                 onChange!(item.code)
               else
                 setText(item.name)
-              setHoveringOptions(false)
             }}
             highlighted={item === highlighted}
           >
