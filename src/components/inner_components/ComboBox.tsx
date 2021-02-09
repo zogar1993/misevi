@@ -57,8 +57,15 @@ export default function ComboBox(props: ComboBoxProps) {
         onChange && onChange(null)
     }
 
+    if (dropdown === null) {
+      if (text.trim() === '')
+        setIsError(false)
+      else
+        setIsError(findOptionByText() === undefined)
+    }
+
     setDropdown(null)
-  }, [value, text, onChange, setOption, findOptionByText])
+  }, [value, text, dropdown, onChange, setOption, findOptionByText])
 
   const handleOnKeyDown = useCallback((e: any) => {
     switch (e.key) {
@@ -111,16 +118,6 @@ export default function ComboBox(props: ComboBoxProps) {
     } else
       setText('')
   }, [value, highlighted])
-
-  //error
-  useEffect(() => {
-    if (dropdown === null) {
-      if (text.trim() === '')
-        setIsError(false)
-      else
-        setIsError(findOptionByText() === undefined)
-    }
-  }, [text, dropdown, findOptionByText])
 
   //key presses
   useEffect(() => {
