@@ -37,35 +37,34 @@ export default function ComboBox(props: ComboBoxProps) {
     onTextChange && onTextChange(text)
   }, [onTextChange, updateDropdown])
 
-  const findOptionByText = useCallback(() => {
-    return options.find(x => insensitiveCompare(text, x.name))
-  }, [text, options])
-
-  const setOption = useCallback((option: ComboBoxItem) => {
+  const updateOption = useCallback((option: ComboBoxItem) => {
     if (option.code !== value)
       onChange && onChange(option.code)
     else
       updateText(option.name)
   }, [value, onChange, updateText])
 
+  const findOptionByText = useCallback(() => {
+    return options.find(x => insensitiveCompare(text, x.name))
+  }, [text, options])
+
   const onLoseFocus = useCallback(() => {
-    const option = findOptionByText()
+    const option = highlighted || findOptionByText()
     if (option) {
-      setOption(option)
+      updateOption(option)
     } else if (text.trim() === '') {
       if (value !== null)
         onChange && onChange(null)
     }
 
-    if (dropdown === null) {
-      if (text.trim() === '')
-        setIsError(false)
-      else
-        setIsError(findOptionByText() === undefined)
-    }
+    if (text.trim() === '')
+      setIsError(false)
+    else
+      setIsError(option === null)
 
     setDropdown(null)
-  }, [value, text, dropdown, onChange, setOption, findOptionByText])
+    setHighlighted(null)
+  }, [value, text, dropdown, highlighted, onChange, updateOption, findOptionByText])
 
   const handleOnKeyDown = useCallback((e: any) => {
     switch (e.key) {
@@ -91,19 +90,17 @@ export default function ComboBox(props: ComboBoxProps) {
       }
       case 'Enter':
         if (highlighted) {
-          onChange && onChange(highlighted.code)
-          setHighlighted(null)
-          refOptions.current?.blur()
+          refInput.current?.blur()
           e.preventDefault()
         }
         break
       case 'Escape':
         if (highlighted) setHighlighted(null)
-        else refOptions.current?.blur()
+        else refInput.current?.blur()
         e.preventDefault()
         break
     }
-  }, [dropdown, onChange, highlighted])
+  }, [dropdown, highlighted])
 
   //text
   useEffect(() => {
@@ -118,15 +115,6 @@ export default function ComboBox(props: ComboBoxProps) {
     } else
       setText('')
   }, [value, highlighted])
-
-  //key presses
-  useEffect(() => {
-    if (open) {
-
-    } else {
-      setHighlighted(null)
-    }
-  }, [open, dropdown, onChange, highlighted])
 
   return (
     <ComboBoxContainer
@@ -161,7 +149,7 @@ export default function ComboBox(props: ComboBoxProps) {
           dropdown && dropdown.map((item) => (
             <Option
               key={item.code}
-              onMouseDown={() => setOption(item)}
+              onMouseDown={() => refInput.current?.blur()}
               highlighted={item === highlighted}
             >
               {item.name}
@@ -183,11 +171,10 @@ export default function ComboBox(props: ComboBoxProps) {
             width='12px'
             height='12px'
             onClick={() => {
-              if (value !== null) {
+              if (value !== null)
                 onChange(null)
-              } else {
+              else
                 updateText('')
-              }
             }}
             visible={text !== ''}
           />
