@@ -73,7 +73,7 @@ export type FieldNumberProps = {
 
 export type FieldComboProps = {
   type: "combobox"
-  value: string | null | undefined
+  value?: string | null
   options: Array<ComboBoxItem>
   onChange?: (value: string | null) => void
   buttons?: Array<ButtonInfo>

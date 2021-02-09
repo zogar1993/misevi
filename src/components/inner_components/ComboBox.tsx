@@ -11,7 +11,7 @@ import Input from './Input'
 //TODO add text visualization of highlighted
 //TODO clear with esc
 //TODO select and clear with enter
-//TODO add selectedd siplay for option
+//TODO add selected display for option
 export default function ComboBox(props: ComboBoxProps) {
   const { value, options, onChange, onTextChange, width, buttons, id } = props
   const [text, setText] = useState('')
@@ -68,11 +68,12 @@ export default function ComboBox(props: ComboBoxProps) {
       setText('')
   }, [value, highlighted])
 
-  //search
+  //options filter
   useEffect(() => {
-    const visibleOptions = options.filter(x => insensitiveCompare(text, x.name))
+    const caps = text.toUpperCase()
+    const visibleOptions = options.filter(x => x.name.toUpperCase().includes(caps))
     setVisibleOptions(visibleOptions)
-  }, [text, options, value])
+  }, [text, options])
 
   //error
   useEffect(() => {
@@ -158,7 +159,7 @@ export default function ComboBox(props: ComboBoxProps) {
         ref={refOptions}
       >
         {
-          options.map((item) => (
+          visibleOptions.map((item) => (
             <Option
               key={item.code}
               onMouseDown={() => setOption(item)}
