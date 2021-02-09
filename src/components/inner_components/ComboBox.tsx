@@ -57,13 +57,9 @@ export default function ComboBox(props: ComboBoxProps) {
         onChange && onChange(null)
     }
 
-    if (text.trim() === '')
-      setIsError(false)
-    else
-      setIsError(option === null)
-
     setDropdown(null)
     setHighlighted(null)
+    setIsError(text.trim() === '' ? false : option === null)
   }, [value, text, dropdown, highlighted, onChange, updateOption, findOptionByText])
 
   const handleOnKeyDown = useCallback((e: any) => {
