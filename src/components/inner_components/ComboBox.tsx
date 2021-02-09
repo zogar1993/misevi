@@ -10,7 +10,6 @@ import Input from './Input'
 //TODO add animations
 //TODO add text visualization of highlighted
 //TODO clear with esc
-//TODO select and clear with enter
 //TODO add selected display for option
 export default function ComboBox(props: ComboBoxProps) {
   const { value, options, onChange, onTextChange, width, buttons, id } = props
@@ -52,15 +51,15 @@ export default function ComboBox(props: ComboBoxProps) {
     const option = highlighted || findOptionByText()
     if (option) {
       updateOption(option)
-    } else if (text.trim() === '') {
+    } else if (text.trim() === '') {//TODO set text ""?
       if (value !== null)
         onChange && onChange(null)
     }
 
     setDropdown(null)
     setHighlighted(null)
-    setIsError(text.trim() === '' ? false : option === null)
-  }, [value, text, dropdown, highlighted, onChange, updateOption, findOptionByText])
+    setIsError(text.trim() === '' ? false : option === undefined)
+  }, [value, text, highlighted, onChange, updateOption, findOptionByText])
 
   const handleOnKeyDown = useCallback((e: any) => {
     switch (e.key) {
@@ -91,7 +90,7 @@ export default function ComboBox(props: ComboBoxProps) {
         }
         break
       case 'Escape':
-        if (highlighted) setHighlighted(null)
+        if (highlighted) setHighlighted(null) //TODO borra ap cuando lo hago
         else refInput.current?.blur()
         e.preventDefault()
         break
@@ -145,7 +144,7 @@ export default function ComboBox(props: ComboBoxProps) {
           dropdown && dropdown.map((item) => (
             <Option
               key={item.code}
-              onMouseDown={() => refInput.current?.blur()}
+              onMouseDown={() => updateOption(item)}
               highlighted={item === highlighted}
             >
               {item.name}
@@ -171,6 +170,9 @@ export default function ComboBox(props: ComboBoxProps) {
                 onChange(null)
               else
                 updateText('')
+              setIsError(false)
+              setDropdown(null)//TODO feels a little hacky
+              refInput.current?.blur()
             }}
             visible={text !== ''}
           />
