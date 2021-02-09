@@ -15,21 +15,27 @@ import Input from './Input'
 export default function ComboBox(props: ComboBoxProps) {
   const { value, options, onChange, onTextChange, width, buttons, id } = props
   const [text, setText] = useState('')
-  const [focused, setFocused] = useState(false)
   const [isError, setIsError] = useState(false)
   const [hovering, setHovering] = useState(false)
   const [highlighted, setHighlighted] = useState<ComboBoxItem | null>(null)
-  const [visibleOptions, setVisibleOptions] = useState<Array<ComboBoxItem>>([])
+  const [dropdown, setDropdown] = useState<Array<ComboBoxItem>|null>(null)
   const refInput = useRef<HTMLInputElement>(null)
   const refOptions = useRef<HTMLOListElement>(null)
   const showSkeleton = value === undefined
   const isNotLoading = value !== undefined
-  const open = focused && options.length > 0
+  const open = !!dropdown && dropdown.length > 0
 
-  const setTextAndNotify = useCallback((text: string) => {
+  const updateDropdown = useCallback((text: string) => {
+    const caps = text.toUpperCase()
+    const visibleOptions = options.filter(x => x.name.toUpperCase().includes(caps))
+    setDropdown(visibleOptions)
+  }, [options])
+
+  const updateText = useCallback((text: string) => {
     setText(text)
+    updateDropdown(text)
     onTextChange && onTextChange(text)
-  }, [onTextChange])
+  }, [onTextChange, updateDropdown])
 
   const findOptionByText = useCallback(() => {
     return options.find(x => insensitiveCompare(text, x.name))
@@ -39,8 +45,8 @@ export default function ComboBox(props: ComboBoxProps) {
     if (option.code !== value)
       onChange && onChange(option.code)
     else
-      setTextAndNotify(option.name)
-  }, [value, onChange, setTextAndNotify])
+      updateText(option.name)
+  }, [value, onChange, updateText])
 
   const onLoseFocus = useCallback(() => {
     const option = findOptionByText()
@@ -51,8 +57,46 @@ export default function ComboBox(props: ComboBoxProps) {
         onChange && onChange(null)
     }
 
-    setFocused(false)
+    setDropdown(null)
   }, [value, text, onChange, setOption, findOptionByText])
+
+  const handleOnKeyDown = useCallback((e: any) => {
+    switch (e.key) {
+      case 'ArrowUp': {
+        if (dropdown === null) return
+        const index = highlighted ? dropdown.indexOf(highlighted) - 1 : dropdown.length - 1
+        if (index >= 0) {
+          setHighlighted(dropdown[index])
+          scrollToItemOfIndex(index, refOptions.current!)
+        }
+        e.preventDefault()
+        break
+      }
+      case 'ArrowDown': {
+        if (dropdown === null) return
+        const index = highlighted ? dropdown.indexOf(highlighted) + 1 : 0
+        if (index < dropdown.length) {
+          setHighlighted(dropdown[index])
+          scrollToItemOfIndex(index, refOptions.current!)
+        }
+        e.preventDefault()
+        break
+      }
+      case 'Enter':
+        if (highlighted) {
+          onChange && onChange(highlighted.code)
+          setHighlighted(null)
+          refOptions.current?.blur()
+          e.preventDefault()
+        }
+        break
+      case 'Escape':
+        if (highlighted) setHighlighted(null)
+        else refOptions.current?.blur()
+        e.preventDefault()
+        break
+    }
+  }, [dropdown, onChange, highlighted])
 
   //text
   useEffect(() => {
@@ -68,67 +112,24 @@ export default function ComboBox(props: ComboBoxProps) {
       setText('')
   }, [value, highlighted])
 
-  //options filter
-  useEffect(() => {
-    const caps = text.toUpperCase()
-    const visibleOptions = options.filter(x => x.name.toUpperCase().includes(caps))
-    setVisibleOptions(visibleOptions)
-  }, [text, options])
-
   //error
   useEffect(() => {
-    if (!focused) {
+    if (dropdown === null) {
       if (text.trim() === '')
         setIsError(false)
       else
         setIsError(findOptionByText() === undefined)
     }
-  }, [text, focused, findOptionByText])
+  }, [text, dropdown, findOptionByText])
 
   //key presses
   useEffect(() => {
     if (open) {
-      const handleOnKeyDown = (e: any) => {
-        switch (e.key) {
-          case 'ArrowUp': {
-            const index = highlighted ? visibleOptions.indexOf(highlighted) - 1 : visibleOptions.length - 1
-            if (index >= 0) {
-              setHighlighted(visibleOptions[index])
-              scrollToItemOfIndex(index, refOptions.current!)
-            }
-            e.preventDefault()
-            break
-          }
-          case 'ArrowDown': {
-            const index = highlighted ? visibleOptions.indexOf(highlighted) + 1 : 0
-            if (index < visibleOptions.length) {
-              setHighlighted(visibleOptions[index])
-              scrollToItemOfIndex(index, refOptions.current!)
-            }
-            e.preventDefault()
-            break
-          }
-          case 'Enter':
-            if (highlighted) {
-              onChange && onChange(highlighted.code)
-              setHighlighted(null)
-              refOptions.current?.blur()
-              e.preventDefault()
-            }
-            break
-          case 'Escape':
-            if (highlighted) setHighlighted(null)
-            else refOptions.current?.blur()
-            e.preventDefault()
-            break
-        }
-      }
-      document.body.addEventListener('keydown', handleOnKeyDown)
-      return () => document.body.removeEventListener('keydown', handleOnKeyDown)
+
     } else {
       setHighlighted(null)
     }
-  }, [open, visibleOptions, onChange, highlighted])
+  }, [open, dropdown, onChange, highlighted])
 
   return (
     <ComboBoxContainer
@@ -141,12 +142,13 @@ export default function ComboBox(props: ComboBoxProps) {
         ref={refInput}
         value={text}
         disabled={showSkeleton}
-        onChange={(e) => setTextAndNotify(e.target.value)}
+        onChange={(e) => updateText(e.target.value)}
         onBlur={onLoseFocus}
         onFocus={() => {
           refInput.current?.select()
-          setFocused(true)
+          updateDropdown('')
         }}
+        onKeyDown={handleOnKeyDown}
         readOnly={onChange === undefined}
         skeleton={showSkeleton}
         error={isError}
@@ -159,7 +161,7 @@ export default function ComboBox(props: ComboBoxProps) {
         ref={refOptions}
       >
         {
-          visibleOptions.map((item) => (
+          dropdown && dropdown.map((item) => (
             <Option
               key={item.code}
               onMouseDown={() => setOption(item)}
@@ -187,7 +189,7 @@ export default function ComboBox(props: ComboBoxProps) {
               if (value !== null) {
                 onChange(null)
               } else {
-                setTextAndNotify('')
+                updateText('')
               }
             }}
             visible={text !== ''}
