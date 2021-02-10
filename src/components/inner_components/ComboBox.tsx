@@ -9,13 +9,13 @@ import Input from './Input'
 
 //TODO add animations
 //TODO add text visualization of highlighted
-//TODO clear with esc
-//TODO add selected display for option
+//TODO add selected display for option (a check, for example)
 export default function ComboBox(props: ComboBoxProps) {
   const { value, options, onChange, onTextChange, width, buttons, id } = props
   const [text, setText] = useState('')
-  const [isError, setIsError] = useState(false)
+  const [error, setError] = useState(false)
   const [hovering, setHovering] = useState(false)
+  const [focused, setFocused] = useState(false)
   const [highlighted, setHighlighted] = useState<ComboBoxItem | null>(null)
   const [dropdown, setDropdown] = useState<Array<ComboBoxItem>|null>(null)
   const refInput = useRef<HTMLInputElement>(null)
@@ -30,6 +30,14 @@ export default function ComboBox(props: ComboBoxProps) {
     setDropdown(visibleOptions)
   }, [options])
 
+  const setTextFromValue = useCallback(() => {
+    if (value) {
+      const option = options.find(x => x.code === value)
+      setText(option ? option.name : '')
+    } else
+      setText('')
+  }, [value, options])
+
   const updateText = useCallback((text: string) => {
     setText(text)
     updateDropdown(text)
@@ -43,22 +51,25 @@ export default function ComboBox(props: ComboBoxProps) {
       updateText(option.name)
   }, [value, onChange, updateText])
 
+  const clearOption = useCallback(() => {
+    if (value !== null)
+      onChange && onChange(null)
+    else
+      updateText('')
+  }, [value, onChange, updateText])
+
   const findOptionByText = useCallback(() => {
     return options.find(x => insensitiveCompare(text, x.name))
   }, [text, options])
 
   const onLoseFocus = useCallback(() => {
     const option = highlighted || findOptionByText()
-    if (option) {
-      updateOption(option)
-    } else if (text.trim() === '') {//TODO set text ""?
-      if (value !== null)
-        onChange && onChange(null)
-    }
+    if (option) updateOption(option)
+    else if (text.trim() === '') clearOption()
 
     setDropdown(null)
     setHighlighted(null)
-    setIsError(text.trim() === '' ? false : option === undefined)
+    setFocused(false)
   }, [value, text, highlighted, onChange, updateOption, findOptionByText])
 
   const handleOnKeyDown = useCallback((e: any) => {
@@ -85,31 +96,36 @@ export default function ComboBox(props: ComboBoxProps) {
       }
       case 'Enter':
         if (highlighted) {
+          updateOption(highlighted)
           refInput.current?.blur()
           e.preventDefault()
         }
         break
       case 'Escape':
-        if (highlighted) setHighlighted(null) //TODO borra ap cuando lo hago
-        else refInput.current?.blur()
+        if (highlighted) setHighlighted(null)
+        else {
+          setTextFromValue()
+          refInput.current?.blur()
+        }
         e.preventDefault()
         break
     }
-  }, [dropdown, highlighted])
+  }, [dropdown, highlighted, setTextFromValue])
 
   //text
   useEffect(() => {
-    if (highlighted) {
-      //TODO Check how it should work
-      //setText(highlighted.name)
-      //onTextChange && onTextChange(text)
-    } else if (value) {
-      const option = options.find(x => x.code === value)
-      if (option !== undefined)
-        setText(option.name)
-    } else
-      setText('')
-  }, [value, highlighted])
+    setTextFromValue()
+  }, [setTextFromValue])
+
+  //error
+  useEffect(() => {
+    if (focused) {
+      if (error) setError(false)
+    } else {
+      const option = highlighted || findOptionByText()
+      setError(text.trim() === '' ? false : option === undefined)
+    }
+  }, [focused, error, text, highlighted, findOptionByText])
 
   return (
     <ComboBoxContainer
@@ -127,11 +143,12 @@ export default function ComboBox(props: ComboBoxProps) {
         onFocus={() => {
           refInput.current?.select()
           updateDropdown('')
+          setFocused(true)
         }}
         onKeyDown={handleOnKeyDown}
         readOnly={onChange === undefined}
         skeleton={showSkeleton}
-        error={isError}
+        error={error}
         type="text"
         role="combobox"
       />
@@ -165,14 +182,10 @@ export default function ComboBox(props: ComboBoxProps) {
             name='clear'
             width='12px'
             height='12px'
-            onClick={() => {
-              if (value !== null)
-                onChange(null)
-              else
-                updateText('')
-              setIsError(false)
-              setDropdown(null)//TODO feels a little hacky
+            onPointerDown={(e: any) => {
+              clearOption()
               refInput.current?.blur()
+              e.preventDefault()
             }}
             visible={text !== ''}
           />
@@ -252,7 +265,7 @@ const Option = styled.li<{ highlighted: boolean }>`
   border: 1px solid ${({ highlighted }) => highlighted ? 'dodgerblue' : 'transparent'};
 
   :hover {
-    background-color: dodgerblue;
+    background-color: powderblue;
   }
 
   transition: background-color 0.2s;

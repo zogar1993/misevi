@@ -4,21 +4,20 @@ import React from "react"
 import {margins, MarginsProps} from "./css_helpers/margins"
 import { NoStyleButton } from './inner_components/NoStyleButton'
 
-export default function ImageButton({src, name, width, height, "margin-right": marginRight, onClick, visible}: {
+export default function ImageButton({src, name, width, height, onClick, visible, ...props}: {
   src?: any
   name: string
   width: string
   height: string
-  "margin-right"?: string//TODO use autogenerators
   onClick?: () => void
   visible?: boolean
-}) {
+} & MarginsProps & any) {//TODO implement onPointerEvents
   return (
     <Button
+      {...props}
       title={name}
       $visible={visible}
       onClick={onClick}
-      margin-right={marginRight}
     >
       <Img
         src={src}
