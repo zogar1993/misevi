@@ -8,8 +8,6 @@ import { HANDWRITTEN_FONT } from '../css/Fonts'
 import Input from './Input'
 
 //TODO add animations
-//TODO add text visualization of highlighted
-//TODO add selected display for option (a check, for example)
 export default function ComboBox(props: ComboBoxProps) {
   const { value, options, onChange, onTextChange, width, buttons, id } = props
   const [text, setText] = useState('')
@@ -24,9 +22,12 @@ export default function ComboBox(props: ComboBoxProps) {
   const isNotLoading = value !== undefined
   const open = !!dropdown && dropdown.length > 0
 
+  const findOptionByText = useCallback(() => {
+    return options.find(x => insensitiveCompare(text, x.name))
+  }, [text, options])
+
   const updateDropdown = useCallback((text: string) => {
-    const caps = text.toUpperCase()
-    const visibleOptions = options.filter(x => x.name.toUpperCase().includes(caps))
+    const visibleOptions = options.filter(x => insensitiveIncludes(x.name, text))
     setDropdown(visibleOptions)
   }, [options])
 
@@ -42,7 +43,10 @@ export default function ComboBox(props: ComboBoxProps) {
     setText(text)
     updateDropdown(text)
     onTextChange && onTextChange(text)
-  }, [onTextChange, updateDropdown])
+    if (highlighted)
+      if (!insensitiveIncludes(highlighted.name, text))
+        setHighlighted(null)
+  }, [onTextChange, updateDropdown, highlighted])
 
   const updateOption = useCallback((option: ComboBoxItem) => {
     if (option.code !== value)
@@ -58,9 +62,6 @@ export default function ComboBox(props: ComboBoxProps) {
       updateText('')
   }, [value, onChange, updateText])
 
-  const findOptionByText = useCallback(() => {
-    return options.find(x => insensitiveCompare(text, x.name))
-  }, [text, options])
 
   const onLoseFocus = useCallback(() => {
     const option = highlighted || findOptionByText()
@@ -300,4 +301,9 @@ function scrollToItemOfIndex(index: number, element: HTMLElement) {
 
 function insensitiveCompare(a: string, b: string) {
   return a.localeCompare(b, undefined, { sensitivity: 'base' }) === 0
+}
+
+function insensitiveIncludes(text: string, sub: string) {
+  const caps = sub.toUpperCase()
+  return text.toUpperCase().includes(caps)
 }
