@@ -8,6 +8,7 @@ import { HANDWRITTEN_FONT } from '../css/Fonts'
 import Input from './Input'
 
 //TODO add animations
+//TODO ignore highlighted on tab
 export default function ComboBox(props: ComboBoxProps) {
   const { value, options, onChange, onTextChange, width, buttons, id } = props
   const [text, setText] = useState('')
@@ -15,7 +16,7 @@ export default function ComboBox(props: ComboBoxProps) {
   const [hovering, setHovering] = useState(false)
   const [focused, setFocused] = useState(false)
   const [highlighted, setHighlighted] = useState<ComboBoxItem | null>(null)
-  const [dropdown, setDropdown] = useState<Array<ComboBoxItem>|null>(null)
+  const [dropdown, setDropdown] = useState<Array<ComboBoxItem> | null>(null)
   const refInput = useRef<HTMLInputElement>(null)
   const refOptions = useRef<HTMLOListElement>(null)
   const showSkeleton = value === undefined
@@ -23,13 +24,10 @@ export default function ComboBox(props: ComboBoxProps) {
   const open = !!dropdown && dropdown.length > 0
 
   const findOptionByText = useCallback(() => {
-    return options.find(x => insensitiveCompare(text, x.name))
+    const trimmed = text.trim()
+    if (trimmed === '') return NULL_OPTION
+    return options.find(x => insensitiveCompare(trimmed, x.name))
   }, [text, options])
-
-  const updateDropdown = useCallback((text: string) => {
-    const visibleOptions = options.filter(x => insensitiveIncludes(x.name, text))
-    setDropdown(visibleOptions)
-  }, [options])
 
   const setTextFromValue = useCallback(() => {
     if (value) {
@@ -39,39 +37,23 @@ export default function ComboBox(props: ComboBoxProps) {
       setText('')
   }, [value, options])
 
+  const updateDropdown = useCallback((text: string) => {
+    const visibleOptions = options.filter(x => insensitiveIncludes(x.name, text))
+    setDropdown(visibleOptions)
+  }, [options])
+
   const updateText = useCallback((text: string) => {
     setText(text)
     updateDropdown(text)
     onTextChange && onTextChange(text)
-    if (highlighted)
-      if (!insensitiveIncludes(highlighted.name, text))
-        setHighlighted(null)
-  }, [onTextChange, updateDropdown, highlighted])
+  }, [onTextChange, updateDropdown])
 
-  const updateOption = useCallback((option: ComboBoxItem) => {
+  const updateOption = useCallback((option: ComboBoxItem|typeof NULL_OPTION) => {
     if (option.code !== value)
       onChange && onChange(option.code)
     else
       updateText(option.name)
   }, [value, onChange, updateText])
-
-  const clearOption = useCallback(() => {
-    if (value !== null)
-      onChange && onChange(null)
-    else
-      updateText('')
-  }, [value, onChange, updateText])
-
-
-  const onLoseFocus = useCallback(() => {
-    const option = highlighted || findOptionByText()
-    if (option) updateOption(option)
-    else if (text.trim() === '') clearOption()
-
-    setDropdown(null)
-    setHighlighted(null)
-    setFocused(false)
-  }, [value, text, highlighted, onChange, updateOption, findOptionByText])
 
   const handleOnKeyDown = useCallback((e: any) => {
     switch (e.key) {
@@ -95,15 +77,21 @@ export default function ComboBox(props: ComboBoxProps) {
         e.preventDefault()
         break
       }
+      case 'Tab': {
+        const option = findOptionByText()
+        if (option) updateOption(option)
+        break
+      }
       case 'Enter':
-        if (highlighted) {
+        if (highlighted && dropdown?.includes(highlighted)) {
           updateOption(highlighted)
           refInput.current?.blur()
           e.preventDefault()
         }
         break
       case 'Escape':
-        if (highlighted) setHighlighted(null)
+        if (highlighted && dropdown?.includes(highlighted))
+          setHighlighted(null)
         else {
           setTextFromValue()
           refInput.current?.blur()
@@ -111,7 +99,13 @@ export default function ComboBox(props: ComboBoxProps) {
         e.preventDefault()
         break
     }
-  }, [dropdown, highlighted, setTextFromValue])
+  }, [dropdown, highlighted, setTextFromValue, findOptionByText])
+
+  const onLoseFocus = useCallback(() => {
+    setDropdown(null)
+    setHighlighted(null)
+    setFocused(false)
+  }, [updateOption])
 
   //text
   useEffect(() => {
@@ -123,10 +117,10 @@ export default function ComboBox(props: ComboBoxProps) {
     if (focused) {
       if (error) setError(false)
     } else {
-      const option = highlighted || findOptionByText()
-      setError(text.trim() === '' ? false : option === undefined)
+      const option = findOptionByText()
+      setError(option === undefined)
     }
-  }, [focused, error, text, highlighted, findOptionByText])
+  }, [focused, error, findOptionByText])
 
   return (
     <ComboBoxContainer
@@ -184,7 +178,7 @@ export default function ComboBox(props: ComboBoxProps) {
             width='12px'
             height='12px'
             onPointerDown={(e: any) => {
-              clearOption()
+              updateOption(NULL_OPTION)
               refInput.current?.blur()
               e.preventDefault()
             }}
@@ -307,3 +301,5 @@ function insensitiveIncludes(text: string, sub: string) {
   const caps = sub.toUpperCase()
   return text.toUpperCase().includes(caps)
 }
+
+const NULL_OPTION = {name: '', code: null}
