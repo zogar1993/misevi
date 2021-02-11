@@ -1,7 +1,7 @@
 import React from 'react'
 import '@testing-library/jest-dom/extend-expect'
 import { fireEvent, render, RenderResult, waitFor } from '@testing-library/react'
-import ComboBox, { ButtonInfo, ComboBoxItem } from '../components/inner_components/ComboBox'
+import { ButtonInfo, ComboBoxItem } from '../components/inner_components/ComboBox'
 import Field from 'components/Field'
 
 describe('ComboBox should', () => {
@@ -132,13 +132,13 @@ describe('ComboBox should', () => {
       await the_combobox_is_rendered()
     })
 
-    it('show the button when combobox is hovered', async () => {
+    it('show the custom button when combobox is hovered', async () => {
       await the_cursor_enters_the_combobox()
-      await the_button_should_be_visible(aCustomButton.name)
+      await the_custom_button_should_be_visible(aCustomButton.name)
     })
 
-    it('hide the button when combobox is not hovered', async () => {
-      await the_button_should_be_hidden(aCustomButton.name)
+    it('hide the custom button when combobox is not hovered', async () => {
+      await the_custom_button_should_be_hidden(aCustomButton.name)
     })
   })
 
@@ -196,22 +196,19 @@ describe('ComboBox should', () => {
     expect(select).toBeEnabled()
   }
 
-  async function the_button_should_be_hidden(title: string) {
-    //const button = getButtonOfTitle(title)
-    //expect(button).not.toBeVisible()
-    // TODO visibility tests do not work correctly https://github.com/testing-library/jest-dom/issues/209
-
+  async function the_custom_button_should_be_hidden(title: string) {
+    const button = getButtonOfTitle(title)
+    await waitFor(async () => expect(button).not.toBeVisible())
   }
 
-  async function the_button_should_be_visible(title: string) {
+  async function the_custom_button_should_be_visible(title: string) {
     const button = getButtonOfTitle(title)
     await waitFor(async () => expect(button).toBeVisible())
   }
 
   async function the_clear_button_should_be_hidden() {
-    //const button = queryClearButton()
-    //expect(button).not.toBeVisible()
-    // TODO visibility tests do not work correctly https://github.com/testing-library/jest-dom/issues/209
+    const button = queryClearButton()
+    expect(button).not.toBeVisible()
   }
 
   async function the_clear_button_should_not_show() {
@@ -220,20 +217,17 @@ describe('ComboBox should', () => {
   }
 
   async function the_clear_button_should_be_visible() {
-    //const button = queryClearButton()
-    //expect(button).toBeVisible()
-    // TODO visibility tests do not work correctly https://github.com/testing-library/jest-dom/issues/209
+    const button = queryClearButton()
+    expect(button).toBeVisible()
   }
 
   async function the_buttons_should_be_hidden() {
-    //const buttonContainer = await getButtonsContainer()
-    //expect(buttonContainer).not.toBeVisible()
-    // TODO visibility tests do not work correctly https://github.com/testing-library/jest-dom/issues/209
-
+    const buttonContainer = await getButtonsContainer()
+    expect(buttonContainer).not.toBeVisible()
   }
 
   const getButtonsContainer = async () => getClearButton().parentElement
-  const getComboBoxContainer = () => screen.container.children[0]
+  const getComboBoxContainer = () => screen.getByRole('combobox').parentElement!
   const getCombobox = async () => screen.findByRole('combobox')
   const queryClearButton = () => screen.queryByTitle('clear')
   const getClearButton = () => screen.getByTitle('clear')

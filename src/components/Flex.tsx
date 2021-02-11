@@ -1,7 +1,7 @@
 import styled, { StyledComponent } from 'styled-components'
 import {DIMENSIONS, dimensions, DimensionsProps} from "./css_helpers/dimensions"
 import {SKELETON_ANIMATION_CSS} from "./css/Skeleton"
-import React from "react"
+import React from 'react'
 import { paddings, PADDINGS, PaddingsProps } from './css_helpers/paddings'
 import { POSITIONS, positions, PositionsProps } from './css_helpers/positions'
 import { margins, MARGINS, MarginsProps } from './css_helpers/margins'
@@ -23,7 +23,7 @@ const removeHtmlProperties =  <W extends object>(
 //TODO apply black magic to other components.
 //TODO add reversed logic
 const Div = styled.div``
-const RealFlex = styled(removeHtmlProperties<FlexProps>(Div, ignored))<FlexProps>`
+const Flex = styled(removeHtmlProperties<FlexProps>(Div, ignored))<FlexProps>`
   display: flex;
   ${props => props["no-pointer-events"] ? "pointer-events: none" : ""};
   ${({visible}) => visible === false ? "visibility: hidden" : ""};
@@ -45,7 +45,7 @@ const RealFlex = styled(removeHtmlProperties<FlexProps>(Div, ignored))<FlexProps
   ${positions};
 `
 
-export default RealFlex
+export default Flex
 
 const align = (value: string | undefined) => {
   if (value === "space-between") return "space-between"
@@ -62,7 +62,7 @@ const align = (value: string | undefined) => {
   return "flex-start"
 }
 
-export type  FlexProps = FlexPropsBase & DimensionsProps & PaddingsProps &
+export type FlexProps = FlexPropsBase & DimensionsProps & PaddingsProps &
   MarginsProps & PositionsProps
 export type FlexPropsBase = {
   "y-align"?: YAlignType
