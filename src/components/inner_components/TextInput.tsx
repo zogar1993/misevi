@@ -1,20 +1,20 @@
 import React, {ForwardedRef, forwardRef, useEffect, useState} from "react"
 import Input from "./Input"
 
-const TextInput = forwardRef(({id, placeholder, value, onBlur, onChange, ...props}: TextInputProps, ref: ForwardedRef<HTMLInputElement>) => {
-  const [current, setCurrent] = useState(value)
-  useEffect(() => setCurrent(value), [value])
+const TextInput = forwardRef(({id, placeholder, value, onBlur, onFocusChange, ...props}: TextInputProps, ref: ForwardedRef<HTMLInputElement>) => {
+  const [text, setText] = useState(value || '')
+  useEffect(() => setText(value || ''), [value])
 
   const handleOnChange = (e: any) => {
     const value = e.target.value
-    setCurrent(value)
-    if (onChange) onChange(value)
+    setText(value)
   }
   const handleOnBlur = () => {
-    if (current === undefined) return
+    if (text === undefined) return
     if (onBlur === undefined) return
-    if (value !== current)
-      onBlur(current)
+    if (value !== text)
+      onBlur(text)
+    onFocusChange(false, text)
   }
 
   const showSkeleton = value === undefined
@@ -22,9 +22,10 @@ const TextInput = forwardRef(({id, placeholder, value, onBlur, onChange, ...prop
   return (
     <Input
       id={id}
-      value={current || ""}
+      value={text || ""}
       onChange={handleOnChange}
       onBlur={handleOnBlur}
+      onFocus={() => onFocusChange(true, text)}
       type="text"
       disabled={showSkeleton}
       skeleton={showSkeleton}
@@ -42,8 +43,8 @@ export type TextInputProps = {
   placeholder?: string
   value?: string
   onBlur?: (value: string) => void
-  onChange?: (value: string) => void
   onFocus?: () => void
   disabled?: boolean
   readOnly?: boolean
+  onFocusChange: (focus: boolean, text: string) => void
 }

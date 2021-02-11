@@ -2,6 +2,7 @@ import React from 'react'
 import '@testing-library/jest-dom/extend-expect'
 import { fireEvent, render, RenderResult, waitFor } from '@testing-library/react'
 import ComboBox, { ButtonInfo, ComboBoxItem } from '../components/inner_components/ComboBox'
+import Field from 'components/Field'
 
 describe('ComboBox should', () => {
   let screen: RenderResult
@@ -159,7 +160,14 @@ describe('ComboBox should', () => {
 
   async function the_combobox_is_rendered() {
     screen = render(
-      <ComboBox options={_options} value={_value} onChange={_onChange} buttons={_buttons} />
+      <Field
+        label={A_LABEL}
+        type="combobox"
+        options={_options}
+        value={_value}
+        onChange={_onChange}
+        buttons={_buttons}
+      />
     )
   }
 
@@ -243,3 +251,5 @@ const AN_OPTION = {
   code: 'an_option',
   name: 'An Option'
 }
+
+const A_LABEL = 'a_label'

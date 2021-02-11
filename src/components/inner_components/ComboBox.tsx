@@ -7,10 +7,8 @@ import close from '../icons/close.svg'
 import { HANDWRITTEN_FONT } from '../css/Fonts'
 import Input from './Input'
 
-//TODO add animations
-//TODO ignore highlighted on tab
 export default function ComboBox(props: ComboBoxProps) {
-  const { value, options, onChange, onTextChange, width, buttons, id } = props
+  const { value, options, onChange, onFocusChange, width, buttons, id } = props
   const [text, setText] = useState('')
   const [error, setError] = useState(false)
   const [hovering, setHovering] = useState(false)
@@ -45,8 +43,7 @@ export default function ComboBox(props: ComboBoxProps) {
   const updateText = useCallback((text: string) => {
     setText(text)
     updateDropdown(text)
-    onTextChange && onTextChange(text)
-  }, [onTextChange, updateDropdown])
+  }, [updateDropdown])
 
   const updateOption = useCallback((option: ComboBoxItem|typeof NULL_OPTION) => {
     if (option.code !== value)
@@ -56,10 +53,13 @@ export default function ComboBox(props: ComboBoxProps) {
   }, [value, onChange, updateText])
 
   const handleOnKeyDown = useCallback((e: any) => {
+    function isInDropdown(highlighted: ComboBoxItem|null): highlighted is ComboBoxItem {
+      return !!(highlighted && dropdown?.includes(highlighted))
+    }
     switch (e.key) {
       case 'ArrowUp': {
         if (dropdown === null) return
-        const index = highlighted ? dropdown.indexOf(highlighted) - 1 : dropdown.length - 1
+        const index = isInDropdown(highlighted) ? dropdown.indexOf(highlighted) - 1 : dropdown.length - 1
         if (index >= 0) {
           setHighlighted(dropdown[index])
           scrollToItemOfIndex(index, refOptions.current!)
@@ -69,7 +69,7 @@ export default function ComboBox(props: ComboBoxProps) {
       }
       case 'ArrowDown': {
         if (dropdown === null) return
-        const index = highlighted ? dropdown.indexOf(highlighted) + 1 : 0
+        const index = isInDropdown(highlighted) ? dropdown.indexOf(highlighted) + 1 : 0
         if (index < dropdown.length) {
           setHighlighted(dropdown[index])
           scrollToItemOfIndex(index, refOptions.current!)
@@ -83,14 +83,14 @@ export default function ComboBox(props: ComboBoxProps) {
         break
       }
       case 'Enter':
-        if (highlighted && dropdown?.includes(highlighted)) {
+        if (isInDropdown(highlighted)) {
           updateOption(highlighted)
           refInput.current?.blur()
           e.preventDefault()
         }
         break
       case 'Escape':
-        if (highlighted && dropdown?.includes(highlighted))
+        if (isInDropdown(highlighted))
           setHighlighted(null)
         else {
           setTextFromValue()
@@ -102,10 +102,11 @@ export default function ComboBox(props: ComboBoxProps) {
   }, [dropdown, highlighted, setTextFromValue, findOptionByText])
 
   const onLoseFocus = useCallback(() => {
+    onFocusChange(false, text)
     setDropdown(null)
     setHighlighted(null)
     setFocused(false)
-  }, [updateOption])
+  }, [onFocusChange, text])
 
   //text
   useEffect(() => {
@@ -139,6 +140,7 @@ export default function ComboBox(props: ComboBoxProps) {
           refInput.current?.select()
           updateDropdown('')
           setFocused(true)
+          onFocusChange(true, text)
         }}
         onKeyDown={handleOnKeyDown}
         readOnly={onChange === undefined}
@@ -195,7 +197,7 @@ export type ComboBoxProps = {
   value: string | null | undefined
   options: Array<ComboBoxItem>
   onChange?: (value: string | null) => void
-  onTextChange?: (value: string) => void
+  onFocusChange: (focus: boolean, text: string) => void
   buttons?: Array<ButtonInfo>
   width?: string
 }
