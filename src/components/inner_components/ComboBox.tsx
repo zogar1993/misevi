@@ -278,6 +278,8 @@ const ComboBoxContainer = styled.div<{ $width?: string }>`
 const ButtonsContainer = styled(Flex)`
   position: absolute;
   right: 9px;
+  ${({visible}) => visible === false ? "visibility: hidden" : ""};
+  //TODO this should not be needed, bu without this tests break
 `
 
 const TextInput = styled(Input)<{ error: boolean }>`
