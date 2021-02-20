@@ -1,23 +1,21 @@
 import styled from "styled-components"
 import {dimensions, DimensionsProps} from "./css_helpers/dimensions"
-import React from "react"
+import React, { HTMLAttributes } from 'react'
 import {margins, MarginsProps} from "./css_helpers/margins"
 import { NoStyleButton } from './inner_components/NoStyleButton'
 
-export default function ImageButton({src, name, width, height, onClick, visible, ...props}: {
+export default function ImageButton({src, name, width, height, visible, ...props}: {
   src?: any
   name: string
   width: string
   height: string
-  onClick?: () => void
   visible?: boolean
-} & MarginsProps & any) {//TODO implement onPointerEvents
+} & MarginsProps & HTMLAttributes<HTMLButtonElement>) {
   return (
     <Button
       {...props}
       title={name}
       $visible={visible}
-      onClick={onClick}
     >
       <Img
         src={src}
