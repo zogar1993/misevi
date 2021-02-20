@@ -49,9 +49,9 @@ export default function Field(props: FieldProps) {
 	)
 }
 
-export type FieldProps = FieldBaseProps & (FieldTextProps | FieldNumberProps | FieldComboProps)
+export type FieldProps = FieldTextProps | FieldNumberProps | FieldComboProps
 
-export type FieldBaseProps = {
+type FieldBaseProps = {
   id?: string
   label: string
   width?: string
@@ -61,7 +61,7 @@ export type FieldTextProps = {
   type?: "text"
   value?: string
   onBlur?: (value: string) => void
-}
+} & FieldBaseProps
 
 export type FieldNumberProps = {
   type: "number"
@@ -69,7 +69,7 @@ export type FieldNumberProps = {
   onBlur?: (value: number) => void
   min?: number
   max?: number
-}
+} & FieldBaseProps
 
 export type FieldComboProps = {
   type: "combobox"
@@ -77,4 +77,4 @@ export type FieldComboProps = {
   options: Array<ComboBoxItem>
   onChange?: (value: string | null) => void
   buttons?: Array<ButtonInfo>
-}
+} & FieldBaseProps

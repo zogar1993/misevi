@@ -1,11 +1,11 @@
 import React, {useState} from "react"
-import FieldUnboxed, { FieldBaseProps, FieldComboProps} from 'components/Field'
+import FieldUnboxed, { FieldComboProps} from 'components/Field'
 
-export function Template({ type, ...args }: FieldBaseProps & FieldComboProps) {
+export function Template({ type, ...args }: FieldComboProps) {
   return <Field type="combobox" {...args}/>
 }
 
-function Field(props: FieldBaseProps & FieldComboProps) {
+function Field(props: FieldComboProps) {
   const [value, setValue] = useState(props.value)
 
   const onChange = (value: string|null) => {
@@ -16,7 +16,7 @@ function Field(props: FieldBaseProps & FieldComboProps) {
   return <FieldUnboxed {...props} value={value} onChange={onChange}/>
 }
 
-export function ComboboxStoryTypes(props: FieldBaseProps & FieldComboProps) {
+export function ComboboxStoryTypes(props: FieldComboProps) {
 
 }
 
