@@ -8,5 +8,6 @@ import RadioButton from './components/RadioButton'
 import ButtonsGroup from './components/ButtonsGroup'
 import Text from './components/Text'
 import Avatar from './components/Avatar'
+import ItemsModal from 'components/ItemsModal'
 
-export {Button, ButtonsGroup, Flex, Field, CircularNumberInput, Dots, RadioButton, Text, Avatar}
+export {Button, ButtonsGroup, Flex, Field, CircularNumberInput, Dots, RadioButton, Text, Avatar, ItemsModal}

@@ -69,12 +69,12 @@ export type AvatarProps = {
 
 const Image = styled.img<{ width?: string, height?: string, skeleton: boolean }>`
   border-radius: ${BORDER_RADIUS};
-  width:${x => x.width};
-  height:${x => x.height};
+  width: ${({width}) => width};
+  height: ${({height}) => height};
   object-fit: scale-down;
   cursor: pointer;
   border: none;
-  ${x => x.skeleton ? SKELETON_ANIMATION_CSS : ''}
+  ${({skeleton}) => skeleton ? SKELETON_ANIMATION_CSS : ''}
 `
 
 const Input = styled.input`
@@ -83,6 +83,6 @@ const Input = styled.input`
 
 const Label = styled.label<{ width?: string, height?: string }>`
   all: unset;
-  width: ${x => x.width};
-  height: ${x => x.height};
+  width: ${({width}) => width};
+  height: ${({height}) => height};
 `
