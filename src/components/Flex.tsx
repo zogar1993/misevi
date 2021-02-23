@@ -9,7 +9,7 @@ import { margins, MARGINS, MarginsProps } from './css_helpers/margins'
 const ignored: Array<string> = ["wrap", "x-align", "y-align"]
 
 const removeHtmlProperties =  <W extends object>(
-  Element: StyledComponent<string | React.ComponentType<any>, any, W>, ignored: Array<string>
+  Element: StyledComponent<any | React.ComponentType<any>, any, W>, ignored: Array<string>
 ) => (({...props}: W & React.HTMLAttributes<HTMLElement>) => {
   const args = props as any
   ignored.forEach((name: any) => delete args[name])

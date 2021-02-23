@@ -15,6 +15,8 @@ import Img from './components/Img'
 import Tag from './components/Tag'
 import Tags from './components/Tags'
 import Box from './components/Box'
+import DataTable from './components/DataTable'
+import Main from './components/Main'
 
 export {
   Button,
@@ -32,5 +34,7 @@ export {
   Img,
   Tag,
   Tags,
-  Box
+  Box,
+  DataTable,
+  Main
 }

@@ -74,7 +74,7 @@ type ColumnFormat = {
 }
 
 type Sort = {
-	value?: SortOrder
+	value?: string
 	func?: (value: any) => any
 	default?: string
 }

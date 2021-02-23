@@ -1,8 +1,9 @@
-import React, {ReactNode, useState} from "react"
+import React, {useState} from "react"
 import styled from "styled-components"
-import {useHistory} from "react-router-dom"
+import {Route, Router, Switch, useHistory} from "react-router-dom"
 import {NoStyleButton} from "components/inner_components/NoStyleButton"
 import theme from "components/theme/Theme"
+import * as H from "history"
 
 const FOOTER_HEIGHT = "0px"
 const OUTER_Z_INDEX = 1
@@ -10,12 +11,30 @@ const OUTER_Z_INDEX = 1
 export type MainProps = {
   logo: any
   screens: Array<RouterItem>
+  provider: any
+  history: H.History
 }
 
-export default function Main({screens, ...props}: MainProps) {
-  const menu = screens.filter(x => isMenuItem(x)) as Array<MenuItem>
-  return <SideBar {...props} menu={menu} expanded={true}/>
+export default function Main({screens, history, provider, ...props}: MainProps) {
+  const menu = screens.filter(isMenuItem)
+  const routes = (screens.filter(isItemBranch).flatMap(x => x.items) as Array<ItemRoutable>)
+    .concat(screens.filter(isItemRoutable))
+
+  return (
+    <Router history={history}>
+      <Switch>
+        {
+          routes.map(({path, component: Component})  =>
+            <Route exact={path !== "*"} path={path} key={path} component={
+              (props: any) => <Component provider={provider} {...props.match.params}/>
+            }/>)
+        }
+      </Switch>
+      <SideBar {...props} menu={menu} expanded={true}/>
+    </Router>
+  )
 }
+
 
 type SideBarProps = {
   logo: any
@@ -77,7 +96,7 @@ function Item({item, expanded, openMenu, setOpenMenu, pathParts}: ItemsProps) {
 }
 
 function isSelected(item: MenuItem, pathParts: Array<string>) {
-  return Boolean(isItemLeaf(item) && pathParts.includes(item.path))
+  return Boolean(isItemRoutable(item) && pathParts.includes(item.path))
 }
 
 function hasSelectedChild(item: MenuItem, pathParts: Array<string>) {
@@ -160,7 +179,7 @@ export function isItemBranch(item: RouterItem): item is ItemBranch {
   return item.hasOwnProperty("items")
 }
 
-export function isItemLeaf(item: RouterItem): item is ItemLeaf {
+export function isItemRoutable(item: RouterItem): item is ItemRoutable  {
   return item.hasOwnProperty("path")
 }
 
@@ -285,9 +304,9 @@ const MiniSubItemName = styled.button<{ selected: boolean }>`
   color: ${({selected}) => (selected ? theme.colors.primary : theme.colors.text)};
 `
 
-export type InvisibleItem = {
+export type ItemRoutable = {
   path: string
-  component: ReactNode
+  component: () => JSX.Element
 }
 
 export type ItemBranch = {
@@ -298,12 +317,11 @@ export type ItemBranch = {
 }
 
 export type ItemLeaf = {
-  path: string
-  component: ReactNode
   name: string
   activePaths?: Array<string>
   icon?: any
-}
+} & ItemRoutable
 
-export type RouterItem = ItemBranch | ItemLeaf | InvisibleItem
+
+export type RouterItem = ItemBranch | ItemLeaf | ItemRoutable
 export type MenuItem = ItemBranch | ItemLeaf
