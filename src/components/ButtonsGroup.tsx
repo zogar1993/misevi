@@ -4,6 +4,7 @@ import { BORDER_RADIUS } from './css/Dimensions'
 import { dimensions, DimensionsProps } from './css_helpers/dimensions'
 import Flex, { XAlignType, YAlignType } from './Flex'
 import Button from './Button'
+import theme from "components/theme/Theme"
 
 export default function ButtonsGroup(props: ButtonsGroupProps) {
 	const {items, selected, onChange, bold, width, columns, size} = props
@@ -110,7 +111,7 @@ const ButtonItem = styled(Button)<Props>`
   color: black;
   font-weight: ${({bold}) => bold ? "bold" : "normal"};
   font-style: ${({italic}) => italic ? "italic" : "normal"};
-  font-family: Almendra SC, Times, serif;
+  font-family: ${theme.fonts.option};
 
   border-bottom-style: ${props => props["has-buttons-bottom"] ? "none" : "solid"};
   border-right-style: ${props => props["has-buttons-right"] ? "none" : "solid"};

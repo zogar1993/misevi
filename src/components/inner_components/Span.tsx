@@ -1,9 +1,16 @@
 import styled from "styled-components"
-import { HANDWRITTEN_FONT } from '../css/Fonts'
+import theme from "components/theme/Theme"
+
+
+const fontSize = ({size}: Props) => {
+  if (size === "small") return "12px"
+  if (size === "large") return "16px"
+  return "14px"
+}
 
 const Span = styled.span<Props>`
-  font-family: ${({handwritten}) => handwritten ? `${HANDWRITTEN_FONT}, ` : ""}Times, serif;
-  font-size: ${props => fontSize(props)};
+  font-family: ${({handwritten}) => handwritten ? theme.fonts.handwritten : theme.fonts.typewriter};
+  font-size: ${fontSize};
   font-weight: ${({ bold }) => bold ? "bold" : "normal"};
   color: ${({ color }) => color || "black"};
 `
@@ -14,10 +21,4 @@ interface Props {
   bold?: boolean
   color?: string
   handwritten?: boolean
-}
-
-const fontSize = ({size}: Props) => {
-  if (size === "small") return "12px"
-  if (size === "large") return "16px"
-  return "14px"
 }

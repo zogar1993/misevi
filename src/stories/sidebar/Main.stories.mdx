@@ -1,0 +1,18 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks'
+import { Template } from './MainTemplate'
+import Main from "components/Main";
+
+<Meta title='Templates/Main' component={Main} />
+
+**LeftNavigationCentralContent** is the main template to be used in VeriTran
+web consoles. It includes a left sidebar menu for internal navigation,
+a user settings gear for user specific actions, an application-selection component to switch between applications,
+a footer and the screens and their routes. **LeftNavigationCentralContent** is meant to be used inside [**Main**](?path=/docs/base-main--main).
+
+### Usage
+
+<Canvas>
+  <Story name='usage'>
+    {Template.bind({})}
+  </Story>
+</Canvas>

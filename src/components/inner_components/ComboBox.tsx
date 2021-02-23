@@ -279,7 +279,7 @@ const ButtonsContainer = styled(Flex)`
   position: absolute;
   right: 9px;
   ${({visible}) => visible === false ? "visibility: hidden" : ""};
-  //TODO this should not be needed, bu without this tests break
+  //TODO this should not be needed, but without this tests break
 `
 
 const TextInput = styled(Input)<{ error: boolean }>`
