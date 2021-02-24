@@ -1,11 +1,13 @@
-import React, {useState} from "react"
-import styled from "styled-components"
-import {Route, Router, Switch, useHistory} from "react-router-dom"
-import {NoStyleButton} from "components/inner_components/NoStyleButton"
-import theme from "components/theme/Theme"
-import * as H from "history"
+import React, { useState } from 'react'
+import styled from 'styled-components'
+import { Route, Router, Switch, useHistory } from 'react-router-dom'
+import { NoStyleButton } from 'components/inner_components/NoStyleButton'
+import theme from 'components/theme/Theme'
+import * as H from 'history'
+import Article from 'components/Article'
+import Flex from 'components/Flex'
 
-const FOOTER_HEIGHT = "0px"
+const FOOTER_HEIGHT = '0px'
 const OUTER_Z_INDEX = 1
 
 export type MainProps = {
@@ -15,48 +17,48 @@ export type MainProps = {
   history: H.History
 }
 
-export default function Main({screens, history, provider, ...props}: MainProps) {
+export default function Main({ screens, history, provider, ...props }: MainProps) {
   const menu = screens.filter(isMenuItem)
   const routes = (screens.filter(isItemBranch).flatMap(x => x.items) as Array<ItemRoutable>)
     .concat(screens.filter(isItemRoutable))
 
   return (
     <Router history={history}>
-      <Switch>
-        {
-          routes.map(({path, component: Component})  =>
-            <Route exact={path !== "*"} path={path} key={path} component={
-              (props: any) => <Component provider={provider} {...props.match.params}/>
-            }/>)
-        }
-      </Switch>
-      <SideBar {...props} menu={menu} expanded={true}/>
+      <Flex width="100%" height="100%">
+        <SideBar {...props} menu={menu} />
+        <Article>
+          <Switch>
+            {
+              routes.map(({ path, component: Component }) =>
+                <Route exact={path !== '*'} path={`/${path}`} key={path} component={
+                  (props: any) => <Component provider={provider} {...props.match.params} />
+                } />)
+            }
+          </Switch>
+        </Article>
+      </Flex>
     </Router>
   )
 }
-
 
 type SideBarProps = {
   logo: any
   menu: Array<MenuItem>
 }
 
-function SideBar({
-                   expanded = true,
-                   logo,
-                   menu
-                 }: SideBarProps & { expanded: boolean }) {
+function SideBar({ logo, menu }: SideBarProps) {
   const [openMenu, setOpenMenu] = useState<string | null>(null)
+  const [expanded, setExpanded] = useState(true)
 
-  const pathParts = location.href.split("/").map((x) => x.split("?")[0])
+  const pathParts = location.href.split('/').map((x) => x.split('?')[0])
 
   return (
     <SideBarElement expanded={expanded}>
       <SideBarOverflowHider>
-        <Logo src={logo} alt='logo' open={expanded}/>
+        <Logo src={logo} alt='logo' open={expanded} onClick={() => setExpanded(expanded => !expanded)} />
         <ItemsContainer>
           {menu.map((item) => (
-            <Item key={item.name} {...{item, expanded, openMenu, setOpenMenu, pathParts}} />
+            <Item key={item.name} {...{ item, expanded, openMenu, setOpenMenu, pathParts }} />
           ))}
         </ItemsContainer>
       </SideBarOverflowHider>
@@ -64,7 +66,7 @@ function SideBar({
   )
 }
 
-function Item({item, expanded, openMenu, setOpenMenu, pathParts}: ItemsProps) {
+function Item({ item, expanded, openMenu, setOpenMenu, pathParts }: ItemsProps) {
   const history = useHistory()
   const selected = isSelected(item, pathParts) || hasSelectedChild(item, pathParts)
   const isOpen = openMenu === item.name
@@ -77,19 +79,18 @@ function Item({item, expanded, openMenu, setOpenMenu, pathParts}: ItemsProps) {
         onClick={() => {
           if (isOpen) setOpenMenu(null)
           else if (isItemBranch(item)) setOpenMenu(item.name)
-          else if (history.location.pathname !== `/${item.path}`) history.push(`/${item.path}`)
+          else {
+            const clean = item.path.split('/').filter(x => !x.includes(':')).join('/')
+            if (!history.location.pathname.includes(`/${clean})`)) history.push(`/${clean}`)
+          }
         }}
       >
-        <ItemButtonMainBand>
-          <ItemIcon icon={item.icon} selected={selected}/>
-          <ItemName selected={selected}>{item.name}</ItemName>
-          {isItemBranch(item) && !selected ? (
-            <DropdownIcon icon={isOpen ? "ic_keyboard_arrow_up" : "ic_keyboard_arrow_down"}/>
-          ) : null}
-        </ItemButtonMainBand>
+        <Icon src={item.icon} alt={item.name} selected={selected} />
+        <ItemName selected={selected}>{item.name}</ItemName>
+        {isItemBranch(item) && !selected ? <DropdownIcon open={isOpen} /> : null}
       </ItemButton>
       {isItemBranch(item) ? (
-        <SubItems items={item.items} expanded={expanded} pathParts={pathParts} show={isOpen || selected}/>
+        <SubItems items={item.items} expanded={expanded} pathParts={pathParts} show={isOpen || selected} />
       ) : null}
     </ItemContainer>
   )
@@ -103,25 +104,26 @@ function hasSelectedChild(item: MenuItem, pathParts: Array<string>) {
   return Boolean(isItemBranch(item) && item.items.some((x) => pathParts.includes(x.path)))
 }
 
-function SubItems({items, expanded, show, pathParts}: SubItemsProps) {
+function SubItems({ items, expanded, show, pathParts }: SubItemsProps) {
+  const history = useHistory()
+  //TODO  refactor onclicks
+
   return (
     <SubItemsContainer show={show} amount={items.length}>
-      {items.map((item) => (
-        <SubItem item={item} key={item.name} expanded={expanded} selected={isSelected(item, pathParts)}/>
-      ))}
+      {items.map((item) => {
+          const selected = isSelected(item, pathParts)
+          return (
+            <SubItemButton key={item.name} expanded={expanded} onClick={() => {
+              const clean = item.path.split('/').filter(x => !x.includes(':')).join('/')
+              if (!history.location.pathname.includes(`/${clean})`)) history.push(`/${clean}`)
+            }}>
+              <Icon src={item.icon} alt={item.name} selected={selected} />
+              <SubItemName selected={selected}>{item.name}</SubItemName>
+            </SubItemButton>
+          )
+        }
+      )}
     </SubItemsContainer>
-  )
-}
-
-function SubItem({item, expanded, selected}: SubItemProps) {
-  //TODO Clean up
-  return (
-    <SubItemContainer expanded={expanded}>
-      <MiniSubItemName selected={selected}>
-        {item.name[0] + item.name[1]}
-      </MiniSubItemName>
-      <SubItemName selected={selected}>{item.name}</SubItemName>
-    </SubItemContainer>
   )
 }
 
@@ -132,12 +134,6 @@ type SubItemsProps = {
   pathParts: Array<string>
 }
 
-type SubItemProps = {
-  item: ItemLeaf
-  expanded: boolean
-  selected: boolean
-}
-
 type ItemsProps = {
   item: MenuItem
   expanded: boolean
@@ -146,8 +142,8 @@ type ItemsProps = {
   pathParts: Array<string>
 }
 
-const WIDTH_EXTENDED = "190px"
-const WIDTH_COLLAPSED = "40px"
+const WIDTH_EXTENDED = '190px'
+const WIDTH_COLLAPSED = '48px'
 
 const SideBarOverflowHider = styled.div`
   position: relative;
@@ -171,31 +167,34 @@ const SideBarOverflowHider = styled.div`
 `
 
 const Logo = styled.img<{ open: boolean }>`
-  width: ${({open}) => (open ? WIDTH_EXTENDED : WIDTH_COLLAPSED)};
-  height: 60px;
+  width: ${WIDTH_EXTENDED};
+  min-height: 40px;
+  overflow-x: hidden;
+
+  border-bottom: ${theme.colors.menu.border} solid 1px;
 `
 
 export function isItemBranch(item: RouterItem): item is ItemBranch {
-  return item.hasOwnProperty("items")
+  return item.hasOwnProperty('items')
 }
 
-export function isItemRoutable(item: RouterItem): item is ItemRoutable  {
-  return item.hasOwnProperty("path")
+export function isItemRoutable(item: RouterItem): item is ItemRoutable {
+  return item.hasOwnProperty('path')
 }
 
 export function isMenuItem(item: RouterItem): item is MenuItem {
-  return item.hasOwnProperty("name")
+  return item.hasOwnProperty('name')
 }
 
 const SideBarElement = styled.div<{ expanded: boolean }>`
   user-select: none;
   position: sticky;
   height: calc(100vh - ${FOOTER_HEIGHT});
-  width: ${({expanded}) => (expanded ? WIDTH_EXTENDED : WIDTH_COLLAPSED)};
-  background-color: ${theme.colors.menu_background};
+  width: ${({ expanded }) => (expanded ? WIDTH_EXTENDED : WIDTH_COLLAPSED)};
+  background-color: ${theme.colors.menu.background};
   transition: width 0.4s;
-
-  box-shadow: rgba(0, 0, 0, 0.6) 0 1px 20px;
+  border-right: ${theme.colors.menu.border} solid 1px;
+  box-sizing: content-box;
 
   z-index: ${OUTER_Z_INDEX + 1};
 `
@@ -203,66 +202,53 @@ const SideBarElement = styled.div<{ expanded: boolean }>`
 const ItemContainer = styled.div<{ open: boolean }>`
   display: flex;
   flex-direction: column;
-  background-color: ${({open}) => (open ? theme.colors.menu_items : "transparent")};
-  border-bottom: ${theme.colors.menu_hover} solid 0.5px;
+  background-color: ${({ open }) => (open ? theme.colors.menu.open_item : 'transparent')};
+  border-bottom: ${theme.colors.menu.border} solid 1px;
   overflow: hidden;
 `
 
-const ITEM_LEFT_PADDING = "10px"
 const ItemButton = styled(NoStyleButton)<{ open: boolean }>`
-
   display: flex;
-  flex-direction: column;
-  background-color: ${({open}) => (open ? theme.colors.menu_items : theme.colors.menu_background)};
-
-  padding-left: ${ITEM_LEFT_PADDING};
+  align-items: center;
+  background-color: ${({ open }) => (open ? theme.colors.menu.open_item : theme.colors.menu.background)};
 
   cursor: pointer;
   transition: 0.4s ease-out;
   z-index: 1;
 
   :hover {
-    background-color: ${theme.colors.menu_hover};
+    background-color: ${theme.colors.menu.focus};
   }
-`
 
-const ItemButtonMainBand = styled.div`
   height: 44px;
-
-  display: flex;
-  align-items: center;
 `
 
 const ItemName = styled.span<{ selected: boolean }>`
   font-family: ${theme.fonts.option};
   font-size: 18px;
   text-align: left;
-  margin-left: ${WIDTH_COLLAPSED};
+  margin-left: 2px;
   width: calc(${WIDTH_EXTENDED} - ${WIDTH_COLLAPSED});
-  color: ${({selected}) => (selected ? theme.colors.primary : theme.colors.text)};
+  color: ${({ selected }) => (selected ? theme.colors.primary : theme.colors.text)};
 `
 
-//TODO add implementation
-const Icon = styled.div<{ icon: any }>`
+
+const Icon = styled.img<{ selected: boolean }>`
+  width: 32px;
+  height: 32px;
+  margin: 0 8px;
 `
 
-const ItemIcon = styled(Icon).attrs<{ selected: boolean }>(({selected}) => ({
-  color: selected ? theme.colors.primary : theme.colors.text
-}))<{ selected: boolean }>`
-  position: absolute;
-  margin-right: 10px;
-`
-
-const SUB_ITEM_HEIGHT = "-37px"
+const SUB_ITEM_HEIGHT = '37px'
 
 const SubItemsContainer = styled.div<{ show: boolean; amount: number }>`
   display: flex;
   flex-direction: column;
-  margin-top: ${({show, amount}) => (show ? "0" : `calc(${SUB_ITEM_HEIGHT} * ${amount})`)};
+  margin-top: ${({ show, amount }) => (show ? '0' : `calc(-${SUB_ITEM_HEIGHT} * ${amount})`)};
   transition: 0.4s ease-in-out;
 `
 
-const SubItemContainer = styled.div<{ expanded: boolean }>`
+const SubItemButton = styled(NoStyleButton)<{ expanded: boolean }>`
   height: ${SUB_ITEM_HEIGHT};
   width: calc(${WIDTH_COLLAPSED} + ${WIDTH_EXTENDED});
 
@@ -270,11 +256,11 @@ const SubItemContainer = styled.div<{ expanded: boolean }>`
   align-items: center;
   cursor: pointer;
 
-  transform: translateX(${({expanded}) => (expanded ? `-${WIDTH_COLLAPSED}` : 0)});
+  transform: translateX(${({ expanded }) => (expanded ? `-${WIDTH_COLLAPSED}` : 0)});
   transition: 0.4s ease-out;
 
   :hover {
-    background-color: ${theme.colors.menu_hover};
+    background-color: ${theme.colors.menu.focus};
   }
 `
 
@@ -283,7 +269,14 @@ const ItemsContainer = styled.nav`
   flex-direction: column;
 `
 
-const DropdownIcon = styled(Icon)`
+const DropdownIcon = styled.div<{ open: boolean }>`
+  width: 12px;
+  height: 12px;
+  border: ${theme.colors.primary} solid 2px;
+  border-left: 0;
+  border-top: 0;
+  transform: translateY(${({ open }) => open ? 0 : '-50%'}) rotate(${({ open }) => open ? 225 : 45}deg);
+
   position: absolute;
   left: 160px;
 `
@@ -292,16 +285,7 @@ const SubItemName = styled.span<{ selected: boolean }>`
   font-family: ${theme.fonts.option};
   margin-left: 16px;
   font-size: 16px;
-  color: ${({selected}) => (selected ? theme.colors.primary : theme.colors.text)};
-`
-
-const MiniSubItemName = styled.button<{ selected: boolean }>`
-  font-family: ${theme.fonts.option};
-  width: ${WIDTH_COLLAPSED};
-  height: 37px;
-  font-size: 16px;
-  font-weight: normal;
-  color: ${({selected}) => (selected ? theme.colors.primary : theme.colors.text)};
+  color: ${({ selected }) => (selected ? theme.colors.primary : theme.colors.text)};
 `
 
 export type ItemRoutable = {
@@ -310,7 +294,7 @@ export type ItemRoutable = {
 }
 
 export type ItemBranch = {
-  icon?: any
+  icon: any
   name: string
   items: Array<ItemLeaf>
   activePaths?: Array<string>
@@ -319,9 +303,8 @@ export type ItemBranch = {
 export type ItemLeaf = {
   name: string
   activePaths?: Array<string>
-  icon?: any
+  icon: any
 } & ItemRoutable
-
 
 export type RouterItem = ItemBranch | ItemLeaf | ItemRoutable
 export type MenuItem = ItemBranch | ItemLeaf

@@ -9,7 +9,7 @@ const fontSize = ({size}: Props) => {
 }
 
 const Span = styled.span<Props>`
-  font-family: ${({handwritten}) => handwritten ? theme.fonts.handwritten : theme.fonts.typewriter};
+  font-family: ${({handwritten}) => handwritten ? theme.fonts.handwritten : theme.fonts.common};
   font-size: ${fontSize};
   font-weight: ${({ bold }) => bold ? "bold" : "normal"};
   color: ${({ color }) => color || "black"};

@@ -1,4 +1,5 @@
 import styled from "styled-components"
+import theme from 'components/theme/Theme'
 
 const FieldLabel = styled.label<Props>`
   position: absolute;
@@ -6,7 +7,7 @@ const FieldLabel = styled.label<Props>`
   transition: 0.2s;
   font-size: ${props => props["as-placeholder"] ? '16px' : "11px"};
   color: ${props => props["as-placeholder"] ? "grey" : "black"};
-  font-family: Times, serif;
+  font-family: ${theme.fonts.common};
   top: ${props => props["as-placeholder"] ? '21px' : "2px"};
   left: 9px;
   user-select: none;

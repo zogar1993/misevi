@@ -1,9 +1,10 @@
 import styled from "styled-components"
-import {SEPARATION} from "web_components/constants"
+import { SEPARATION } from 'components/css/Dimensions'
 
 const Article = styled.article`
   box-sizing: border-box;
-  width: 100%;
+  flex-grow: 1;
+  flex-shrink: 1;
   height: 100%;
 
   padding: ${SEPARATION};

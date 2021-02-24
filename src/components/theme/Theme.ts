@@ -2,18 +2,20 @@ import { Color } from './Color'
 import { useLayoutEffect } from 'react'
 // @ts-ignore
 import styleInject from 'style-inject'
+import { css } from 'styled-components'
 
 const light = {
   colors: {
     text: Color.Black,
-    muted: Color.Gray,
+    muted: Color.DarkGrey,
 
     background1: Color.White,
-    menu_items2: "lightgrey",
-    menu_items: "whitesmoke",
-    menu_background: "whitesmoke",
-    menu_hover: "lightgrey",
-    menu_hover2: "darkgrey",
+    menu: {
+      background: Color.LighterGray,
+      open_item: Color.LightGray,
+      focus: Color.Gray,
+      border: Color.Gray
+    },
 
     primary: Color.Black,
   },
@@ -21,7 +23,7 @@ const light = {
     handwritten: "Patrick Hand, Times, serif",
     option: "Almendra SC, Times, serif",
     title: "Almendra, Times, serif",
-    typewriter: "Life Savers, Times, serif"
+    common: "Arial, Times, serif"
   },
 }
 
@@ -65,7 +67,7 @@ export function useTheme(theme: string) {
 }
 
 function themeToCssWithoutSelector() {
-  return `
+  return css`
     body {
       ${themeToCss(DEFAULT_THEME)}
     }
@@ -73,7 +75,7 @@ function themeToCssWithoutSelector() {
 }
 
 function themeToCssWithSelector(theme: string) {
-  return `
+  return css`
     body[data-theme=${theme}] {
       ${themeToCss(theme)}
     }
@@ -94,12 +96,19 @@ styleInject(
       .map((theme) => themeToCssWithSelector(theme))
       .join('')}
 
+    * {
+      margin: 0;
+      padding: 0;
+      border: 0;
+      box-sizing: border-box;
+    }
+
     body {
       background: ${theme.colors.background1};
     }
 
     body * {
-      font-family: ${theme.fonts.typewriter};
+      font-family: ${theme.fonts.common};
     }
   `
 )
