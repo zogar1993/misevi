@@ -5,7 +5,7 @@ const Article = styled.article`
   box-sizing: border-box;
   flex-grow: 1;
   flex-shrink: 1;
-  height: 100%;
+  height: 100vh;
 
   padding: ${SEPARATION};
   padding-top: calc(${SEPARATION} * 2);
