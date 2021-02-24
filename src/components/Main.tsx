@@ -207,6 +207,7 @@ const ItemContainer = styled.div<{ open: boolean }>`
   background-color: ${({ open }) => (open ? theme.colors.menu.open_item : 'transparent')};
   border-bottom: ${theme.colors.menu.border} solid 1px;
   overflow: hidden;
+  transition: 0.4s ease-out;
 `
 
 const ItemButton = styled(NoStyleButton)<{ open: boolean }>`
@@ -272,6 +273,7 @@ const ItemsContainer = styled.nav`
 `
 
 const DropdownIcon = styled.div<{ open: boolean }>`
+  margin-top: 6px;
   width: 12px;
   height: 12px;
   border: ${theme.colors.primary} solid 2px;
