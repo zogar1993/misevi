@@ -12,14 +12,14 @@ const OUTER_Z_INDEX = 1
 
 export type MainProps = {
   logo: any
-  screens: Array<RouterItem>
+  screens: Array<ScreenItem>
   provider: any
   history: H.History
 }
 
 export default function Main({ screens, history, provider, ...props }: MainProps) {
   const menu = screens.filter(isMenuItem)
-  const routes = (screens.filter(isItemBranch).flatMap(x => x.items) as Array<ItemRoutable>)
+  const routes = (screens.filter(isItemBranch).flatMap(x => x.items) as Array<RouteOnlyItem>)
     .concat(screens.filter(isItemRoutable))
 
   return (
@@ -79,10 +79,7 @@ function Item({ item, expanded, openMenu, setOpenMenu, pathParts }: ItemsProps) 
         onClick={() => {
           if (isOpen) setOpenMenu(null)
           else if (isItemBranch(item)) setOpenMenu(item.name)
-          else {
-            const clean = item.path.split('/').filter(x => !x.includes(':')).join('/')
-            if (!history.location.pathname.includes(`/${clean})`)) history.push(`/${clean}`)
-          }
+          else redirectTo(item, history)
         }}
       >
         <Icon src={item.icon} alt={item.name} selected={selected} />
@@ -106,17 +103,17 @@ function hasSelectedChild(item: MenuItem, pathParts: Array<string>) {
 
 function SubItems({ items, expanded, show, pathParts }: SubItemsProps) {
   const history = useHistory()
-  //TODO  refactor onclicks
 
   return (
     <SubItemsContainer show={show} amount={items.length}>
       {items.map((item) => {
           const selected = isSelected(item, pathParts)
           return (
-            <SubItemButton key={item.name} expanded={expanded} onClick={() => {
-              const clean = item.path.split('/').filter(x => !x.includes(':')).join('/')
-              if (!history.location.pathname.includes(`/${clean})`)) history.push(`/${clean}`)
-            }}>
+            <SubItemButton
+              key={item.name}
+              expanded={expanded}
+              onClick={() => { redirectTo(item, history)}}
+            >
               <Icon src={item.icon} alt={item.name} selected={selected} />
               <SubItemName selected={selected}>{item.name}</SubItemName>
             </SubItemButton>
@@ -127,8 +124,13 @@ function SubItems({ items, expanded, show, pathParts }: SubItemsProps) {
   )
 }
 
+function redirectTo(item: LeafItem, history: H.History) {
+  const clean = item.path.split('/').filter(x => !x.includes(':')).join('/')
+  if (!history.location.pathname.includes(`/${clean})`)) history.push(`/${clean}`)
+}
+
 type SubItemsProps = {
-  items: Array<ItemLeaf>
+  items: Array<LeafItem>
   expanded: boolean
   show: boolean
   pathParts: Array<string>
@@ -174,15 +176,15 @@ const Logo = styled.img<{ open: boolean }>`
   border-bottom: ${theme.colors.menu.border} solid 1px;
 `
 
-export function isItemBranch(item: RouterItem): item is ItemBranch {
+export function isItemBranch(item: ScreenItem): item is BranchItem {
   return item.hasOwnProperty('items')
 }
 
-export function isItemRoutable(item: RouterItem): item is ItemRoutable {
+export function isItemRoutable(item: ScreenItem): item is RouteOnlyItem {
   return item.hasOwnProperty('path')
 }
 
-export function isMenuItem(item: RouterItem): item is MenuItem {
+export function isMenuItem(item: ScreenItem): item is MenuItem {
   return item.hasOwnProperty('name')
 }
 
@@ -288,23 +290,23 @@ const SubItemName = styled.span<{ selected: boolean }>`
   color: ${({ selected }) => (selected ? theme.colors.primary : theme.colors.text)};
 `
 
-export type ItemRoutable = {
+export type RouteOnlyItem = {
   path: string
   component: () => JSX.Element
 }
 
-export type ItemBranch = {
+export type BranchItem = {
   icon: any
   name: string
-  items: Array<ItemLeaf>
+  items: Array<LeafItem>
   activePaths?: Array<string>
 }
 
-export type ItemLeaf = {
+export type LeafItem = {
   name: string
   activePaths?: Array<string>
   icon: any
-} & ItemRoutable
+} & RouteOnlyItem
 
-export type RouterItem = ItemBranch | ItemLeaf | ItemRoutable
-export type MenuItem = ItemBranch | ItemLeaf
+export type ScreenItem = BranchItem | LeafItem | RouteOnlyItem
+export type MenuItem = BranchItem | LeafItem

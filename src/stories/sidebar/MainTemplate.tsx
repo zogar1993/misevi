@@ -1,5 +1,5 @@
 import React from "react"
-import MainUnboxed, {MainProps, RouterItem} from "components/Main"
+import MainUnboxed, {MainProps, ScreenItem} from "components/Main"
 import logo from './img/logo.png'
 import prayer from './img/prayer.png'
 import wicca from './img/wicca.png'
@@ -27,7 +27,7 @@ function Main(args: MainProps) {
   )
 }
 
-const screens: Array<RouterItem> = [
+const screens: Array<ScreenItem> = [
   { path: '/', component: () => <span>Home</span>, name: "Home", icon: home },
   {path: "characters", component:  () => <span>Characters</span>, name: "Characters", icon: child},
   {path: "talents", component:  () => <span>Talents</span>, name: "Talents", icon: talent},
