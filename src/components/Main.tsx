@@ -23,21 +23,23 @@ export default function Main({ screens, history, provider, ...props }: MainProps
     .concat(screens.filter(isItemRoutable))
 
   return (
-    <Router history={history}>
-      <Flex width="100%" height="100%">
-        <SideBar {...props} menu={menu} />
-        <Article>
-          <Switch>
-            {
-              routes.map(({ path, component: Component }) =>
-                <Route exact={path !== '*'} path={`/${path}`} key={path} component={
-                  (props: any) => <Component provider={provider} {...props.match.params} />
-                } />)
-            }
-          </Switch>
-        </Article>
-      </Flex>
-    </Router>
+    <React.StrictMode>
+      <Router history={history}>
+        <Flex width="100%" height="100%">
+          <SideBar {...props} menu={menu} />
+          <Article>
+            <Switch>
+              {
+                routes.map(({ path, component: Component }) =>
+                  <Route exact={path !== '*'} path={`/${path}`} key={path} component={
+                    (props: any) => <Component provider={provider} {...props.match.params} />
+                  } />)
+              }
+            </Switch>
+          </Article>
+        </Flex>
+      </Router>
+    </React.StrictMode>
   )
 }
 
@@ -51,6 +53,7 @@ function SideBar({ logo, menu }: SideBarProps) {
   const [expanded, setExpanded] = useState(true)
 
   const pathParts = location.href.split('/').map((x) => x.split('?')[0])
+
 
   return (
     <SideBarElement expanded={expanded}>
