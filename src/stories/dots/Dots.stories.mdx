@@ -1,5 +1,5 @@
 import {Canvas, Meta, Story} from "@storybook/addon-docs/blocks";
-import Template from "stories/dots/Template";
+import Template, { coloring } from './DotsTemplate'
 import Dots from "components/Dots";
 
 <Meta title="Numeric/Dots" component={Dots}/>
@@ -19,13 +19,13 @@ import Dots from "components/Dots";
 
 ### Zweihander Advancement
 <Canvas>
-  <Story name="Lacking Advancement" args={{total: 5, value: 1, advances: 2}}>
+  <Story name="Lacking Advancement" args={{total: 5, value: 2, coloring: coloring}}>
     {Template.bind({})}
   </Story>
-  <Story name="Even" args={{total: 5, value: 2, advances: 2}}>
+  <Story name="Even" args={{total: 5, value: 3, coloring: coloring}}>
     {Template.bind({})}
   </Story>
-  <Story name="Over Advancing" args={{total: 5, value: 3, advances: 2}}>
+  <Story name="Over Advancing" args={{total: 5, value: 4, coloring: coloring}}>
     {Template.bind({})}
   </Story>
 </Canvas>

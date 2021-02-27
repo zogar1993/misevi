@@ -5,34 +5,29 @@ import styled from 'styled-components'
 import Div from './inner_components/Div'
 import { NoStyleInput } from './inner_components/NoStyleInput'
 
-export default function Dots({ total, value, onChange, reversed, rows, advances = 0 }: DotsProps) {
+export default function Dots({ total, value, onChange, reversed, rows, coloring }: DotsProps) {
   const [tentative, setTentative] = useState<number | null>(null)
   useEffect(() => setTentative(null), [value])
   const values = Array.from({ length: total }, (_, k) => k + 1) as Array<number>
 
-  const thereIsATentative = useCallback(() => tentative !== null, [tentative])
-  const isMarked = useCallback((current: number) => current <= value, [value])
-  const isAdvance = useCallback((current: number) => current <= advances, [advances])
-  const isMarkedWhenTentativeIsLower = useCallback((current: number) =>
-    tentative!! < value && current > tentative!! && current <= value
-    , [tentative, value])
-  const wouldBeCleared = useCallback((current: number) =>
-      isMarkedWhenTentativeIsLower(current)
-    , [isMarkedWhenTentativeIsLower])
-  const wouldBeMarked = useCallback((current: number) =>
-    tentative!! > value && current > value && current <= tentative!!
-    , [tentative, value])
-
   const getColorFor = useCallback((current: number) => {
-    if (thereIsATentative()) {
+    const isMarked = (current: number) => current <= value
+    if (tentative !== null) {
+      const wouldBeCleared = (current: number) =>
+        tentative < value && current > tentative && current <= value
+      const wouldBeMarked = (current: number) =>
+        tentative > value && current > value && current <= tentative
+
       if (wouldBeCleared(current)) return 'lightgray'
       if (wouldBeMarked(current)) return 'dimgray'
+      return isMarked(current) ? 'black' : 'white'
     }
 
-    if (isAdvance(current))
-      return isMarked(current) ? 'black' : 'palegreen'
-    return isMarked(current) ? 'darkred' : 'white'
-  }, [thereIsATentative, wouldBeCleared, wouldBeMarked, isMarked])
+    const color = coloring && coloring({number: current, value: value})
+    if (color) return color
+
+    return isMarked(current) ? 'black' : 'white'
+  }, [value, tentative, coloring])
 
   const width = (rows ? total / rows : total) * 14 + 'px'
   const height = (rows || 1) * 14 + 'px'
@@ -82,7 +77,7 @@ export interface DotsProps {
   onChange?: (value: number) => void
   reversed?: boolean
   rows?: number
-  advances?: number
+  coloring?: (props: {number: number, value: number}) => string
 }
 
 const DotZeroElement = styled(NoStyleInput)<{visible: boolean}>`
