@@ -17,28 +17,30 @@ export default function ComboBox(props: ComboBoxProps) {
   const [dropdown, setDropdown] = useState<Array<ComboBoxItem> | null>(null)
   const refInput = useRef<HTMLInputElement>(null)
   const refOptions = useRef<HTMLOListElement>(null)
-  const showSkeleton = value === undefined
-  const isNotLoading = value !== undefined
+  const isLoading = value === undefined || options === undefined
+  const isNotLoading = !isLoading
   const open = !!dropdown && dropdown.length > 0
+
+  const getOptions = useCallback(() => options || [], [options])
 
   const findOptionByText = useCallback(() => {
     const trimmed = text.trim()
     if (trimmed === '') return NULL_OPTION
-    return options.find(x => insensitiveCompare(trimmed, x.name))
-  }, [text, options])
+    return getOptions().find(x => insensitiveCompare(trimmed, x.name))
+  }, [text, getOptions])
 
   const setTextFromValue = useCallback(() => {
     if (value) {
-      const option = options.find(x => x.code === value)
+      const option = getOptions().find(x => x.code === value)
       setText(option ? option.name : '')
     } else
       setText('')
-  }, [value, options])
+  }, [value, getOptions])
 
   const updateDropdown = useCallback((text: string) => {
-    const visibleOptions = options.filter(x => insensitiveIncludes(x.name, text))
+    const visibleOptions = getOptions().filter(x => insensitiveIncludes(x.name, text))
     setDropdown(visibleOptions)
-  }, [options])
+  }, [getOptions])
 
   const updateText = useCallback((text: string) => {
     setText(text)
@@ -133,7 +135,7 @@ export default function ComboBox(props: ComboBoxProps) {
         id={id}
         ref={refInput}
         value={text}
-        disabled={showSkeleton}
+        disabled={isLoading}
         onChange={(e) => updateText(e.target.value)}
         onBlur={onLoseFocus}
         onFocus={() => {
@@ -144,7 +146,7 @@ export default function ComboBox(props: ComboBoxProps) {
         }}
         onKeyDown={handleOnKeyDown}
         readOnly={onChange === undefined}
-        skeleton={showSkeleton}
+        skeleton={isLoading}
         error={error}
         type="text"
         role="combobox"
@@ -195,7 +197,7 @@ export default function ComboBox(props: ComboBoxProps) {
 export type ComboBoxProps = {
   id?: string
   value: string | null | undefined
-  options: Array<ComboBoxItem>
+  options: Array<ComboBoxItem> | undefined
   onChange?: (value: string | null) => void
   onFocusChange: (focus: boolean, text: string) => void
   buttons?: Array<ButtonInfo>

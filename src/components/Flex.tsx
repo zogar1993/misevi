@@ -5,6 +5,7 @@ import React from 'react'
 import { paddings, PADDINGS, PaddingsProps } from './css_helpers/paddings'
 import { POSITIONS, positions, PositionsProps } from './css_helpers/positions'
 import { margins, MARGINS, MarginsProps } from './css_helpers/margins'
+import { SEPARATION } from './css/Dimensions'
 
 const ignored: Array<string> = ["wrap", "x-align", "y-align"]
 
@@ -34,6 +35,7 @@ const Flex = styled(removeHtmlProperties<FlexProps>(Div, ignored))<FlexProps>`
   justify-content: ${({vertical, ...props}) => align(props[vertical ? "y-align" : "x-align"])};
   align-content: ${({vertical, ...props}) => align(props[vertical ? "x-align" : "y-align"])};
   align-items: ${({vertical, ...props}) => align(props[vertical ? "x-align" : "y-align"])};
+  gap: ${({gap}) => gap ? gap === true ? SEPARATION : gap : 0 };
 
   border-color: ${({skeleton}) => skeleton ? "transparent" : "black"};
   ${({skeleton}) => skeleton ? SKELETON_ANIMATION_CSS : ""};
@@ -69,6 +71,7 @@ export type FlexPropsBase = {
   "x-align"?: XAlignType
   reversed?: boolean
   wrap?: boolean
+  gap?: true | string
   vertical?: boolean
   overflow?: string
   skeleton?: boolean

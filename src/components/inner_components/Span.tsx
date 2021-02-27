@@ -3,6 +3,7 @@ import theme from "components/theme/Theme"
 
 
 const fontSize = ({size}: Props) => {
+  if (size === "smallest") return "10px"
   if (size === "small") return "12px"
   if (size === "large") return "16px"
   return "14px"
@@ -17,8 +18,10 @@ const Span = styled.span<Props>`
 export default Span
 
 interface Props {
-  size?: "small" | "medium" | "large"
+  size?: TextSize
   bold?: boolean
   color?: string
   handwritten?: boolean
 }
+
+export type TextSize = "smallest" | "small" | "medium" | "large"

@@ -1,6 +1,6 @@
 import React, { ReactNode, useState } from 'react'
 import styled from 'styled-components'
-import { Flex } from 'index'
+import Flex from 'components/Flex'
 
 const noSorting = (_: any) => 0
 

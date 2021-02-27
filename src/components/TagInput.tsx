@@ -34,3 +34,4 @@ const Tag = styled.span`
     padding: 3px 5px 3px 5px;
     margin-left: ${SEPARATION};
 `
+
