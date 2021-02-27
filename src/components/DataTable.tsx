@@ -167,9 +167,10 @@ const Header = styled.th<any>`
   cursor: ${props => props.onClick ? 'pointer' : 'default'};
 `
 
-const TableHeaders = ({ children }: { children: ReactNode }) => <THead>
-  <tr>{children}</tr>
-</THead>
+const TableHeaders = ({ children }: { children: ReactNode }) =>
+  <THead>
+    <tr>{children}</tr>
+  </THead>
 
 const THead = styled.thead`
   background-color: black;

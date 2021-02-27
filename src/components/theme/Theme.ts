@@ -103,6 +103,10 @@ styleInject(
       box-sizing: border-box;
     }
 
+    ::before, ::after {
+      box-sizing: border-box;
+    }
+
     body {
       background: ${theme.colors.background1};
     }
