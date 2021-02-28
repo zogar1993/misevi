@@ -18,7 +18,7 @@ export default function Field({ label, width, ...props }: FieldProps) {
 
   return (
     <FieldContainer width={width}>
-      <FieldLabel as-placeholder={isPlaceholder} htmlFor={id}>{label}</FieldLabel>
+      <FieldLabel as-placeholder={isPlaceholder} htmlFor={id} disabled={disabled}>{label}</FieldLabel>
       {
         props.type === 'number' ? <NumberInput {...props} id={id} /> :
           props.type === 'combobox' ? <ComboBox {...props} id={id} onFocusChange={onTextChange} /> :
@@ -33,7 +33,6 @@ export type FieldProps = FieldTextProps | FieldNumberProps | FieldComboProps
 type FieldBaseProps = {
   label: string
   width?: string
-  disabled?: boolean
 }
 
 export type FieldTextProps = { type?: 'text' } & FieldBaseProps & TextInputProps

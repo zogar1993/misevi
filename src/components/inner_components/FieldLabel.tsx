@@ -12,9 +12,11 @@ const FieldLabel = styled.label<Props>`
   left: 9px;
   user-select: none;
   z-index: 2;
+  ${({ disabled }) => disabled ? 'pointer-events: none' : '2px'};
 `
 export default FieldLabel
 
 type Props = {
   'as-placeholder'?: boolean
+  disabled?: boolean
 }

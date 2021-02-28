@@ -3,9 +3,6 @@ import styled, { css } from 'styled-components'
 import Dialog from './inner_components/Dialog'
 import Title from './inner_components/Title'
 
-//TODO This dependencies constantes are tied to the nav bar, should be removed
-const NAV_BAR_WITH_BORDER_HEIGHT = '46px'
-const PAGE_CONTENT_HEIGHT = `calc(100vh - ${NAV_BAR_WITH_BORDER_HEIGHT})`
 
 export default function ItemsModal<T extends Item>({ render, item, items, navigate, children }: Props<T>) {
   const [leaving, setLeaving] = useState<{ item: T, direction: 'up' | 'left' | 'right' } | null>(null)
@@ -99,7 +96,7 @@ const Background = styled.div<{ show: boolean }>`
 const ModalCard = styled.div<{ animation?: string }>`
   position: absolute;
   max-width: 80vw;
-  max-height: ${PAGE_CONTENT_HEIGHT};
+  max-height: 80vh;
   @media (max-width: 768px) {
     width: 100vw;
     height: 100vh;
@@ -117,7 +114,7 @@ const ModalHeader = styled.header`
   padding: 10px;
 `
 
-const ModalBody = styled.header`
+const ModalBody = styled.body`
   background-color: white;
   padding: 10px;
 `
@@ -157,7 +154,7 @@ const bounceInTop = () => css`
   animation: bounce-in-top 0.8s both;
   @keyframes bounce-in-top {
     0% {
-      transform: translateY(-500px);
+      transform: translateY(-100vh);
       animation-timing-function: ease-in;
       opacity: 0;
     }
@@ -167,7 +164,7 @@ const bounceInTop = () => css`
       opacity: 1;
     }
     55% {
-      transform: translateY(-65px);
+      transform: translateY(-13vh);
       animation-timing-function: ease-in;
     }
     72% {
@@ -175,7 +172,7 @@ const bounceInTop = () => css`
       animation-timing-function: ease-out;
     }
     81% {
-      transform: translateY(-28px);
+      transform: translateY(-6vh);
       animation-timing-function: ease-in;
     }
     93% {
@@ -183,7 +180,7 @@ const bounceInTop = () => css`
       animation-timing-function: ease-out;
     }
     97% {
-      transform: translateY(-6px);
+      transform: translateY(-1.2vh);
       animation-timing-function: ease-in;
     }
     100% {
@@ -201,7 +198,7 @@ const slideOutTop = () => css`
       animation-timing-function: ease-in;
     }
     to {
-      transform: translateY(-500px);
+      transform: translateY(-100vh);
     }
   }
 `

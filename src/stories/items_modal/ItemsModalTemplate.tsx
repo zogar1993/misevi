@@ -1,11 +1,7 @@
 import React from "react"
-import Field, {FieldProps, FieldTextProps} from "components/Field"
+import ItemsModal from "components/ItemsModal"
 
-export function Template(args: FieldProps) {
-  return <Field {...args}/>
-}
-
-export function TextFieldStoryTypes(props: FieldTextProps) {
-
+export function Template(args: any) {
+  return <ItemsModal {...args}/>
 }
 

@@ -1,18 +1,12 @@
 import {Canvas, Meta, Story} from "@storybook/addon-docs/blocks";
-import {Template, TextFieldStoryTypes} from "stories/text_field/TextFieldTemplate";
+import {Template} from "./ItemsModalTemplate";
+import ItemsModal from 'components/ItemsModal'
 
-<Meta title="Form/TextField" component={TextFieldStoryTypes}/>
+<Meta title="Form/ItemsModal" component={ItemsModal}/>
 
-### Default
+### Usage
 <Canvas>
-    <Story name="with value" args={{label: "label", value: 5}}>
-        {Template.bind({})}
-    </Story>
-</Canvas>
-
-### Skeleton
-<Canvas>
-    <Story name="without value" args={{label: "label"}}>
+    <Story name="usage" args={{label: "label", value: 5}}>
         {Template.bind({})}
     </Story>
 </Canvas>

@@ -19,7 +19,10 @@ import {Template, ComboboxStoryTypes, items, long_items} from "./ComboBoxTemplat
 
 ### Disabled
 <Canvas>
-  <Story name="disabled" args={{label: "label", value: "apostle", options: items, disabled: true}}>
+  <Story name="disabled with selected" args={{label: "label", value: "apostle", options: items, disabled: true}}>
+    {Template.bind({})}
+  </Story>
+  <Story name="disabled empty" args={{label: "label", value: null, options: items, disabled: true}}>
     {Template.bind({})}
   </Story>
 </Canvas>
