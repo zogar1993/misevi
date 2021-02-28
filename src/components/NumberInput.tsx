@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useState} from "react"
-import Input, {InputProps} from "./inner_components/Input"
+import Input from "./inner_components/Input"
 
 export default function NumberInput(props: NumberInputProps) {
   const {value, onBlur, min, max, disabled} = props
@@ -39,7 +39,7 @@ export default function NumberInput(props: NumberInputProps) {
   )
 }
 
-export interface NumberInputProps extends InputProps {
+export type NumberInputProps = {
   id?: string
   min?: number
   max?: number

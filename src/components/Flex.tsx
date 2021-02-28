@@ -28,6 +28,7 @@ const Flex = styled(removeHtmlProperties<FlexProps>(Div, ignored))<FlexProps>`
   display: flex;
   ${props => props["no-pointer-events"] ? "pointer-events: none" : ""};
   ${({visible}) => visible === false ? "visibility: hidden" : ""};
+  ${({area}) => area ? `grid-area: ${area}` : ""};
 
   overflow: ${({ overflow }) => overflow || "visible"};
   flex-direction: ${({vertical, reversed}) => `${vertical ? "column" : "row"}${reversed ? "-reverse" : ""}`};
@@ -77,6 +78,7 @@ export type FlexPropsBase = {
   skeleton?: boolean
   visible?: boolean
   "no-pointer-events"?: boolean
+  area?: string
 }
 
 type Spaced = "space-between" | "space-evenly" | "space-around"

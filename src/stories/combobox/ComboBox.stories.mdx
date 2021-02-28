@@ -1,5 +1,5 @@
 import {Canvas, Meta, Story} from "@storybook/addon-docs/blocks";
-import {Template, ComboboxStoryTypes, items, long_items} from "./ComboboxTemplate";
+import {Template, ComboboxStoryTypes, items, long_items} from "./ComboBoxTemplate";
 
 <Meta title="Form/Combobox" component={ComboboxStoryTypes}/>
 
@@ -17,10 +17,17 @@ import {Template, ComboboxStoryTypes, items, long_items} from "./ComboboxTemplat
   </Story>
 </Canvas>
 
+### Disabled
+<Canvas>
+  <Story name="disabled" args={{label: "label", value: "apostle", options: items, disabled: true}}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
 ### Skeleton
 <Canvas>
-    <Story name="skeleton" args={{label: "label", options: items}}>
-        {Template.bind({})}
-    </Story>
+  <Story name="skeleton" args={{label: "label", options: items}}>
+    {Template.bind({})}
+  </Story>
 </Canvas>
 

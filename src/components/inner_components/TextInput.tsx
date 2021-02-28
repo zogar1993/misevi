@@ -1,7 +1,7 @@
 import React, {ForwardedRef, forwardRef, useEffect, useState} from "react"
 import Input from "./Input"
 
-const TextInput = forwardRef(({id, placeholder, value, onBlur, onFocusChange, ...props}: TextInputProps, ref: ForwardedRef<HTMLInputElement>) => {
+const TextInput = forwardRef(({id, placeholder, value, onBlur, onFocusChange, ...props}: InternalTextInputProps, ref: ForwardedRef<HTMLInputElement>) => {
   const [text, setText] = useState(value || '')
   useEffect(() => setText(value || ''), [value])
 
@@ -46,5 +46,8 @@ export type TextInputProps = {
   onFocus?: () => void
   disabled?: boolean
   readOnly?: boolean
-  onFocusChange: (focus: boolean, text: string) => void
 }
+
+export type InternalTextInputProps = {
+  onFocusChange: (focus: boolean, text: string) => void
+} & TextInputProps

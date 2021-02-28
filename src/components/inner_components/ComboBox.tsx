@@ -7,8 +7,8 @@ import close from '../icons/close.svg'
 import { HANDWRITTEN_FONT } from '../css/Fonts'
 import Input from './Input'
 
-export default function ComboBox(props: ComboBoxProps) {
-  const { value, options, onChange, onFocusChange, width, buttons, id } = props
+export default function ComboBox(props: InternalCombBoxProps) {
+  const { value, options, onChange, onFocusChange, buttons, id, disabled } = props
   const [text, setText] = useState('')
   const [error, setError] = useState(false)
   const [hovering, setHovering] = useState(false)
@@ -127,7 +127,6 @@ export default function ComboBox(props: ComboBoxProps) {
 
   return (
     <ComboBoxContainer
-      $width={width}
       onMouseEnter={() => setHovering(true)}
       onMouseLeave={() => setHovering(false)}
     >
@@ -135,7 +134,7 @@ export default function ComboBox(props: ComboBoxProps) {
         id={id}
         ref={refInput}
         value={text}
-        disabled={isLoading}
+        disabled={disabled || isLoading}
         onChange={(e) => updateText(e.target.value)}
         onBlur={onLoseFocus}
         onFocus={() => {
@@ -151,11 +150,7 @@ export default function ComboBox(props: ComboBoxProps) {
         type="text"
         role="combobox"
       />
-      <Options
-        width={width}
-        open={open}
-        ref={refOptions}
-      >
+      <Options open={open} ref={refOptions}>
         {
           dropdown && dropdown.map((item) => (
             <Option
@@ -170,7 +165,7 @@ export default function ComboBox(props: ComboBoxProps) {
       </Options>
       <ButtonsContainer
         y-align='center'
-        visible={hovering && isNotLoading}
+        visible={hovering && isNotLoading && !disabled}
       >
         {buttons === undefined ? null :
           buttons.map((x) => <ComboboxImageButton key={x.name} props={props} {...x} />)
@@ -199,10 +194,13 @@ export type ComboBoxProps = {
   value: string | null | undefined
   options: Array<ComboBoxItem> | undefined
   onChange?: (value: string | null) => void
-  onFocusChange: (focus: boolean, text: string) => void
   buttons?: Array<ButtonInfo>
-  width?: string
+  disabled?: boolean
 }
+
+export type InternalCombBoxProps = {
+  onFocusChange: (focus: boolean, text: string) => void
+} & ComboBoxProps
 
 export type ButtonInfo = {
   name: string
@@ -234,7 +232,7 @@ const OPTION_HEIGHT = 23
 const MAX_OPTION_AMOUNT = 5
 const BORDER_WIDTH = 1
 
-const Options = styled.ol<{ open: boolean, width?: string }>`
+const Options = styled.ol<{ open: boolean }>`
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -244,7 +242,7 @@ const Options = styled.ol<{ open: boolean, width?: string }>`
   border: ${BORDER_WIDTH}px solid lightgray;
   list-style: none;
   background-color: whitesmoke;
-  width: ${({ width }) => width || '100%'};
+  width: 100%;
   ${({ open }) => open ? '' : 'display: none'};
   transition: 0.2s;
   max-height: calc(${OPTION_HEIGHT}px * ${MAX_OPTION_AMOUNT} + ${BORDER_WIDTH}px * 2);
@@ -274,7 +272,6 @@ const ComboBoxContainer = styled.div<{ $width?: string }>`
   display: flex;
   align-items: center;
   position: relative;
-  ${({ $width }) => ($width ? `width: ${$width}` : '')};
 `
 
 const ButtonsContainer = styled(Flex)`

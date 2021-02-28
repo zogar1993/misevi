@@ -1,8 +1,10 @@
 import React from "react"
 import NumberInput, {NumberInputProps} from "./NumberInput"
 import styled from 'styled-components'
+import { InputProps } from 'components/inner_components/Input'
 
-const CircularNumberInput = styled(NumberInput)<NumberInputProps>`
+//TODO no me gusta que adquiera skeleton de input props
+const CircularNumberInput = styled(NumberInput)<NumberInputProps & InputProps>`
   text-align: center;
   width: 26px;
   height: 26px;
