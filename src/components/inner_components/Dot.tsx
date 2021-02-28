@@ -1,9 +1,9 @@
-import styled from "styled-components"
-import React from "react"
+import styled from 'styled-components'
+import React from 'react'
 import { NoStyleInput } from './NoStyleInput'
 import { SKELETON_ANIMATION_CSS } from '../css/Skeleton'
 
-export default function Dot({onChange, checked, ...props}: DotProps) {
+export default function Dot({ onChange, checked, ...props }: DotProps) {
   const showSkeleton = checked === undefined
   return (
     <DotElement
@@ -27,18 +27,18 @@ export type DotProps = {
 }
 
 const DotElement = styled(NoStyleInput).attrs(() => ({
-  type: "radio"
-}))<DotProps & {skeleton: boolean}>`
+  type: 'radio'
+}))<DotProps & { skeleton: boolean }>`
   width: 14px;
   height: 14px;
   box-sizing: border-box;
   border: 1px solid black;
   border-radius: 50%;
-  background-color: ${({color}) => color || "black"};
+  background-color: ${({ color }) => color || 'black'};
   :hover {
       border: 1px solid dodgerblue;
   }
-  ${({skeleton}) => skeleton ? SKELETON_ANIMATION_CSS : ""};
+  ${({ skeleton }) => skeleton ? SKELETON_ANIMATION_CSS : ''};
 
   :disabled {
     border: 1px solid transparent;

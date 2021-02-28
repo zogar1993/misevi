@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import {BORDER_RADIUS} from './css/Dimensions'
+import { BORDER_RADIUS } from './css/Dimensions'
 import Resizer from 'react-image-file-resizer'
 import bandit from './icons/bandit.png'
-import {SKELETON_ANIMATION_CSS} from './css/Skeleton'
+import { SKELETON_ANIMATION_CSS } from './css/Skeleton'
 
-export default function Avatar({onChange, src, alt, width = '135px', height = '135px'}: AvatarProps) {
+export default function Avatar({ onChange, src, alt, width = '135px', height = '135px' }: AvatarProps) {
   const [imageShowed, setImageShowed] = useState<string>('')
   useEffect(() => setImageShowed(getImage(src)), [src])
   const showSkeleton = src === undefined
@@ -13,8 +13,8 @@ export default function Avatar({onChange, src, alt, width = '135px', height = '1
     await changeDisplayedImage(e, setImageShowed, onChange)
   return (
     <Label width={width} height={height}>
-      <Input type="file" onChange={handleOnChange}/>
-      <Image src={imageShowed} alt={alt} width={width} height={height} skeleton={showSkeleton}/>
+      <Input type="file" onChange={handleOnChange} />
+      <Image src={imageShowed} alt={alt} width={width} height={height} skeleton={showSkeleton} />
     </Label>
   )
 }
@@ -43,7 +43,7 @@ async function createThumbnail(file: File) {
   const originalPromise = encode(file)
   const thumbnailPromise = resizeImage(file)
   const [original, thumbnail] = await Promise.all([originalPromise, thumbnailPromise])
-  return {original, thumbnail}
+  return { original, thumbnail }
 }
 
 function getImage(url: string | null | undefined): string {
@@ -56,7 +56,7 @@ function getImage(url: string | null | undefined): string {
 const resizeImage = (file: Blob): Promise<string> => new Promise(resolve =>
   Resizer.imageFileResizer(
     file, 70, 70, 'JPEG', 100, 0,
-    resolve as any, 'base64', 70, 70,
+    resolve as any, 'base64', 70, 70
   ))
 
 export type AvatarProps = {
@@ -69,12 +69,12 @@ export type AvatarProps = {
 
 const Image = styled.img<{ width?: string, height?: string, skeleton: boolean }>`
   border-radius: ${BORDER_RADIUS};
-  width: ${({width}) => width};
-  height: ${({height}) => height};
+  width: ${({ width }) => width};
+  height: ${({ height }) => height};
   object-fit: scale-down;
   cursor: pointer;
   border: none;
-  ${({skeleton}) => skeleton ? SKELETON_ANIMATION_CSS : ''}
+  ${({ skeleton }) => skeleton ? SKELETON_ANIMATION_CSS : ''}
 `
 
 const Input = styled.input`
@@ -83,6 +83,6 @@ const Input = styled.input`
 
 const Label = styled.label<{ width?: string, height?: string }>`
   all: unset;
-  width: ${({width}) => width};
-  height: ${({height}) => height};
+  width: ${({ width }) => width};
+  height: ${({ height }) => height};
 `

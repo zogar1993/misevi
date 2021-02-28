@@ -1,11 +1,11 @@
-import {cssFromProps} from './inner_helpers'
+import { cssFromProps } from './inner_helpers'
 
 export const PADDINGS = Object.freeze([
-  "padding",
-  "padding-top",
-  "padding-right",
-  "padding-bottom",
-  "padding-left"
+  'padding',
+  'padding-top',
+  'padding-right',
+  'padding-bottom',
+  'padding-left'
 ])
 
 export const paddings = (props: PaddingsProps) => `
@@ -15,8 +15,8 @@ export const paddings = (props: PaddingsProps) => `
 
 export type PaddingsProps = {
   padding?: string
-  "padding-top"?: string
-  "padding-right"?: string
-  "padding-bottom"?: string
-  "padding-left"?: string
+  'padding-top'?: string
+  'padding-right'?: string
+  'padding-bottom'?: string
+  'padding-left'?: string
 }

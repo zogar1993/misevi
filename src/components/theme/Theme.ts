@@ -17,14 +17,14 @@ const light = {
       border: Color.Gray
     },
 
-    primary: Color.Black,
+    primary: Color.Black
   },
   fonts: {
-    handwritten: "Patrick Hand, Times, serif",
-    option: "Almendra SC, Times, serif",
-    title: "Almendra, Times, serif",
-    common: "Arial, Times, serif"
-  },
+    handwritten: 'Patrick Hand, Times, serif',
+    option: 'Almendra SC, Times, serif',
+    title: 'Almendra, Times, serif',
+    common: 'Arial, Times, serif'
+  }
 }
 
 const themes = { light }
@@ -93,8 +93,8 @@ styleInject(
   `
     ${themeToCssWithoutSelector()}
     ${Object.keys(themes)
-      .map((theme) => themeToCssWithSelector(theme))
-      .join('')}
+    .map((theme) => themeToCssWithSelector(theme))
+    .join('')}
 
     * {
       margin: 0;
@@ -118,7 +118,7 @@ styleInject(
 )
 
 export default theme
-  /*
-  ::-webkit-scrollbar-thumb {
-  background: ${theme.colors.border2};
+/*
+::-webkit-scrollbar-thumb {
+background: ${theme.colors.border2};
 }*/

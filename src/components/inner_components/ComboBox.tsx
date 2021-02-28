@@ -47,7 +47,7 @@ export default function ComboBox(props: InternalCombBoxProps) {
     updateDropdown(text)
   }, [updateDropdown])
 
-  const updateOption = useCallback((option: ComboBoxItem|typeof NULL_OPTION) => {
+  const updateOption = useCallback((option: ComboBoxItem | typeof NULL_OPTION) => {
     if (option.code !== value)
       onChange && onChange(option.code)
     else
@@ -55,9 +55,10 @@ export default function ComboBox(props: InternalCombBoxProps) {
   }, [value, onChange, updateText])
 
   const handleOnKeyDown = useCallback((e: any) => {
-    function isInDropdown(highlighted: ComboBoxItem|null): highlighted is ComboBoxItem {
+    function isInDropdown(highlighted: ComboBoxItem | null): highlighted is ComboBoxItem {
       return !!(highlighted && dropdown?.includes(highlighted))
     }
+
     switch (e.key) {
       case 'ArrowUp': {
         if (dropdown === null) return
@@ -277,7 +278,7 @@ const ComboBoxContainer = styled.div<{ $width?: string }>`
 const ButtonsContainer = styled(Flex)`
   position: absolute;
   right: 9px;
-  ${({visible}) => visible === false ? "visibility: hidden" : ""};
+  ${({ visible }) => visible === false ? 'visibility: hidden' : ''};
   //TODO this should not be needed, but without this tests break
 `
 
@@ -305,4 +306,4 @@ function insensitiveIncludes(text: string, sub: string) {
   return text.toUpperCase().includes(caps)
 }
 
-const NULL_OPTION = {name: '', code: null}
+const NULL_OPTION = { name: '', code: null }

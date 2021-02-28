@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled from 'styled-components'
 
 const Dialog = styled.dialog<{ active: boolean }>`
   position: absolute;
@@ -15,7 +15,7 @@ const Dialog = styled.dialog<{ active: boolean }>`
 
   z-index: 200;
 
-  ${({active}) => active ? "" : "pointer-events: none"};
+  ${({ active }) => active ? '' : 'pointer-events: none'};
 
   @media (max-width: 768px) {
     justify-content: flex-start;

@@ -1,5 +1,5 @@
-import styled from "styled-components"
-import { SEPARATION } from 'components/css/Dimensions'
+import styled from 'styled-components'
+import { SEPARATION } from './css/Dimensions'
 
 const Article = styled.article`
   box-sizing: border-box;

@@ -1,11 +1,11 @@
-import React, {ReactNode} from "react"
-import Flex, {XAlignType, YAlignType} from "./Flex"
-import {DimensionsProps} from "./css_helpers/dimensions"
+import React, { ReactNode } from 'react'
+import Flex, { XAlignType, YAlignType } from './Flex'
+import { DimensionsProps } from './css_helpers/dimensions'
 import Span, { TextSize } from './inner_components/Span'
-import styled from "styled-components"
-import {BORDER_RADIUS} from "./css/Dimensions"
+import styled from 'styled-components'
+import { BORDER_RADIUS } from './css/Dimensions'
 
-export default function Text({children, tooltip, bold, handwritten, size, mode, ...props}: TextProps) {
+export default function Text({ children, tooltip, bold, handwritten, size, mode, ...props }: TextProps) {
   return (
     <Container {...props} skeleton={children === undefined}>
       <Span
@@ -22,9 +22,9 @@ export default function Text({children, tooltip, bold, handwritten, size, mode, 
 }
 
 function color(mode: TextMode): string {
-  if (mode === "positive") return "green"
-  if (mode === "negative") return "red"
-  return "black"
+  if (mode === 'positive') return 'green'
+  if (mode === 'negative') return 'red'
+  return 'black'
 }
 
 const Container = styled(Flex)`
@@ -37,12 +37,12 @@ export type TextProps = {
   size?: TextSize
   bold?: boolean
   color?: string//TODO Should not let set color
-  "x-align"?: XAlignType
-  "y-align"?: YAlignType
+  'x-align'?: XAlignType
+  'y-align'?: YAlignType
   bordered?: boolean
   tooltip?: string
   mode?: TextMode
   handwritten?: boolean
 } & DimensionsProps
 
-type TextMode = "default" | "positive" | "negative"
+type TextMode = 'default' | 'positive' | 'negative'

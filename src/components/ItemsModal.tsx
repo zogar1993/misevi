@@ -1,88 +1,88 @@
-import React, {ReactNode, useCallback, useEffect, useState} from "react"
-import styled, {css} from "styled-components"
-import Dialog from "./inner_components/Dialog"
-import Title from "./inner_components/Title"
+import React, { ReactNode, useCallback, useEffect, useState } from 'react'
+import styled, { css } from 'styled-components'
+import Dialog from './inner_components/Dialog'
+import Title from './inner_components/Title'
 
 //TODO This dependencies constantes are tied to the nav bar, should be removed
-const NAV_BAR_WITH_BORDER_HEIGHT = "46px"
+const NAV_BAR_WITH_BORDER_HEIGHT = '46px'
 const PAGE_CONTENT_HEIGHT = `calc(100vh - ${NAV_BAR_WITH_BORDER_HEIGHT})`
 
-export default function ItemsModal<T extends Item>({render, item, items, navigate, children}: Props<T>) {
-	const [leaving, setLeaving] = useState<{ item: T, direction: "up" | "left" | "right" } | null>(null)
+export default function ItemsModal<T extends Item>({ render, item, items, navigate, children }: Props<T>) {
+  const [leaving, setLeaving] = useState<{ item: T, direction: 'up' | 'left' | 'right' } | null>(null)
 
-	const direction = leaving?.direction || "none"
-	const id = animationId(leaving?.item.code || "")
-	const inAnimation = IN_ANIMATIONS[direction](id)
-	const outAnimation = OUT_ANIMATIONS[direction](id)
+  const direction = leaving?.direction || 'none'
+  const id = animationId(leaving?.item.code || '')
+  const inAnimation = IN_ANIMATIONS[direction](id)
+  const outAnimation = OUT_ANIMATIONS[direction](id)
 
-	const show = useCallback((item: T) => {
-		navigate(`/${item.code}`)
-		setLeaving(null)
-	}, [navigate])
+  const show = useCallback((item: T) => {
+    navigate(`/${item.code}`)
+    setLeaving(null)
+  }, [navigate])
 
-	const hide = useCallback(() => {
-		if (item === null) return
-		navigate()
-		setLeaving({item, direction: "up"})
-	}, [item, navigate])
+  const hide = useCallback(() => {
+    if (item === null) return
+    navigate()
+    setLeaving({ item, direction: 'up' })
+  }, [item, navigate])
 
-	const previous = useCallback((item: T) => {
-		const index = items.indexOf(item)
-		if (index === -1 || index === 0) return
-		setLeaving({item, direction: "left"})
-		navigate(`/${items[index - 1].code}`)
-	}, [items, navigate])
+  const previous = useCallback((item: T) => {
+    const index = items.indexOf(item)
+    if (index === -1 || index === 0) return
+    setLeaving({ item, direction: 'left' })
+    navigate(`/${items[index - 1].code}`)
+  }, [items, navigate])
 
-	const next = useCallback((item: T) => {
-		const index = items.indexOf(item)
-		if (index === -1 || index === items.length - 1) return
-		setLeaving({item, direction: "right"})
-		navigate(`/${items[index + 1].code}`)
-	}, [items, navigate])
+  const next = useCallback((item: T) => {
+    const index = items.indexOf(item)
+    if (index === -1 || index === items.length - 1) return
+    setLeaving({ item, direction: 'right' })
+    navigate(`/${items[index + 1].code}`)
+  }, [items, navigate])
 
 
-	useEffect(() => {
-		const handleOnKeyDown = (e: any) => {
-			if (item === null) return
-			switch (e.key) {
-				case "ArrowLeft":
-					previous(item)
-					e.preventDefault()
-					break
-				case "ArrowRight":
-					next(item)
-					e.preventDefault()
-					break
-				case "Escape":
-					hide && hide()
-					e.preventDefault()
-					break
-			}
-		}
+  useEffect(() => {
+    const handleOnKeyDown = (e: any) => {
+      if (item === null) return
+      switch (e.key) {
+        case 'ArrowLeft':
+          previous(item)
+          e.preventDefault()
+          break
+        case 'ArrowRight':
+          next(item)
+          e.preventDefault()
+          break
+        case 'Escape':
+          hide && hide()
+          e.preventDefault()
+          break
+      }
+    }
 
-		document.body.addEventListener("keydown", handleOnKeyDown)
-		return () => document.body.removeEventListener("keydown", handleOnKeyDown)
-	}, [previous, next, hide, item])
+    document.body.addEventListener('keydown', handleOnKeyDown)
+    return () => document.body.removeEventListener('keydown', handleOnKeyDown)
+  }, [previous, next, hide, item])
 
-	return (
-		<>
-			{children(show)}
-			<Dialog active={item !== null}>
-				<Background onClick={hide} show={item !== null}/>
-				{item ? <Card item={item} animation={inAnimation} render={render}/> : null}
-				{leaving ? <Card item={leaving.item} animation={outAnimation} render={render}/> : null}
-			</Dialog>
-		</>
-	)
+  return (
+    <>
+      {children(show)}
+      <Dialog active={item !== null}>
+        <Background onClick={hide} show={item !== null} />
+        {item ? <Card item={item} animation={inAnimation} render={render} /> : null}
+        {leaving ? <Card item={leaving.item} animation={outAnimation} render={render} /> : null}
+      </Dialog>
+    </>
+  )
 }
 
 type Props<T> = {
-	onClose?: () => void
-	render: (item: T) => ReactNode
-	item: T | null
-	items: Array<T>
-	navigate: (path?: string) => void
-	children: (show: (item: T) => void) => ReactNode
+  onClose?: () => void
+  render: (item: T) => ReactNode
+  item: T | null
+  items: Array<T>
+  navigate: (path?: string) => void
+  children: (show: (item: T) => void) => ReactNode
 }
 
 const Background = styled.div<{ show: boolean }>`
@@ -92,8 +92,8 @@ const Background = styled.div<{ show: boolean }>`
   left: 0;
   top: 0;
   background-color: rgba(10, 10, 10, 0.86);
-  opacity: ${({show}) => show ? 1 : 0};
-  transition: ${({show}) => show ? "ease-out" : "ease-in"} 0.4s;
+  opacity: ${({ show }) => show ? 1 : 0};
+  transition: ${({ show }) => show ? 'ease-out' : 'ease-in'} 0.4s;
 `
 
 const ModalCard = styled.div<{ animation?: string }>`
@@ -106,7 +106,7 @@ const ModalCard = styled.div<{ animation?: string }>`
     max-width: 100vw;
     max-height: 100vh;
   }
-  ${({animation}) => animation || ""};
+  ${({ animation }) => animation || ''};
 `
 
 const ModalHeader = styled.header`
@@ -130,27 +130,27 @@ const ModalFooter = styled.footer`
   padding: 10px;
 `
 
-function Card<T extends Item>({item, render, animation}: CardProps<T>) {
-	return (
-		<ModalCard animation={animation}>
-			<ModalHeader>
-				<Title font="Almendra SC">{item?.name}</Title>
-			</ModalHeader>
-			<ModalBody>
-				{render(item)}
-			</ModalBody>
-			<ModalFooter/>
-		</ModalCard>
-	)
+function Card<T extends Item>({ item, render, animation }: CardProps<T>) {
+  return (
+    <ModalCard animation={animation}>
+      <ModalHeader>
+        <Title font="Almendra SC">{item?.name}</Title>
+      </ModalHeader>
+      <ModalBody>
+        {render(item)}
+      </ModalBody>
+      <ModalFooter />
+    </ModalCard>
+  )
 }
 
 type CardProps<T> = { item: T, render: (item: T) => ReactNode, animation: any }
 
-const animationId = (value: string) => value.split("").map(x => x.charCodeAt(0)).join("")
+const animationId = (value: string) => value.split('').map(x => x.charCodeAt(0)).join('')
 
 type Item = {
-	code: string
-	name: string
+  code: string
+  name: string
 }
 
 const bounceInTop = () => css`
@@ -259,15 +259,15 @@ const slideOutRight = (id: string) => css`
 `
 
 const IN_ANIMATIONS = {
-	none: bounceInTop,
-	left: slideInRight,
-	right: slideInLeft,
-	up: () => ""
+  none: bounceInTop,
+  left: slideInRight,
+  right: slideInLeft,
+  up: () => ''
 }
 
 const OUT_ANIMATIONS = {
-	none: () => "",
-	left: slideOutRight,
-	right: slideOutLeft,
-	up: () => slideOutTop
+  none: () => '',
+  left: slideOutRight,
+  right: slideOutLeft,
+  up: () => slideOutTop
 }

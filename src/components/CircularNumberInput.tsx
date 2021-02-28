@@ -1,7 +1,7 @@
-import React from "react"
-import NumberInput, {NumberInputProps} from "./NumberInput"
+import React from 'react'
+import NumberInput, { NumberInputProps } from './NumberInput'
 import styled from 'styled-components'
-import { InputProps } from 'components/inner_components/Input'
+import { InputProps } from './inner_components/Input'
 
 //TODO no me gusta que adquiera skeleton de input props
 const CircularNumberInput = styled(NumberInput)<NumberInputProps & InputProps>`

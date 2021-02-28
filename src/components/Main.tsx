@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Route, Router, Switch, useHistory } from 'react-router-dom'
-import { NoStyleButton } from 'components/inner_components/NoStyleButton'
-import theme from 'components/theme/Theme'
+import { NoStyleButton } from './inner_components/NoStyleButton'
+import theme from './theme/Theme'
 import * as H from 'history'
-import Article from 'components/Article'
-import Flex from 'components/Flex'
+import Article from './Article'
+import Flex from './Flex'
 
 const FOOTER_HEIGHT = '0px'
 const OUTER_Z_INDEX = 1
@@ -115,7 +115,9 @@ function SubItems({ items, expanded, show, pathParts }: SubItemsProps) {
             <SubItemButton
               key={item.name}
               expanded={expanded}
-              onClick={() => { redirectTo(item, history)}}
+              onClick={() => {
+                redirectTo(item, history)
+              }}
             >
               <Icon src={item.icon} alt={item.name} selected={selected} />
               <SubItemName selected={selected}>{item.name}</SubItemName>

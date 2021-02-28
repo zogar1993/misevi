@@ -1,8 +1,8 @@
-import React, {useCallback, useEffect, useState} from "react"
-import Input from "./inner_components/Input"
+import React, { useCallback, useEffect, useState } from 'react'
+import Input from './inner_components/Input'
 
 export default function NumberInput(props: NumberInputProps) {
-  const {value, onBlur, min, max, disabled} = props
+  const { value, onBlur, min, max, disabled } = props
   const [current, setCurrent] = useState<number>()
 
   const handleOnChange = useCallback((e: any) => {
@@ -28,7 +28,7 @@ export default function NumberInput(props: NumberInputProps) {
   return (
     <Input
       {...props}
-      value={current || ""}
+      value={current || ''}
       min={min}
       max={max}
       onChange={handleOnChange}

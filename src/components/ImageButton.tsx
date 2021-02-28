@@ -1,10 +1,10 @@
-import styled from "styled-components"
-import {dimensions, DimensionsProps} from "./css_helpers/dimensions"
+import styled from 'styled-components'
+import { dimensions, DimensionsProps } from './css_helpers/dimensions'
 import React, { HTMLAttributes } from 'react'
-import {margins, MarginsProps} from "./css_helpers/margins"
+import { margins, MarginsProps } from './css_helpers/margins'
 import { NoStyleButton } from './inner_components/NoStyleButton'
 
-export default function ImageButton({src, name, width, height, visible, ...props}: {
+export default function ImageButton({ src, name, width, height, visible, ...props }: {
   src?: any
   name: string
   width: string
@@ -28,12 +28,13 @@ export default function ImageButton({src, name, width, height, visible, ...props
 }
 
 const Img = styled.img<DimensionsProps>`
-	:hover {
-		transform: scale(1.2);
-	}
+  :hover {
+    transform: scale(1.2);
+  }
+
   ${dimensions};
 `
 const Button = styled(NoStyleButton)<{ $visible?: boolean } & MarginsProps>`
-  ${({$visible}) => $visible === false ? "display: none" : ""};
+  ${({ $visible }) => $visible === false ? 'display: none' : ''};
   ${margins};
 `

@@ -1,17 +1,17 @@
 import styled, { StyledComponent } from 'styled-components'
-import {DIMENSIONS, dimensions, DimensionsProps} from "./css_helpers/dimensions"
-import {SKELETON_ANIMATION_CSS} from "./css/Skeleton"
+import { DIMENSIONS, dimensions, DimensionsProps } from './css_helpers/dimensions'
+import { SKELETON_ANIMATION_CSS } from './css/Skeleton'
 import React from 'react'
 import { paddings, PADDINGS, PaddingsProps } from './css_helpers/paddings'
 import { POSITIONS, positions, PositionsProps } from './css_helpers/positions'
 import { margins, MARGINS, MarginsProps } from './css_helpers/margins'
 import { SEPARATION } from './css/Dimensions'
 
-const ignored: Array<string> = ["wrap", "x-align", "y-align"]
+const ignored: Array<string> = ['wrap', 'x-align', 'y-align']
 
-const removeHtmlProperties =  <W extends object>(
+const removeHtmlProperties = <W extends object>(
   Element: StyledComponent<any | React.ComponentType<any>, any, W>, ignored: Array<string>
-) => (({...props}: W & React.HTMLAttributes<HTMLElement>) => {
+) => (({ ...props }: W & React.HTMLAttributes<HTMLElement>) => {
   const args = props as any
   ignored.forEach((name: any) => delete args[name])
   DIMENSIONS.forEach((name: string) => delete args[name])
@@ -26,21 +26,21 @@ const removeHtmlProperties =  <W extends object>(
 const Div = styled.div``
 const Flex = styled(removeHtmlProperties<FlexProps>(Div, ignored))<FlexProps>`
   display: flex;
-  ${props => props["no-pointer-events"] ? "pointer-events: none" : ""};
-  ${({visible}) => visible === false ? "visibility: hidden" : ""};
-  ${({area}) => area ? `grid-area: ${area}` : ""};
+  ${props => props['no-pointer-events'] ? 'pointer-events: none' : ''};
+  ${({ visible }) => visible === false ? 'visibility: hidden' : ''};
+  ${({ area }) => area ? `grid-area: ${area}` : ''};
 
-  overflow: ${({ overflow }) => overflow || "visible"};
-  flex-direction: ${({vertical, reversed}) => `${vertical ? "column" : "row"}${reversed ? "-reverse" : ""}`};
-  ${({wrap}) => wrap ? "flex-wrap: wrap" : ""};
-  justify-content: ${({vertical, ...props}) => align(props[vertical ? "y-align" : "x-align"])};
-  align-content: ${({vertical, ...props}) => align(props[vertical ? "x-align" : "y-align"])};
-  align-items: ${({vertical, ...props}) => align(props[vertical ? "x-align" : "y-align"])};
-  gap: ${({gap}) => gap ? gap === true ? SEPARATION : gap : 0 };
+  overflow: ${({ overflow }) => overflow || 'visible'};
+  flex-direction: ${({ vertical, reversed }) => `${vertical ? 'column' : 'row'}${reversed ? '-reverse' : ''}`};
+  ${({ wrap }) => wrap ? 'flex-wrap: wrap' : ''};
+  justify-content: ${({ vertical, ...props }) => align(props[vertical ? 'y-align' : 'x-align'])};
+  align-content: ${({ vertical, ...props }) => align(props[vertical ? 'x-align' : 'y-align'])};
+  align-items: ${({ vertical, ...props }) => align(props[vertical ? 'x-align' : 'y-align'])};
+  gap: ${({ gap }) => gap ? gap === true ? SEPARATION : gap : 0};
 
-  border-color: ${({skeleton}) => skeleton ? "transparent" : "black"};
-  ${({skeleton}) => skeleton ? SKELETON_ANIMATION_CSS : ""};
-  background-color: ${({skeleton}) => skeleton ? "whitesmoke" : "transparent"};
+  border-color: ${({ skeleton }) => skeleton ? 'transparent' : 'black'};
+  ${({ skeleton }) => skeleton ? SKELETON_ANIMATION_CSS : ''};
+  background-color: ${({ skeleton }) => skeleton ? 'whitesmoke' : 'transparent'};
 
   ${dimensions};
   ${paddings};
@@ -51,25 +51,25 @@ const Flex = styled(removeHtmlProperties<FlexProps>(Div, ignored))<FlexProps>`
 export default Flex
 
 const align = (value: string | undefined) => {
-  if (value === "space-between") return "space-between"
-  if (value === "space-evenly") return "space-evenly"
-  if (value === "space-around") return "space-around"
+  if (value === 'space-between') return 'space-between'
+  if (value === 'space-evenly') return 'space-evenly'
+  if (value === 'space-around') return 'space-around'
 
-  if (value === "top") return "flex-start"
-  if (value === "left") return "flex-start"
-  if (value === "center") return "center"
-  if (value === "stretch") return "stretch"
-  if (value === "right") return "flex-end"
-  if (value === "bottom") return "flex-end"
+  if (value === 'top') return 'flex-start'
+  if (value === 'left') return 'flex-start'
+  if (value === 'center') return 'center'
+  if (value === 'stretch') return 'stretch'
+  if (value === 'right') return 'flex-end'
+  if (value === 'bottom') return 'flex-end'
 
-  return "flex-start"
+  return 'flex-start'
 }
 
 export type FlexProps = FlexPropsBase & DimensionsProps & PaddingsProps &
   MarginsProps & PositionsProps
 export type FlexPropsBase = {
-  "y-align"?: YAlignType
-  "x-align"?: XAlignType
+  'y-align'?: YAlignType
+  'x-align'?: XAlignType
   reversed?: boolean
   wrap?: boolean
   gap?: true | string
@@ -77,10 +77,10 @@ export type FlexPropsBase = {
   overflow?: string
   skeleton?: boolean
   visible?: boolean
-  "no-pointer-events"?: boolean
+  'no-pointer-events'?: boolean
   area?: string
 }
 
-type Spaced = "space-between" | "space-evenly" | "space-around"
-export type YAlignType = "top" | "center" | "stretch" | "bottom" | Spaced
-export type XAlignType = "left" | "center" | "stretch" | "right" | Spaced
+type Spaced = 'space-between' | 'space-evenly' | 'space-around'
+export type YAlignType = 'top' | 'center' | 'stretch' | 'bottom' | Spaced
+export type XAlignType = 'left' | 'center' | 'stretch' | 'right' | Spaced

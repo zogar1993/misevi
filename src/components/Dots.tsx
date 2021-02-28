@@ -23,7 +23,7 @@ export default function Dots({ total, value, onChange, reversed, rows, coloring 
       return isMarked(current) ? 'black' : 'white'
     }
 
-    const color = coloring && coloring({number: current, value: value})
+    const color = coloring && coloring({ number: current, value: value })
     if (color) return color
 
     return isMarked(current) ? 'black' : 'white'
@@ -77,14 +77,14 @@ export interface DotsProps {
   onChange?: (value: number) => void
   reversed?: boolean
   rows?: number
-  coloring?: (props: {number: number, value: number}) => string
+  coloring?: (props: { number: number, value: number }) => string
 }
 
-const DotZeroElement = styled(NoStyleInput)<{visible: boolean}>`
+const DotZeroElement = styled(NoStyleInput)<{ visible: boolean }>`
   width: 14px;
   height: 14px;
-  border: 1px ${({ visible }) => visible ? "solid" : "hidden"} black;
-  ${({ disabled }) => disabled ? "display: none;" : ""}
+  border: 1px ${({ visible }) => visible ? 'solid' : 'hidden'} black;
+  ${({ disabled }) => disabled ? 'display: none;' : ''}
   border-radius: 50%;
   cursor: pointer;
 
@@ -94,12 +94,12 @@ const DotZeroElement = styled(NoStyleInput)<{visible: boolean}>`
 `
 
 const Svg = styled.svg.attrs(_ => ({
-  height: "6px",
-  width: "6px",
-  viewBox: "0 0 329.26933 329",
-  xmlns: "http://www.w3.org/2000/svg"
-}))<{visible: boolean}>`
-  ${({visible}) => visible ? "" : "visibility: hidden;"};
+  height: '6px',
+  width: '6px',
+  viewBox: '0 0 329.26933 329',
+  xmlns: 'http://www.w3.org/2000/svg'
+}))<{ visible: boolean }>`
+  ${({ visible }) => visible ? '' : 'visibility: hidden;'};
   pointer-events: none;
   position: absolute;
 `
@@ -125,7 +125,7 @@ type DotZeroProps = {
   onChange: undefined | ((value: number) => void)
 }
 
-function DotZero({reversed, tentative, setTentative, onChange, value}: DotZeroProps) {
+function DotZero({ reversed, tentative, setTentative, onChange, value }: DotZeroProps) {
   return (
     <Flex
       width="14px"

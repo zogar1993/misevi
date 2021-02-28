@@ -1,6 +1,6 @@
 import React, { ReactNode, useState } from 'react'
 import styled from 'styled-components'
-import Flex from 'components/Flex'
+import Flex from './Flex'
 
 const noSorting = (_: any) => 0
 
@@ -89,7 +89,7 @@ const OrderingTriangles = styled.div<{ sort: SortOrder }>`
   position: relative;
 
   ::before {
-    content: ${({sort}) => sort === 'idle' || sort === 'desc' ? '""' : 'auto'};
+    content: ${({ sort }) => sort === 'idle' || sort === 'desc' ? '""' : 'auto'};
     top: 0;
     width: 0;
     height: 0;
@@ -99,7 +99,7 @@ const OrderingTriangles = styled.div<{ sort: SortOrder }>`
   }
 
   ::after {
-    content: ${({sort}) => sort === 'idle' || sort === 'asc' ? '""' : 'auto'};;
+    content: ${({ sort }) => sort === 'idle' || sort === 'asc' ? '""' : 'auto'};;
     bottom: 0;
     width: 0;
     height: 0;

@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled from 'styled-components'
 
 export const NoStyleInput = styled.input`
   box-sizing: border-box;

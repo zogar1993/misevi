@@ -60,7 +60,7 @@ const Input = styled(NoStyleInput).attrs<InputProps>(() => ({
     border: 1px solid transparent;
   }
 
-  ${({ disabled }) => disabled ? "cursor: not-allowed" : ''};
+  ${({ disabled }) => disabled ? 'cursor: not-allowed' : ''};
   ${({ skeleton }) => skeleton ? SKELETON_ANIMATION_CSS : ''};
 `
 export default Input

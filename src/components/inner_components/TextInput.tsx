@@ -1,7 +1,14 @@
-import React, {ForwardedRef, forwardRef, useEffect, useState} from "react"
-import Input from "./Input"
+import React, { ForwardedRef, forwardRef, useEffect, useState } from 'react'
+import Input from './Input'
 
-const TextInput = forwardRef(({id, placeholder, value, onBlur, onFocusChange, ...props}: InternalTextInputProps, ref: ForwardedRef<HTMLInputElement>) => {
+const TextInput = forwardRef(({
+                                id,
+                                placeholder,
+                                value,
+                                onBlur,
+                                onFocusChange,
+                                ...props
+                              }: InternalTextInputProps, ref: ForwardedRef<HTMLInputElement>) => {
   const [text, setText] = useState(value || '')
   useEffect(() => setText(value || ''), [value])
 
@@ -22,7 +29,7 @@ const TextInput = forwardRef(({id, placeholder, value, onBlur, onFocusChange, ..
   return (
     <Input
       id={id}
-      value={text || ""}
+      value={text || ''}
       onChange={handleOnChange}
       onBlur={handleOnBlur}
       onFocus={() => onFocusChange(true, text)}
