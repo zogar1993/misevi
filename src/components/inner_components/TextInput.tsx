@@ -21,7 +21,7 @@ const TextInput = forwardRef(({
     if (onBlur === undefined) return
     if (value !== text)
       onBlur(text)
-    onFocusChange(false, text)
+    onFocusChange && onFocusChange(false, text)
   }
 
   const showSkeleton = value === undefined
@@ -32,7 +32,7 @@ const TextInput = forwardRef(({
       value={text || ''}
       onChange={handleOnChange}
       onBlur={handleOnBlur}
-      onFocus={() => onFocusChange(true, text)}
+      onFocus={() => onFocusChange && onFocusChange(true, text)}
       type="text"
       disabled={showSkeleton}
       skeleton={showSkeleton}
@@ -56,5 +56,5 @@ export type TextInputProps = {
 }
 
 export type InternalTextInputProps = {
-  onFocusChange: (focus: boolean, text: string) => void
+  onFocusChange?: (focus: boolean, text: string) => void
 } & TextInputProps

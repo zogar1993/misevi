@@ -15,7 +15,7 @@ export default function Field({ label, width, ...props }: FieldProps) {
     setIsPlaceholder(value === '' || value === null)
   }, [value])
   const id = props.id || label
-
+//TODO when focused, label does a weird behaviour when clicked.
   return (
     <FieldContainer width={width}>
       <FieldLabel as-placeholder={isPlaceholder} htmlFor={id} disabled={disabled}>{label}</FieldLabel>

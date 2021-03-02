@@ -105,7 +105,7 @@ export default function ComboBox(props: InternalCombBoxProps) {
   }, [dropdown, highlighted, setTextFromValue, findOptionByText])
 
   const onLoseFocus = useCallback(() => {
-    onFocusChange(false, text)
+    onFocusChange && onFocusChange(false, text)
     setDropdown(null)
     setHighlighted(null)
     setFocused(false)
@@ -142,7 +142,7 @@ export default function ComboBox(props: InternalCombBoxProps) {
           refInput.current?.select()
           updateDropdown('')
           setFocused(true)
-          onFocusChange(true, text)
+          onFocusChange && onFocusChange(true, text)
         }}
         onKeyDown={handleOnKeyDown}
         readOnly={onChange === undefined}
@@ -200,7 +200,7 @@ export type ComboBoxProps = {
 }
 
 export type InternalCombBoxProps = {
-  onFocusChange: (focus: boolean, text: string) => void
+  onFocusChange?: (focus: boolean, text: string) => void
 } & ComboBoxProps
 
 export type ButtonInfo = {
