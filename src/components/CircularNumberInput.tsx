@@ -1,10 +1,10 @@
 import React from 'react'
 import NumberInput, { NumberInputProps } from './NumberInput'
 import styled from 'styled-components'
-import { InputProps } from './inner_components/Input'
 
-//TODO no me gusta que adquiera skeleton de input props
-const CircularNumberInput = styled(NumberInput)<NumberInputProps & InputProps>`
+const CircularNumberInput = styled(NumberInput)<NumberInputProps & {
+  'animation-seed'?: number
+}>`
   text-align: center;
   width: 26px;
   height: 26px;

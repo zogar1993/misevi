@@ -17,7 +17,7 @@ export default function DataTable(props: DataTableProps) {
   const initial = columns
     .map((x, i) => ({ ...x, index: i }))
     .find(x => x.sort && x.sort.default)
-//TODO clean up this 3am code done at 11pm
+  //TODO needs redesign
   const [sortBy, setSortBy] = useState<number | null>(initial ? initial.index : null)
   const [sortOrder, setSortOrder] = useState<string | null>((initial && initial.sort && initial.sort.default) || 'idle')
   const [valueOf, setValueOf] = useState<(value: any) => number>(() => (initial ? getSortingValueGetter(initial.sort) : noSorting))

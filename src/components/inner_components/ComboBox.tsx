@@ -156,7 +156,10 @@ export default function ComboBox(props: InternalCombBoxProps) {
           dropdown && dropdown.map((item) => (
             <Option
               key={item.code}
-              onMouseDown={() => updateOption(item)}
+              onMouseDown={(e: any) => {
+                updateOption(item)
+                e.preventDefault()
+              }}
               highlighted={item === highlighted}
             >
               {item.name}
