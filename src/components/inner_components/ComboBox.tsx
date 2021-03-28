@@ -158,6 +158,7 @@ export default function ComboBox(props: InternalCombBoxProps) {
               key={item.code}
               onMouseDown={(e: any) => {
                 updateOption(item)
+                refInput.current?.blur()
                 e.preventDefault()
               }}
               highlighted={item === highlighted}
