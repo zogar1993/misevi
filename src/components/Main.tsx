@@ -204,7 +204,12 @@ const SideBarElement = styled.div<{ expanded: boolean }>`
   box-sizing: content-box;
 
   z-index: ${OUTER_Z_INDEX + 1};
+
+  @media (max-width: 768px) {
+    display: none;
+  }
 `
+//TODO make item container a hamburger when cellphone
 
 const ItemContainer = styled.div<{ open: boolean }>`
   display: flex;
@@ -213,12 +218,7 @@ const ItemContainer = styled.div<{ open: boolean }>`
   border-bottom: ${theme.colors.menu.border} solid 1px;
   overflow: hidden;
   transition: 0.4s ease-out;
-
-  @media (max-width: 768px) {
-    display: none;
-  }
 `
-//TODO make item container a hamburger when cellphone
 
 const ItemButton = styled(NoStyleButton)<{ open: boolean }>`
   display: flex;
