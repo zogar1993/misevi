@@ -5,7 +5,7 @@ import NumberInput, { NumberInputProps } from './NumberInput'
 import TextInput, { TextInputProps } from './inner_components/TextInput'
 import ComboBox, { ComboBoxProps } from './inner_components/ComboBox'
 
-export default function Field({ label, width, ...props }: FieldProps) {
+export default function Field({ label, width, area, ...props }: FieldProps) {
   const { value, disabled } = props
   const [isPlaceholder, setIsPlaceholder] = useState<boolean>(false)
   const onTextChange = useCallback((focus: boolean, text: string) => {
@@ -17,7 +17,7 @@ export default function Field({ label, width, ...props }: FieldProps) {
   const id = props.id || label
 //TODO when focused, label does a weird behaviour when clicked.
   return (
-    <FieldContainer width={width}>
+    <FieldContainer width={width} area={area}>
       <FieldLabel as-placeholder={isPlaceholder} htmlFor={id} disabled={disabled}>{label}</FieldLabel>
       {
         props.type === 'number' ? <NumberInput {...props} id={id} /> :
@@ -33,6 +33,7 @@ export type FieldProps = FieldTextProps | FieldNumberProps | FieldComboProps
 type FieldBaseProps = {
   label: string
   width?: string
+  area?: string
 }
 
 export type FieldTextProps = { type?: 'text' } & FieldBaseProps & TextInputProps

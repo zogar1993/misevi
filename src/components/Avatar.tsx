@@ -5,14 +5,14 @@ import Resizer from 'react-image-file-resizer'
 import bandit from './icons/bandit.png'
 import { SKELETON_ANIMATION_CSS } from './css/Skeleton'
 
-export default function Avatar({ onChange, src, alt, width = '135px', height = '135px' }: AvatarProps) {
+export default function Avatar({ onChange, src, alt, area, width = '135px', height = '135px' }: AvatarProps) {
   const [imageShowed, setImageShowed] = useState<string>('')
   useEffect(() => setImageShowed(getImage(src)), [src])
   const showSkeleton = src === undefined
   const handleOnChange = async (e: React.ChangeEvent<HTMLInputElement>) =>
     await changeDisplayedImage(e, setImageShowed, onChange)
   return (
-    <Label width={width} height={height}>
+    <Label width={width} height={height} area={area}>
       <Input type="file" onChange={handleOnChange} />
       <Image src={imageShowed} alt={alt} width={width} height={height} skeleton={showSkeleton} />
     </Label>
@@ -65,6 +65,7 @@ export type AvatarProps = {
   alt: string
   width?: string
   height?: string
+  area?: string
 }
 
 const Image = styled.img<{ width?: string, height?: string, skeleton: boolean }>`
@@ -81,8 +82,10 @@ const Input = styled.input`
   display: none;
 `
 
-const Label = styled.label<{ width?: string, height?: string }>`
+//TODO add area to all
+const Label = styled.label<{ width?: string, height?: string, area?: string }>`
   all: unset;
   width: ${({ width }) => width};
   height: ${({ height }) => height};
+  ${({area}) => `grid-area: ${area}` || ''};
 `
