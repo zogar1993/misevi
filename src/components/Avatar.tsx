@@ -88,5 +88,5 @@ const Label = styled.label<{ width?: string, height?: string, area?: string }>`
   all: unset;
   width: ${({ width }) => width};
   height: ${({ height }) => height};
-  ${({area}) => `grid-area: ${area}` || ''};
+  ${({area}) => area ? `grid-area: ${area}` : ''};
 `

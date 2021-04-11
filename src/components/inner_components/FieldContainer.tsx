@@ -10,6 +10,6 @@ const FieldContainer = styled.div<{ width?: string, area?: string }>`
   flex-direction: column;
   padding-top: 15px;
 
-  ${({area}) => `grid-area: ${area}` || ''};
+  ${({area}) => area ? `grid-area: ${area}` : ''};
 `
 export default FieldContainer
