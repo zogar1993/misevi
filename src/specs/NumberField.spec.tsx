@@ -114,7 +114,7 @@ describe("Number Input should", () => {
         verify(actionsMock.onBlur(value)).once()
     }
 
-    const getInput = () => screen.getByRole("textbox") as HTMLInputElement
+    const getInput = () => screen.getByLabelText(A_LABEL) as HTMLInputElement
 })
 
 const MIN = 28
