@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import Div from './inner_components/Div'
 import { NoStyleInput } from './inner_components/NoStyleInput'
 
-export default function Dots({ total, value, onChange, reversed, rows, coloring }: DotsProps) {
+export default function Dots({ total, value, onChange, reversed, rows = 1, coloring }: DotsProps) {
   const [tentative, setTentative] = useState<number | null>(null)
   useEffect(() => setTentative(null), [value])
   const values = Array.from({ length: total }, (_, k) => k + 1) as Array<number>
@@ -29,8 +29,8 @@ export default function Dots({ total, value, onChange, reversed, rows, coloring 
     return isMarked(current) ? 'black' : 'white'
   }, [value, tentative, coloring])
 
-  const width = (rows ? total / rows : total) * 14 + 'px'
-  const height = (rows || 1) * 14 + 'px'
+  const width = (total / rows) * 14 + 'px'
+  const height = rows * 14 + 'px'
   return (
     <Div
       position="relative"
