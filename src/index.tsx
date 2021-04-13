@@ -11,7 +11,7 @@ import Avatar from './components/Avatar'
 import ItemsModal from './components/ItemsModal'
 import { SKELETON_ANIMATION_CSS } from './components/css/Skeleton'
 import FlexItem from './components/FlexItem'
-import Img from './components/Img'
+import Picture from 'components/Picture'
 import Tag from './components/Tag'
 import Tags from './components/Tags'
 import Box from './components/Box'
@@ -31,7 +31,7 @@ export {
   ItemsModal,
   SKELETON_ANIMATION_CSS,
   FlexItem,
-  Img,
+  Picture,
   Tag,
   Tags,
   Box,
