@@ -21,12 +21,15 @@ const Img = styled.img<PictureProps>`
   ${positions};
 `
 
-const SkeletonDiv = styled.div<DimensionsProps>`
+const SkeletonDiv = styled.div<PictureProps>`
+  border-radius: ${BORDER_RADIUS};
+  ${({float}) => float ? `float: ${float}` : '' };
   ${SKELETON_ANIMATION_CSS}
   ${dimensions};
 `
 
 //TODO check if null or undefined or true or false is a valid value instead of ''
+//TODO check if img can be set artificially to preserve semantic meaning
 export type PictureProps = {
   hide?: boolean
   disabled?: boolean
