@@ -77,7 +77,7 @@ export interface DotsProps {
   onChange?: (value: number) => void
   reversed?: boolean
   rows?: number
-  coloring?: (props: { number: number, value: number }) => string
+  coloring?: (props: { number: number, value: number }) => string | undefined
 }
 
 const DotZeroElement = styled(NoStyleInput)<{ visible: boolean }>`

@@ -8,5 +8,4 @@ const RANKS = 3
 export function coloring({number, value}: {number: number, value: number}) {
   if (number <= RANKS && number > value) return "palegreen"
   if (number > RANKS && number <= value) return "#f44336"
-  return null
 }
