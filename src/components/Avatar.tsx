@@ -83,7 +83,6 @@ const Input = styled.input`
   display: none;
 `
 
-//TODO add area to all
 const Label = styled.label<{ width?: string, height?: string, area?: string }>`
   all: unset;
   width: ${({ width }) => width};

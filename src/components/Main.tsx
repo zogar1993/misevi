@@ -304,7 +304,7 @@ const SubItemName = styled.span<{ selected: boolean }>`
 
 export type RouteOnlyItem = {
   path: string
-  component: () => JSX.Element
+  component: (props?: any) => JSX.Element | null
 }
 
 export type BranchItem = {
