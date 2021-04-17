@@ -1,5 +1,6 @@
 import React, {useState} from "react"
 import FieldUnboxed, { FieldComboProps} from 'components/Field'
+import { ComboBoxItem } from 'components/inner_components/ComboBox'
 
 export function Template({ type, ...args }: FieldComboProps) {
   return <Field type="combobox" {...args}/>

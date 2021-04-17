@@ -5,7 +5,7 @@ import NumberInput, { NumberInputProps } from './NumberInput'
 import TextInput, { TextInputProps } from './inner_components/TextInput'
 import ComboBox, { ComboBoxProps } from './inner_components/ComboBox'
 
-export default function Field({ label, width, area, ...props }: FieldProps) {
+export default function Field<T extends string = string>({ label, width, area, ...props }: FieldProps<T>) {
   const { value, disabled } = props
   const [isPlaceholder, setIsPlaceholder] = useState<boolean>(false)
   const onTextChange = useCallback((focus: boolean, text: string) => {
@@ -28,7 +28,7 @@ export default function Field({ label, width, area, ...props }: FieldProps) {
   )
 }
 
-export type FieldProps = FieldTextProps | FieldNumberProps | FieldComboProps
+export type FieldProps<T extends string = string> = FieldTextProps | FieldNumberProps | FieldComboProps<T>
 
 type FieldBaseProps = {
   label: string
@@ -38,4 +38,4 @@ type FieldBaseProps = {
 
 export type FieldTextProps = { type?: 'text' } & FieldBaseProps & TextInputProps
 export type FieldNumberProps = { type: 'number' } & FieldBaseProps & NumberInputProps
-export type FieldComboProps = { type: 'combobox' } & FieldBaseProps & ComboBoxProps
+export type FieldComboProps<T extends string = string> = { type: 'combobox' } & FieldBaseProps & ComboBoxProps<T>

@@ -7,14 +7,14 @@ import close from '../icons/close.svg'
 import { HANDWRITTEN_FONT } from '../css/Fonts'
 import Input from './Input'
 
-export default function ComboBox(props: InternalCombBoxProps) {
+export default function ComboBox<T extends string = string>(props: InternalCombBoxProps<T>) {
   const { value, options, onChange, onFocusChange, buttons, id, disabled } = props
   const [text, setText] = useState('')
   const [error, setError] = useState(false)
   const [hovering, setHovering] = useState(false)
   const [focused, setFocused] = useState(false)
-  const [highlighted, setHighlighted] = useState<ComboBoxItem | null>(null)
-  const [dropdown, setDropdown] = useState<Array<ComboBoxItem> | null>(null)
+  const [highlighted, setHighlighted] = useState<ComboBoxItem<T> | null>(null)
+  const [dropdown, setDropdown] = useState<Array<ComboBoxItem<T>> | null>(null)
   const refInput = useRef<HTMLInputElement>(null)
   const refOptions = useRef<HTMLOListElement>(null)
   const isLoading = value === undefined || options === undefined
@@ -47,7 +47,7 @@ export default function ComboBox(props: InternalCombBoxProps) {
     updateDropdown(text)
   }, [updateDropdown])
 
-  const updateOption = useCallback((option: ComboBoxItem | typeof NULL_OPTION) => {
+  const updateOption = useCallback((option: ComboBoxItem<T> | typeof NULL_OPTION) => {
     if (option.code !== value)
       onChange && onChange(option.code)
     else
@@ -55,7 +55,7 @@ export default function ComboBox(props: InternalCombBoxProps) {
   }, [value, onChange, updateText])
 
   const handleOnKeyDown = useCallback((e: any) => {
-    function isInDropdown(highlighted: ComboBoxItem | null): highlighted is ComboBoxItem {
+    function isInDropdown(highlighted: ComboBoxItem<T> | null): highlighted is ComboBoxItem<T> {
       return !!(highlighted && dropdown?.includes(highlighted))
     }
 
@@ -194,33 +194,33 @@ export default function ComboBox(props: InternalCombBoxProps) {
   )
 }
 
-export type ComboBoxProps = {
+export type ComboBoxProps<T extends string = string> = {
   id?: string
-  value: string | null | undefined
-  options: Array<ComboBoxItem> | undefined
-  onChange?: (value: string | null) => void
-  buttons?: Array<ButtonInfo>
+  value: T | null | undefined
+  options: Array<ComboBoxItem<T>> | undefined
+  onChange?: (value: T | null) => void
+  buttons?: Array<ButtonInfo<T>>
   disabled?: boolean
 }
 
-export type InternalCombBoxProps = {
+export type InternalCombBoxProps<T extends string = string> = {
   onFocusChange?: (focus: boolean, text: string) => void
-} & ComboBoxProps
+} & ComboBoxProps<T>
 
-export type ButtonInfo = {
+export type ButtonInfo<T extends string = string> = {
   name: string
   src: string
-  onClick: (props: ComboBoxProps) => void
+  onClick: (props: ComboBoxProps<T>) => void
 }
 
-export type ComboBoxItem = {
+export type ComboBoxItem<T extends string = string> = {
   name: string
-  code: string
+  code: T
   from?: number
   to?: number
 }
 
-function ComboboxImageButton({ name, src, onClick, props }: ButtonInfo & { props: ComboBoxProps }) {
+function ComboboxImageButton<T extends string = string>({ name, src, onClick, props }: ButtonInfo<T> & { props: ComboBoxProps<T> }) {
   return (
     <ImageButton
       src={src}
