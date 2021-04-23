@@ -5,7 +5,7 @@ import React from 'react'
 import { paddings, PADDINGS, PaddingsProps } from './css_helpers/paddings'
 import { POSITIONS, positions, PositionsProps } from './css_helpers/positions'
 import { margins, MARGINS, MarginsProps } from './css_helpers/margins'
-import { SEPARATION } from './css/Dimensions'
+import { BORDER_RADIUS, SEPARATION } from './css/Dimensions'
 
 const ignored: Array<string> = ['wrap', 'x-align', 'y-align']
 
@@ -28,7 +28,8 @@ const Flex = styled(removeHtmlProperties<FlexProps>(Div, ignored))<FlexProps>`
   display: flex;
   ${props => props['no-pointer-events'] ? 'pointer-events: none' : ''};
   ${({ visible }) => visible === false ? 'visibility: hidden' : ''};
-  ${({ delimited }) => delimited === false ? 'border: 1px solid darkgray' : ''};
+  ${({ delimited }) => delimited ? 'border: 1px solid lightgray' : ''};
+  ${({ delimited }) => delimited ? `border-radius: ${BORDER_RADIUS}` : ''};
   ${({ area }) => area ? `grid-area: ${area}` : ''};
 
   overflow: ${({ overflow }) => overflow || 'visible'};

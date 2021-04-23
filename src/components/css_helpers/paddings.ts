@@ -9,10 +9,9 @@ export const PADDINGS = Object.freeze([
 ])
 
 export const paddings = (props: PaddingsProps) => `
-  box-sizing: border-box;
   ${cssFromProps(props, PADDINGS)}
 `
-
+//TODO basic padding
 export type PaddingsProps = {
   padding?: string
   'padding-top'?: string
