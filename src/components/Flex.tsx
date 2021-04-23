@@ -28,6 +28,7 @@ const Flex = styled(removeHtmlProperties<FlexProps>(Div, ignored))<FlexProps>`
   display: flex;
   ${props => props['no-pointer-events'] ? 'pointer-events: none' : ''};
   ${({ visible }) => visible === false ? 'visibility: hidden' : ''};
+  ${({ delimited }) => delimited === false ? 'border: 1px solid darkgray' : ''};
   ${({ area }) => area ? `grid-area: ${area}` : ''};
 
   overflow: ${({ overflow }) => overflow || 'visible'};
@@ -38,9 +39,9 @@ const Flex = styled(removeHtmlProperties<FlexProps>(Div, ignored))<FlexProps>`
   align-items: ${({ vertical, ...props }) => align(props[vertical ? 'x-align' : 'y-align'])};
   gap: ${({ gap }) => gap ? gap === true ? SEPARATION : gap : 0};
 
-  border-color: ${({ skeleton }) => skeleton ? 'transparent' : 'black'};
+  ${({ skeleton }) => skeleton ? 'border-width: 0' : ''};
+  ${({ skeleton }) => skeleton ? 'background-color: whitesmoke' : ''};
   ${({ skeleton }) => skeleton ? SKELETON_ANIMATION_CSS : ''};
-  background-color: ${({ skeleton }) => skeleton ? 'whitesmoke' : 'transparent'};
 
   ${dimensions};
   ${paddings};
@@ -79,6 +80,7 @@ export type FlexPropsBase = {
   visible?: boolean
   'no-pointer-events'?: boolean
   area?: string
+  delimited?: boolean
 }
 
 type Spaced = 'space-between' | 'space-evenly' | 'space-around'

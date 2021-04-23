@@ -39,7 +39,6 @@ export type TextProps = {
   color?: string//TODO Should not let set color
   'x-align'?: XAlignType
   'y-align'?: YAlignType
-  bordered?: boolean
   tooltip?: string
   mode?: TextMode
   handwritten?: boolean

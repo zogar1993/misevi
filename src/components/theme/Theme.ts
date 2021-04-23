@@ -122,3 +122,4 @@ export default theme
 ::-webkit-scrollbar-thumb {
 background: ${theme.colors.border2};
 }*/
+//TODO move repeted styles here
