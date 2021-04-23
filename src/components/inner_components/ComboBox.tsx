@@ -176,18 +176,18 @@ export default function ComboBox<T extends string = string>(props: InternalCombB
           buttons.map((x) => <ComboboxImageButton key={x.name} props={props} {...x} />)
         }
         {onChange && !unclearable &&
-          <ImageButton
-            src={close}
-            name='clear'
-            width='12px'
-            height='12px'
-            onPointerDown={(e: any) => {
-              updateOption(NULL_OPTION)
-              refInput.current?.blur()
-              e.preventDefault()
-            }}
-            visible={text !== ''}
-          />
+        <ImageButton
+          src={close}
+          name='clear'
+          width='12px'
+          height='12px'
+          onPointerDown={(e: any) => {
+            updateOption(NULL_OPTION)
+            refInput.current?.blur()
+            e.preventDefault()
+          }}
+          visible={text !== ''}
+        />
         }
       </ButtonsContainer>
     </ComboBoxContainer>
@@ -197,7 +197,7 @@ export default function ComboBox<T extends string = string>(props: InternalCombB
 export type ComboBoxProps<T extends string = string> = {
   id?: string
   value: T | null | undefined
-  options: Array<ComboBoxItem<T>> | undefined
+  options: Readonly<Array<ComboBoxItem<T>>> | undefined
   onChange?: (value: T | null) => void
   buttons?: Array<ButtonInfo<T>>
   disabled?: boolean
@@ -315,6 +315,3 @@ const NULL_OPTION = { name: '', code: null }
 
 //TODO if there is one open combobox, and then the x of another combobox is clicked, first still displays all eternity
 //TODO there is some issue with flickering red error, not being able to reproduce it yet.
-
-//TODO Combobox shows nothing when loaded with an invalid value
-//TODO make combobox items inmmutable
