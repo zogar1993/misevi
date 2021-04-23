@@ -5,31 +5,38 @@ import {Template, ComboboxStoryTypes, items, long_items} from "./ComboBoxTemplat
 
 ### Default
 <Canvas>
-  <Story name="with value" args={{label: "label", value: "apostle", options: items}}>
+  <Story name="with value" args={{label: "with value", value: "apostle", options: items}}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+### Invalid Value
+<Canvas>
+  <Story name="with invalid value" args={{label: "with invalid value", value: "spostore", options: items}}>
     {Template.bind({})}
   </Story>
 </Canvas>
 
 ### Long Dropdown
 <Canvas>
-  <Story name="long dropdown" args={{label: "label", value: null, options: long_items}}>
+  <Story name="long dropdown" args={{label: "long dropdown", value: null, options: long_items}}>
     {Template.bind({})}
   </Story>
 </Canvas>
 
 ### Disabled
 <Canvas>
-  <Story name="disabled with selected" args={{label: "label", value: "apostle", options: items, disabled: true}}>
+  <Story name="disabled with selected" args={{label: "disabled with selected", value: "apostle", options: items, disabled: true}}>
     {Template.bind({})}
   </Story>
-  <Story name="disabled empty" args={{label: "label", value: null, options: items, disabled: true}}>
+  <Story name="disabled empty" args={{label: "disabled empty", value: null, options: items, disabled: true}}>
     {Template.bind({})}
   </Story>
 </Canvas>
 
 ### Skeleton
 <Canvas>
-  <Story name="skeleton" args={{label: "label", options: items}}>
+  <Story name="skeleton" args={{label: "skeleton", options: items}}>
     {Template.bind({})}
   </Story>
 </Canvas>

@@ -162,6 +162,18 @@ describe('ComboBox should', () => {
     }
   })
 
+  describe('while value is not in options', () => {
+    beforeEach(async () => {
+      await the_options_are(IRRELEVANT_OPTIONS)
+      await the_value_is(AN_OPTION.code)
+      await the_combobox_is_rendered()
+    })
+
+    it('not show the clear button when hovered', async () => {
+      await the_select_should_display(AN_OPTION.code)
+    })
+  })
+
   async function the_options_are(options: Array<ComboBoxItem>) {
     _options = options
   }

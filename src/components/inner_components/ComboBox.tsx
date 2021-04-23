@@ -32,7 +32,7 @@ export default function ComboBox<T extends string = string>(props: InternalCombB
   const setTextFromValue = useCallback(() => {
     if (value) {
       const option = getOptions().find(x => x.code === value)
-      setText(option ? option.name : '')
+      setText(option ? option.name : value)
     } else
       setText('')
   }, [value, getOptions])
