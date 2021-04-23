@@ -10,12 +10,14 @@ describe('ComboBox should', () => {
   let _value: string | null | undefined
   let _onChange: (() => void) | undefined
   let _buttons: Array<ButtonInfo> | undefined
+  let _unclearable: boolean | undefined
 
   beforeEach(() => {
     _options = []
     _value = undefined
     _onChange = () => {}
     _buttons = undefined
+    _unclearable = undefined
   })
 
   describe('while a value is set but no onChange handler is set', () => {
@@ -142,6 +144,24 @@ describe('ComboBox should', () => {
     })
   })
 
+  describe('while is unclearable', () => {
+    beforeEach(async () => {
+      await the_combobox_is_unclearable()
+      await the_options_are(IRRELEVANT_OPTIONS)
+      await the_value_is(IRRELEVANT_OPTIONS[0].code)
+      await the_combobox_is_rendered()
+    })
+
+    it('not show the clear button when hovered', async () => {
+      await the_cursor_enters_the_combobox()
+      await the_clear_button_should_not_show()
+    })
+
+    async function the_combobox_is_unclearable() {
+      _unclearable = true
+    }
+  })
+
   async function the_options_are(options: Array<ComboBoxItem>) {
     _options = options
   }
@@ -167,6 +187,7 @@ describe('ComboBox should', () => {
         value={_value}
         onChange={_onChange}
         buttons={_buttons}
+        unclearable={_unclearable}
       />
     )
   }

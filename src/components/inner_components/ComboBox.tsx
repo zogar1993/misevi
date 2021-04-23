@@ -8,7 +8,7 @@ import { HANDWRITTEN_FONT } from '../css/Fonts'
 import Input from './Input'
 
 export default function ComboBox<T extends string = string>(props: InternalCombBoxProps<T>) {
-  const { value, options, onChange, onFocusChange, buttons, id, disabled } = props
+  const { value, options, onChange, onFocusChange, buttons, id, disabled, unclearable } = props
   const [text, setText] = useState('')
   const [error, setError] = useState(false)
   const [hovering, setHovering] = useState(false)
@@ -175,7 +175,7 @@ export default function ComboBox<T extends string = string>(props: InternalCombB
         {buttons === undefined ? null :
           buttons.map((x) => <ComboboxImageButton key={x.name} props={props} {...x} />)
         }
-        {onChange === undefined ? null :
+        {onChange && !unclearable &&
           <ImageButton
             src={close}
             name='clear'
@@ -201,6 +201,7 @@ export type ComboBoxProps<T extends string = string> = {
   onChange?: (value: T | null) => void
   buttons?: Array<ButtonInfo<T>>
   disabled?: boolean
+  unclearable?: boolean
 }
 
 export type InternalCombBoxProps<T extends string = string> = {
@@ -311,3 +312,9 @@ function insensitiveIncludes(text: string, sub: string) {
 }
 
 const NULL_OPTION = { name: '', code: null }
+
+//TODO if there is one open combobox, and then the x of another combobox is clicked, first still displays all eternity
+//TODO there is some issue with flickering red error, not being able to reproduce it yet.
+
+//TODO Combobox shows nothing when loaded with an invalid value
+//TODO make combobox items inmmutable
