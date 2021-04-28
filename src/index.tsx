@@ -13,7 +13,6 @@ import { SKELETON_ANIMATION_CSS } from './components/css/Skeleton'
 import FlexItem from './components/FlexItem'
 import Picture from 'components/Picture'
 import Tag from './components/Tag'
-import Tags from './components/Tags'
 import Box from './components/Box'
 import DataTable from './components/DataTable'
 import Main from './components/Main'
@@ -33,10 +32,8 @@ export {
   FlexItem,
   Picture,
   Tag,
-  Tags,
   Box,
   DataTable,
   Main
 }
 //TODO remove skeleton from index
-//TODO refactor tags
