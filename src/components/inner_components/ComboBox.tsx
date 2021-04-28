@@ -315,3 +315,5 @@ const NULL_OPTION = { name: '', code: null }
 
 //TODO if there is one open combobox, and then the x of another combobox is clicked, first still displays all eternity
 //TODO there is some issue with flickering red error, not being able to reproduce it yet.
+//TODO make non nullable if clearable
+//TODO add clipping
