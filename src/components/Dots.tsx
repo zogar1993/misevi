@@ -35,7 +35,7 @@ export default function Dots({ total, value, onChange, rows = 1, coloring }: Dot
     return isMarked(current) ? 'black' : 'white'
   }, [value, tentative, coloring])
 
-  const width = (total / rows) * 14 + 'px'
+  const width = Math.ceil(total / rows) * 14 + 'px'
   const height = rows * 14 + 'px'
   return (
     <DotsContainer
@@ -67,6 +67,7 @@ export default function Dots({ total, value, onChange, rows = 1, coloring }: Dot
 }
 
 const DotsContainer = styled.div<{ 'no-pointer-events'?: boolean, width?: string, height?: string }>`
+  display: flex;
   position: relative;
   flex-wrap: wrap;
   margin-bottom: 1px;
