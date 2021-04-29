@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 import { dimensions, DimensionsProps } from './css_helpers/dimensions'
-import { positions, PositionsProps } from './css_helpers/positions'
 import { BORDER_RADIUS } from './css/Dimensions'
 import { SKELETON_ANIMATION_CSS } from 'components/css/Skeleton'
 
@@ -18,7 +17,6 @@ const Img = styled.img<PictureProps>`
   ${({bordered}) => bordered ? `border: 1px lightgray solid` : '' };
 
   ${dimensions};
-  ${positions};
 `
 
 const SkeletonDiv = styled.div<PictureProps>`
@@ -38,4 +36,4 @@ export type PictureProps = {
   bordered?: boolean
   src?: string
   alt?: string
-} & DimensionsProps & PositionsProps
+} & DimensionsProps

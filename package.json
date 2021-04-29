@@ -29,7 +29,7 @@
     "dist/components/*"
   ],
   "scripts": {
-    "start": "npm run storybook",
+    "start": "yarn storybook",
     "build": "npm run build:ts",
     "build:ts": "npx rollup -c",
     "build:clean": "rm -rf ./dist/*",
