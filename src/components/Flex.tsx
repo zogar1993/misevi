@@ -2,7 +2,6 @@ import styled, { StyledComponent } from 'styled-components'
 import { DIMENSIONS, dimensions, DimensionsProps } from './css_helpers/dimensions'
 import { SKELETON_ANIMATION_CSS } from './css/Skeleton'
 import React from 'react'
-import { paddings, PADDINGS, PaddingsProps } from './css_helpers/paddings'
 import { POSITIONS, positions, PositionsProps } from './css_helpers/positions'
 import { margins, MARGINS, MarginsProps } from './css_helpers/margins'
 import { BORDER_RADIUS, SEPARATION } from './css/Dimensions'
@@ -15,7 +14,6 @@ const removeHtmlProperties = <W extends object>(
   const args = props as any
   ignored.forEach((name: any) => delete args[name])
   DIMENSIONS.forEach((name: string) => delete args[name])
-  PADDINGS.forEach((name: string) => delete args[name])
   MARGINS.forEach((name: string) => delete args[name])
   POSITIONS.forEach((name: string) => delete args[name])
   return <Element {...args}>{args.children}</Element>
@@ -38,14 +36,14 @@ const Flex = styled(removeHtmlProperties<FlexProps>(Div, ignored))<FlexProps>`
   justify-content: ${({ vertical, ...props }) => align(props[vertical ? 'y-align' : 'x-align'])};
   align-content: ${({ vertical, ...props }) => align(props[vertical ? 'x-align' : 'y-align'])};
   align-items: ${({ vertical, ...props }) => align(props[vertical ? 'x-align' : 'y-align'])};
-  gap: ${({ gap }) => gap ? gap === true ? SEPARATION : gap : 0};
+  ${({ gap }) => gap ? `gap: ${SEPARATION}` : ''};
+  ${({ padded }) => padded ? `padding: ${SEPARATION}` : ''};
 
   ${({ skeleton }) => skeleton ? 'border-width: 0' : ''};
   ${({ skeleton }) => skeleton ? 'background-color: whitesmoke' : ''};
   ${({ skeleton }) => skeleton ? SKELETON_ANIMATION_CSS : ''};
 
   ${dimensions};
-  ${paddings};
   ${margins};
   ${positions};
 `
@@ -67,14 +65,14 @@ const align = (value: string | undefined) => {
   return 'flex-start'
 }
 
-export type FlexProps = FlexPropsBase & DimensionsProps & PaddingsProps &
-  MarginsProps & PositionsProps
+export type FlexProps = FlexPropsBase & DimensionsProps & MarginsProps & PositionsProps
 export type FlexPropsBase = {
   'y-align'?: YAlignType
   'x-align'?: XAlignType
   reversed?: boolean
   wrap?: boolean
-  gap?: true | string
+  gap?: boolean
+  padded?: boolean
   vertical?: boolean
   overflow?: string
   skeleton?: boolean
