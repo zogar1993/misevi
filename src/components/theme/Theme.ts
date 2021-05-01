@@ -1,5 +1,4 @@
 import { Color } from './Color'
-import { useLayoutEffect } from 'react'
 // @ts-ignore
 import styleInject from 'style-inject'
 import { css } from 'styled-components'
@@ -8,8 +7,9 @@ const light = {
   colors: {
     text: Color.Black,
     muted: Color.DarkGrey,
-
     background1: Color.White,
+    primary: Color.White,
+
     menu: {
       background: Color.LighterGray,
       open_item: Color.LightGray,
@@ -17,13 +17,31 @@ const light = {
       border: Color.Gray
     },
 
-    primary: Color.White
+    disabled: {
+      text: Color.DarkGrey,
+      primary: Color.LighterGray
+    },
+
+    actives: {
+      text: Color.Black,
+      primary: Color.DarkGrey
+    },
+
+    hovers: {
+      text: Color.Black,
+      primary: Color.Gray
+    },
   },
   fonts: {
     handwritten: 'Patrick Hand, Times, serif',
     option: 'Almendra SC, Times, serif',
     title: 'Almendra, Times, serif',
     common: 'Arial, Times, serif'
+  },
+  buttons: {
+    colors: {
+      border: Color.DarkGrey
+    }
   }
 }
 
