@@ -52,16 +52,13 @@ function SideBar({ logo, menu }: SideBarProps) {
   const [openMenu, setOpenMenu] = useState<string | null>(null)
   const [expanded, setExpanded] = useState(true)
 
-  const pathParts = location.href.split('/').map((x) => x.split('?')[0])
-
-
   return (
     <SideBarElement expanded={expanded}>
       <SideBarOverflowHider>
         <Logo src={logo} alt='logo' open={expanded} onClick={() => setExpanded(expanded => !expanded)} />
         <ItemsContainer>
           {menu.map((item) => (
-            <Item key={item.name} {...{ item, expanded, openMenu, setOpenMenu, pathParts }} />
+            <Item key={item.name} {...{ item, expanded, openMenu, setOpenMenu }} />
           ))}
         </ItemsContainer>
       </SideBarOverflowHider>
@@ -69,14 +66,12 @@ function SideBar({ logo, menu }: SideBarProps) {
   )
 }
 
-function Item({ item, expanded, openMenu, setOpenMenu, pathParts }: ItemsProps) {
+function Item({ item, expanded, openMenu, setOpenMenu }: ItemsProps) {
   const history = useHistory()
-  const selected = isSelected(item, pathParts) || hasSelectedChild(item, pathParts)
   const isOpen = openMenu === item.name
 
-
   return (
-    <ItemContainer open={isOpen || selected}>
+    <ItemContainer open={isOpen}>
       <ItemButton
         open={isOpen}
         onClick={() => {
@@ -85,32 +80,23 @@ function Item({ item, expanded, openMenu, setOpenMenu, pathParts }: ItemsProps) 
           else redirectTo(item, history)
         }}
       >
-        <Icon src={item.icon} alt={item.name} selected={selected} />
-        <ItemName selected={selected}>{item.name}</ItemName>
-        {isItemBranch(item) && !selected ? <DropdownIcon open={isOpen} /> : null}
+        <Icon src={item.icon} alt={item.name}/>
+        <ItemName>{item.name}</ItemName>
+        {isItemBranch(item) ? <DropdownIcon open={isOpen} /> : null}
       </ItemButton>
       {isItemBranch(item) ? (
-        <SubItems items={item.items} expanded={expanded} pathParts={pathParts} show={isOpen || selected} />
+        <SubItems items={item.items} expanded={expanded} show={isOpen} />
       ) : null}
     </ItemContainer>
   )
 }
 
-function isSelected(item: MenuItem, pathParts: Array<string>) {
-  return Boolean(isItemRoutable(item) && pathParts.includes(item.path))
-}
-
-function hasSelectedChild(item: MenuItem, pathParts: Array<string>) {
-  return Boolean(isItemBranch(item) && item.items.some((x) => pathParts.includes(x.path)))
-}
-
-function SubItems({ items, expanded, show, pathParts }: SubItemsProps) {
+function SubItems({ items, expanded, show }: SubItemsProps) {
   const history = useHistory()
 
   return (
     <SubItemsContainer show={show} amount={items.length}>
       {items.map((item) => {
-          const selected = isSelected(item, pathParts)
           return (
             <SubItemButton
               key={item.name}
@@ -119,8 +105,8 @@ function SubItems({ items, expanded, show, pathParts }: SubItemsProps) {
                 redirectTo(item, history)
               }}
             >
-              <Icon src={item.icon} alt={item.name} selected={selected} />
-              <SubItemName selected={selected}>{item.name}</SubItemName>
+              <Icon src={item.icon} alt={item.name}/>
+              <SubItemName>{item.name}</SubItemName>
             </SubItemButton>
           )
         }
@@ -138,7 +124,6 @@ type SubItemsProps = {
   items: Array<LeafItem>
   expanded: boolean
   show: boolean
-  pathParts: Array<string>
 }
 
 type ItemsProps = {
@@ -146,7 +131,6 @@ type ItemsProps = {
   expanded: boolean
   openMenu: string | null
   setOpenMenu: (value: string | null) => void
-  pathParts: Array<string>
 }
 
 const WIDTH_EXTENDED = '190px'
@@ -236,17 +220,17 @@ const ItemButton = styled(NoStyleButton)<{ open: boolean }>`
   height: 44px;
 `
 
-const ItemName = styled.span<{ selected: boolean }>`
+const ItemName = styled.span`
   font-family: ${theme.fonts.option};
   font-size: 18px;
   text-align: left;
   margin-left: 2px;
   width: calc(${WIDTH_EXTENDED} - ${WIDTH_COLLAPSED});
-  color: ${({ selected }) => (selected ? theme.colors.primary : theme.colors.text)};
+  color: ${theme.colors.text};
 `
 
 
-const Icon = styled.img<{ selected: boolean }>`
+const Icon = styled.img`
   width: 32px;
   height: 32px;
   margin: 0 8px;
@@ -286,7 +270,7 @@ const DropdownIcon = styled.div<{ open: boolean }>`
   margin-top: 6px;
   width: 12px;
   height: 12px;
-  border: ${theme.colors.primary} solid 2px;
+  border: ${theme.colors.text} solid 2px;
   border-left: 0;
   border-top: 0;
   transform: translateY(${({ open }) => open ? 0 : '-50%'}) rotate(${({ open }) => open ? 225 : 45}deg);
@@ -295,11 +279,11 @@ const DropdownIcon = styled.div<{ open: boolean }>`
   left: 160px;
 `
 
-const SubItemName = styled.span<{ selected: boolean }>`
+const SubItemName = styled.span`
   font-family: ${theme.fonts.option};
   margin-left: 16px;
   font-size: 16px;
-  color: ${({ selected }) => (selected ? theme.colors.primary : theme.colors.text)};
+  color: ${theme.colors.text};
 `
 
 export type RouteOnlyItem = {

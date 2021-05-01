@@ -17,7 +17,7 @@ const light = {
       border: Color.Gray
     },
 
-    primary: Color.Black
+    primary: Color.White
   },
   fonts: {
     handwritten: 'Patrick Hand, Times, serif',
