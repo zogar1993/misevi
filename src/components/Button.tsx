@@ -25,7 +25,6 @@ export type ButtonProps = {
 
 const ButtonElement = styled(NoStyleButton)<ButtonProps>`
   box-sizing: border-box;
-  border: 1px solid ${theme.buttons.colors.border};
   min-width: 65px;
 
   padding: ${padding} 8px;
@@ -37,21 +36,28 @@ const ButtonElement = styled(NoStyleButton)<ButtonProps>`
 
   border-radius: ${BORDER_RADIUS};
 
+  border-width: 1px;
+  border-style: solid;
+
   color: ${theme.colors.text};
+  border-color: ${theme.colors.text};
   background-color: ${theme.colors.primary};
 
   :hover:not(:disabled) {
     color: ${theme.colors.hovers.text};
+    border-color: ${theme.colors.hovers.text};
     background-color: ${theme.colors.hovers.primary};
   }
 
   :active:not(:disabled) {
     color: ${theme.colors.actives.text};
+    border-color: ${theme.colors.actives.text};
     background-color: ${theme.colors.actives.primary};
   }
 
   :disabled {
     color: ${theme.colors.disabled.text};
+    border-color: ${theme.colors.disabled.text};
     background-color: ${theme.colors.disabled.primary};
     cursor: not-allowed;
   }
