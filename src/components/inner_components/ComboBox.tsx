@@ -49,10 +49,11 @@ export default function ComboBox<T extends string = string>(props: InternalCombB
 
   const updateOption = useCallback((option: ComboBoxItem<T> | typeof NULL_OPTION) => {
     if (option.code !== value)
-      onChange && onChange(option.code)
+      if(unclearable && option.code === null) return
+      else onChange && onChange(option.code as T)
     else
       updateText(option.name)
-  }, [value, onChange, updateText])
+  }, [value, onChange, updateText, unclearable])
 
   const handleOnKeyDown = useCallback((e: any) => {
     function isInDropdown(highlighted: ComboBoxItem<T> | null): highlighted is ComboBoxItem<T> {
@@ -198,11 +199,15 @@ export type ComboBoxProps<T extends string = string> = {
   id?: string
   value: T | null | undefined
   options: Readonly<Array<ComboBoxItem<T>>> | undefined
-  onChange?: (value: T | null) => void
   buttons?: Array<ButtonInfo<T>>
   disabled?: boolean
-  unclearable?: boolean
-}
+} & ({
+  unclearable?: false
+  onChange?: (value: T | null) => void
+} | {
+  unclearable: true
+  onChange?: (value: T) => void
+})
 
 export type InternalCombBoxProps<T extends string = string> = {
   onFocusChange?: (focus: boolean, text: string) => void
@@ -315,5 +320,4 @@ const NULL_OPTION = { name: '', code: null }
 
 //TODO if there is one open combobox, and then the x of another combobox is clicked, first still displays all eternity
 //TODO there is some issue with flickering red error, not being able to reproduce it yet.
-//TODO make non nullable if clearable
 //TODO add clipping
