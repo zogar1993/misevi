@@ -20,6 +20,7 @@ const padding = ({ size }: ButtonProps) => {
 
 export type ButtonProps = {
   size?: 'small' | 'medium' | 'large'
+  disabled?: boolean
   onClick: (e?: any) => void
 }
 

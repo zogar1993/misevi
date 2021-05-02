@@ -112,6 +112,7 @@ const ButtonItem = styled(Button)<Props>`
   font-weight: ${({ bold }) => bold ? 'bold' : 'normal'};
   font-style: ${({ italic }) => italic ? 'italic' : 'normal'};
   font-family: ${theme.fonts.option};
+  text-transform: capitalize;
 
   border-bottom-style: ${props => props['has-buttons-bottom'] ? 'none' : 'solid'};
   border-right-style: ${props => props['has-buttons-right'] ? 'none' : 'solid'};

@@ -37,11 +37,6 @@ const light = {
     option: 'Almendra SC, Times, serif',
     title: 'Almendra, Times, serif',
     common: 'Arial, Times, serif'
-  },
-  buttons: {
-    colors: {
-      border: Color.DarkGrey
-    }
   }
 }
 
