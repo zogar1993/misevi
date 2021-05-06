@@ -273,4 +273,3 @@ const OUT_ANIMATIONS = {
   right: slideOutLeft,
   up: () => slideOutTop
 }
-//TODO fix modal leave for big content

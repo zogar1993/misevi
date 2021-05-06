@@ -96,7 +96,7 @@ styleInject(
 
 export default theme
 
-//TODO move repeted styles here
+//TODO move repeated styles here
 
 // converts any nested theme object into one with the css variables as the value
 export function toVarNames<T>(obj: T, prefix = '-'): T {
