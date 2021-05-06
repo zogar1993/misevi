@@ -2,6 +2,7 @@ import { Color } from './Color'
 // @ts-ignore
 import styleInject from 'style-inject'
 import { css } from 'styled-components'
+import {BORDER_RADIUS} from "../css/Dimensions"
 
 const light = {
   colors: {
@@ -42,7 +43,7 @@ const light = {
 
 const themes = { light }
 
-// any theme could have been used, dark was chosen arbitrarily.
+// any theme could have been used, light was chosen arbitrarily.
 const theme = toVarNames(light)
 
 type ThemeType = 'light'
@@ -62,8 +63,25 @@ styleInject(
       box-sizing: border-box;
     }
 
-    ::before, ::after {
+    *::before, ::after {
       box-sizing: border-box;
+    }
+
+    *::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    *::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    *::-webkit-scrollbar-thumb {
+      background: darkgrey;
+      border-radius: ${BORDER_RADIUS};
+    }
+
+    *::-webkit-scrollbar-thumb:hover {
+      background: grey;
     }
 
     body {
@@ -77,12 +95,8 @@ styleInject(
 )
 
 export default theme
-/*
-::-webkit-scrollbar-thumb {
-background: ${theme.colors.border2};
-}*/
-//TODO move repeted styles here
 
+//TODO move repeted styles here
 
 // converts any nested theme object into one with the css variables as the value
 export function toVarNames<T>(obj: T, prefix = '-'): T {

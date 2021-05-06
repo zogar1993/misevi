@@ -246,7 +246,6 @@ const BORDER_WIDTH = 1
 const Options = styled.ol<{ open: boolean }>`
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
   border-radius: ${BORDER_RADIUS};
   position: absolute;
   top: 30px;
@@ -264,7 +263,6 @@ const Options = styled.ol<{ open: boolean }>`
 `
 
 const Option = styled.li<{ highlighted: boolean }>`
-  box-sizing: border-box;
   font-family: ${HANDWRITTEN_FONT}, Times, serif;
   height: ${OPTION_HEIGHT}px;
   font-size: 13px;

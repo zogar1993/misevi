@@ -95,7 +95,6 @@ const shadow = ({
 }
 
 const ButtonItem = styled(Button)<Props>`
-  box-sizing: border-box;
   border: 1px solid darkgray;
   min-width: 65px;
   position: relative;

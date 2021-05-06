@@ -27,7 +27,6 @@ const Label = styled.label`
 
 const Tag = styled.span`
   font-size: 12px;
-  box-sizing: border-box;
   height: 16px;
   border: 1px solid lightgray;
   border-radius: ${BORDER_RADIUS};

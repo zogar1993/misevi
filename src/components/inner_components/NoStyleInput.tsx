@@ -1,7 +1,6 @@
 import styled from 'styled-components'
 
 export const NoStyleInput = styled.input`
-  box-sizing: border-box;
   appearance: none;
   outline: none;
   box-shadow: none;

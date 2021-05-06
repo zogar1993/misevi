@@ -3,7 +3,6 @@ import { INPUT_HEIGHT } from '../css/Dimensions'
 
 const FieldContainer = styled.div<{ width?: string, area?: string }>`
   position: relative;
-  box-sizing: border-box;
   width: ${({width}) => width || 'auto'};
   height: ${INPUT_HEIGHT};
   display: flex;

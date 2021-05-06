@@ -94,6 +94,8 @@ const Background = styled.div<{ show: boolean }>`
 `
 
 const ModalCard = styled.div<{ animation?: string }>`
+  display: flex;
+  flex-direction: column;
   position: absolute;
   max-width: 80vw;
   max-height: 80vh;
@@ -117,6 +119,9 @@ const ModalHeader = styled.header`
 const ModalBody = styled.body`
   background-color: white;
   padding: 10px;
+  max-height: 75vh;
+  overflow-y: auto;
+  overflow-x: hidden;
 `
 
 const ModalFooter = styled.footer`

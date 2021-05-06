@@ -31,7 +31,6 @@ const DotElement = styled(NoStyleInput).attrs(() => ({
 }))<DotProps & { skeleton: boolean }>`
   width: 14px;
   height: 14px;
-  box-sizing: border-box;
   border: 1px solid black;
   border-radius: 50%;
   background-color: ${({ color }) => color || 'black'};

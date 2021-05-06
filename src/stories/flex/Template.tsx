@@ -22,7 +22,6 @@ const Square = styled.div`
 	font-weight: bold;
 
   background-color: greenyellow;
-  box-sizing: border-box;
   width: auto;
   height: auto;
   min-height: 60px;
@@ -38,7 +37,6 @@ function Flex(props: FlexProps) {
 }
 
 const FlexElement = styled(UnboxedFlex)`
-  box-sizing: border-box;
   background-color: coral;
   border-width: 1px;
   border-color: black;

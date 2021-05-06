@@ -25,7 +25,6 @@ export type ButtonProps = {
 }
 
 const ButtonElement = styled(NoStyleButton)<ButtonProps>`
-  box-sizing: border-box;
   min-width: 65px;
 
   padding: ${padding} 8px;
