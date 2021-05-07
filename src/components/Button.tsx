@@ -22,6 +22,7 @@ export type ButtonProps = {
   size?: 'small' | 'medium' | 'large'
   disabled?: boolean
   onClick: (e?: any) => void
+  children: string
 }
 
 const ButtonElement = styled(NoStyleButton)<ButtonProps>`
@@ -64,5 +65,5 @@ const ButtonElement = styled(NoStyleButton)<ButtonProps>`
 `
 
 
-export const Button = (args: ButtonProps & { children: any }) => <ButtonElement {...args} />
+export const Button = (args: ButtonProps) => <ButtonElement {...args} />
 export default Button
