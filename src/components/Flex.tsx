@@ -1,25 +1,12 @@
 import styled, { StyledComponent } from 'styled-components'
-import { DIMENSIONS, dimensions, DimensionsProps } from './css_helpers/dimensions'
+import { dimensions, DimensionsProps } from './css_helpers/dimensions'
 import { SKELETON_ANIMATION_CSS } from './css/Skeleton'
 import React from 'react'
-import { margins, MARGINS, MarginsProps } from './css_helpers/margins'
+import { margins, MarginsProps } from './css_helpers/margins'
 import { BORDER_RADIUS, SEPARATION } from './css/Dimensions'
+import {purified} from "./purifier/Purified"
 
-const ignored: Array<string> = ['wrap', 'x-align', 'y-align']
-
-const removeHtmlProperties = <W extends object>(
-  Element: StyledComponent<any | React.ComponentType<any>, any, W>, ignored: Array<string>
-) => (({ ...props }: W & React.HTMLAttributes<HTMLElement>) => {
-  const args = props as any
-  ignored.forEach((name: any) => delete args[name])
-  DIMENSIONS.forEach((name: string) => delete args[name])
-  MARGINS.forEach((name: string) => delete args[name])
-  return <Element {...args}>{args.children}</Element>
-})
-
-//TODO apply black magic to other components.
-const Div = styled.div``
-const Flex = styled(removeHtmlProperties<FlexProps>(Div, ignored))<FlexProps>`
+const Flex = styled(purified.div)`
   display: flex;
   ${props => props['no-pointer-events'] ? 'pointer-events: none' : ''};
   ${({ visible }) => visible === false ? 'visibility: hidden' : ''};
