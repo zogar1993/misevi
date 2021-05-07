@@ -1,7 +1,5 @@
-import { heights, HEIGHTS, HeightsProps } from 'components/css_helpers/heights'
-import { widths, WIDTHS, WidthsProps } from 'components/css_helpers/widths'
-
-export const DIMENSIONS = Object.freeze([...WIDTHS, ...HEIGHTS])
+import { heights, HeightsProps } from 'components/css_helpers/heights'
+import { widths, WidthsProps } from 'components/css_helpers/widths'
 
 export const dimensions = (props: DimensionsProps) => `
     ${widths(props)}

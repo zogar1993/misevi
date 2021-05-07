@@ -2,10 +2,8 @@ import UnboxedFlex, {FlexProps} from "components/Flex"
 import styled from "styled-components"
 import React from "react"
 
-
 export const FlexDistilled = (props: FlexProps) => <Flex {...props}/>
 
-//TODO add flex storybook showing borders
 export default function FlexTemplate({width, height, ...args}: FlexProps) {
   return (
     <Flex {...{width: width || "220px", height: height || "220px", wrap: true, ...args}}>

@@ -1,4 +1,4 @@
-import styled, { StyledComponent } from 'styled-components'
+import styled from 'styled-components'
 import { dimensions, DimensionsProps } from './css_helpers/dimensions'
 import { SKELETON_ANIMATION_CSS } from './css/Skeleton'
 import React from 'react'
