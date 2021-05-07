@@ -4,6 +4,7 @@ import FieldContainer from './inner_components/FieldContainer'
 import NumberInput, { NumberInputProps } from './NumberInput'
 import TextInput, { TextInputProps } from './inner_components/TextInput'
 import ComboBox, { ComboBoxProps } from './inner_components/ComboBox'
+import uuid from "./uuid/uuid"
 
 export default function Field<T extends string = string>({ label, width, area, ...props }: FieldProps<T>) {
   const { value, disabled } = props
@@ -14,7 +15,7 @@ export default function Field<T extends string = string>({ label, width, area, .
   useEffect(() => {
     setIsPlaceholder(value === '' || value === null)
   }, [value])
-  const id = props.id || label
+  const id = label ? `${label}-${uuid()}` : uuid()
 //TODO when focused, label does a weird behaviour when clicked.
   return (
     <FieldContainer width={width} area={area}>

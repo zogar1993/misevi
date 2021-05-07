@@ -49,11 +49,10 @@ export default function ComboBox<T extends string = string>(props: InternalCombB
 
   const updateOption = useCallback((option: ComboBoxItem<T> | typeof NULL_OPTION) => {
     if (option.code !== value)
-      if(unclearable && option.code === null) return
-      else onChange && onChange(option.code as T)
+      onChange && onChange(option.code)
     else
       updateText(option.name)
-  }, [value, onChange, updateText, unclearable])
+  }, [value, onChange, updateText])
 
   const handleOnKeyDown = useCallback((e: any) => {
     function isInDropdown(highlighted: ComboBoxItem<T> | null): highlighted is ComboBoxItem<T> {
@@ -185,7 +184,7 @@ export default function ComboBox<T extends string = string>(props: InternalCombB
           onPointerDown={(e: any) => {
             updateOption(NULL_OPTION)
             refInput.current?.blur()
-            e.preventDefault()
+            e.stopPropagation()
           }}
           visible={text !== ''}
         />
@@ -196,20 +195,16 @@ export default function ComboBox<T extends string = string>(props: InternalCombB
 }
 
 export type ComboBoxProps<T extends string = string> = {
-  id?: string
   value: T | null | undefined
   options: Readonly<Array<ComboBoxItem<T>>> | undefined
   buttons?: Array<ButtonInfo<T>>
   disabled?: boolean
-} & ({
-  unclearable?: false
+  unclearable?: boolean
   onChange?: (value: T | null) => void
-} | {
-  unclearable: true
-  onChange?: (value: T) => void
-})
+}
 
 export type InternalCombBoxProps<T extends string = string> = {
+  id?: string
   onFocusChange?: (focus: boolean, text: string) => void
 } & ComboBoxProps<T>
 
@@ -316,6 +311,5 @@ function insensitiveIncludes(text: string, sub: string) {
 
 const NULL_OPTION = { name: '', code: null }
 
-//TODO if there is one open combobox, and then the x of another combobox is clicked, first still displays all eternity
 //TODO there is some issue with flickering red error, not being able to reproduce it yet.
 //TODO add clipping

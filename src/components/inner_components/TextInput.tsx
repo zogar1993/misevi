@@ -46,7 +46,6 @@ const TextInput = forwardRef(({
 export default TextInput
 
 export type TextInputProps = {
-  id?: string
   placeholder?: string
   value?: string
   onBlur?: (value: string) => void
@@ -56,5 +55,6 @@ export type TextInputProps = {
 }
 
 export type InternalTextInputProps = {
+  id?: string
   onFocusChange?: (focus: boolean, text: string) => void
 } & TextInputProps

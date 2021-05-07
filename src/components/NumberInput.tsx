@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import Input from './inner_components/Input'
 
-export default function NumberInput(props: NumberInputProps) {
+export default function NumberInput(props: InternalNumberInputProps) {
   const { value, onBlur, min, max, disabled } = props
   const [current, setCurrent] = useState<number>()
 
@@ -40,13 +40,16 @@ export default function NumberInput(props: NumberInputProps) {
 }
 
 export type NumberInputProps = {
-  id?: string
   min?: number
   max?: number
   value?: number
   onBlur?: (value: number) => void
   disabled?: boolean
 }
+
+export type InternalNumberInputProps = {
+  id?: string
+} & NumberInputProps
 
 export const keepWithinBoundaries = (value: number, min?: number, max?: number) => {
   if (min && value < min) return min
