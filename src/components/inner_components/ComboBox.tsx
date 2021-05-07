@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { BORDER_RADIUS, SEPARATION } from '../css/Dimensions'
-import Flex from '../Flex'
 import ImageButton from '../ImageButton'
 import close from '../icons/close.svg'
 import { HANDWRITTEN_FONT } from '../css/Fonts'
@@ -168,10 +167,7 @@ export default function ComboBox<T extends string = string>(props: InternalCombB
           ))
         }
       </Options>
-      <ButtonsContainer
-        y-align='center'
-        visible={hovering && isNotLoading && !disabled}
-      >
+      <ButtonsContainer visible={hovering && isNotLoading && !disabled}>
         {buttons === undefined ? null :
           buttons.map((x) => <ComboboxImageButton key={x.name} props={props} {...x} />)
         }
@@ -278,11 +274,12 @@ const ComboBoxContainer = styled.div<{ $width?: string }>`
   position: relative;
 `
 
-const ButtonsContainer = styled(Flex)`
+const ButtonsContainer = styled.div<{visible: boolean}>`
   position: absolute;
   right: 9px;
+  align-content: center;
+  align-items: center;
   ${({ visible }) => visible === false ? 'visibility: hidden' : ''};
-  //TODO this should not be needed, but without this tests break
 `
 
 const TextInput = styled(Input)<{ error: boolean }>`
@@ -311,5 +308,4 @@ function insensitiveIncludes(text: string, sub: string) {
 
 const NULL_OPTION = { name: '', code: null }
 
-//TODO there is some issue with flickering red error, not being able to reproduce it yet.
 //TODO add clipping

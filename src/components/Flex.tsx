@@ -9,7 +9,6 @@ import {purified} from "./purifier/Purified"
 const Flex = styled(purified.div)`
   display: flex;
   ${props => props['no-pointer-events'] ? 'pointer-events: none' : ''};
-  ${({ visible }) => visible === false ? 'visibility: hidden' : ''};
   ${({ delimited }) => delimited ? 'border: 1px solid lightgray' : ''};
   ${({ delimited }) => delimited ? `border-radius: ${BORDER_RADIUS}` : ''};
   ${({ area }) => area ? `grid-area: ${area}` : ''};
@@ -58,7 +57,6 @@ export type FlexPropsBase = {
   vertical?: boolean
   overflow?: string
   skeleton?: boolean
-  visible?: boolean
   'no-pointer-events'?: boolean
   area?: string
   delimited?: boolean
