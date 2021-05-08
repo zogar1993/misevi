@@ -9,17 +9,27 @@ import uuid from "./uuid/uuid"
 export default function Field<T extends string = string>({ label, width, area, ...props }: FieldProps<T>) {
   const { value, disabled } = props
   const [isPlaceholder, setIsPlaceholder] = useState<boolean>(false)
+  const [isFocused, setIsFocused] = useState<boolean>(false)
   const onTextChange = useCallback((focus: boolean, text: string) => {
     setIsPlaceholder(!focus && text.trim() === '')
+    setIsFocused(focus)
   }, [])
+
   useEffect(() => {
     setIsPlaceholder(value === '' || value === null)
   }, [value])
   const id = label ? `${label}-${uuid()}` : uuid()
-//TODO when focused, label does a weird behaviour when clicked.
+
   return (
     <FieldContainer width={width} area={area}>
-      <FieldLabel as-placeholder={isPlaceholder} htmlFor={id} disabled={disabled}>{label}</FieldLabel>
+      <FieldLabel
+        as-placeholder={isPlaceholder}
+        htmlFor={id}
+        disabled={disabled}
+        onMouseDown={(e) => { if(isFocused) e.preventDefault() }}
+      >
+        {label}
+      </FieldLabel>
       {
         props.type === 'number' ? <NumberInput {...props} id={id} /> :
           props.type === 'combobox' ? <ComboBox {...props} id={id} onFocusChange={onTextChange} /> :

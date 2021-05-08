@@ -87,7 +87,7 @@ describe('Text Field should', () => {
                                    }: { label?: string, value?: string }) {
 
     screen = render(
-      <Field label={label} value={value} onBlur={actions.onBlur}/>//TODO add onChange
+      <Field label={label} value={value} onBlur={actions.onBlur}/>
     )
   }
   function given_a_text_input() {

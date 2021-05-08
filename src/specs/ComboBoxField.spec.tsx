@@ -123,7 +123,7 @@ describe('ComboBox should', () => {
 
   describe('while there is a custom button set', () => {
     const aCustomButton = {
-      src: '',
+      src: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=",
       name: 'do_something',
       onClick: () => {}
     }
