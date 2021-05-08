@@ -28,7 +28,6 @@ export {
   Text,
   Avatar,
   ItemsModal,
-  SKELETON_ANIMATION_CSS,
   FlexItem,
   Picture,
   Tag,
@@ -36,4 +35,3 @@ export {
   DataTable,
   Main
 }
-//TODO remove skeleton from index

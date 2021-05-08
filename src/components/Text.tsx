@@ -9,7 +9,7 @@ export default function Text({ children, tooltip, bold, handwritten, size, mode,
   return (
     <Container {...props} skeleton={children === undefined}>
       <Span
-        color={mode ? color(mode) : props.color}
+        color={color(mode)}
         title={tooltip}
         bold={bold}
         handwritten={handwritten}
@@ -21,7 +21,7 @@ export default function Text({ children, tooltip, bold, handwritten, size, mode,
   )
 }
 
-function color(mode: TextMode): string {
+function color(mode: TextMode | undefined): string {
   if (mode === 'positive') return 'green'
   if (mode === 'negative') return 'red'
   return 'black'
@@ -36,7 +36,6 @@ export type TextProps = {
   font?: string
   size?: TextSize
   bold?: boolean
-  color?: string//TODO Should not let set color
   'x-align'?: XAlignType
   'y-align'?: YAlignType
   tooltip?: string
