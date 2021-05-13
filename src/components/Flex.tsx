@@ -23,7 +23,7 @@ const Flex = styled(purified.div)`
   ${({ padded }) => padded ? `padding: ${SEPARATION}` : ''};
 
   ${({ skeleton }) => skeleton ? 'border-width: 0' : ''};
-  ${({ skeleton }) => skeleton ? 'background-color: whitesmoke' : ''};
+  ${({ skeleton }) => skeleton ? `border-radius: ${BORDER_RADIUS}` : ''};
   ${({ skeleton }) => skeleton ? SKELETON_ANIMATION_CSS : ''};
 
   ${dimensions};
