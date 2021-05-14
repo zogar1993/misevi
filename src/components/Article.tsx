@@ -10,5 +10,9 @@ const Article = styled.article`
   padding-top: calc(${SEPARATION} * 2);
 
   overflow-y: auto;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `
 export default Article
