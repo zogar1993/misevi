@@ -6,11 +6,22 @@ export function Template({ ...args }: DataTableProps) {
 }
 
 function DataTable(props: DataTableProps) {
-  return <DataTableUnboxed
-    {...props}
-    columns={[{header: "mono", format: (value: any) => <span>{value.name}</span>, sort: {value: "name", default: "idle"}}]}
-    data={[]}
-    identifier={() => ""}/>
+  return (
+    <DataTableUnboxed
+      {...props}
+      columns={
+        [
+          {
+            header: "mono",
+            format: (value: any) => <span>{value.name}</span>,
+            sort: {value: "name", default: "idle"}
+          }
+        ]
+      }
+      data={[]}
+      identifier={() => ""}
+    />
+  )
 }
 
 export const items = [

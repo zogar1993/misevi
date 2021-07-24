@@ -5,7 +5,7 @@ import { margins, MarginsProps } from './css_helpers/margins'
 import { NoStyleButton } from './inner_components/NoStyleButton'
 
 export default function ImageButton({ src, name, width, height, visible, ...props }: {
-  src?: any
+  src: any
   name: string
   width: string
   height: string

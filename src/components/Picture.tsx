@@ -3,9 +3,10 @@ import styled from 'styled-components'
 import { dimensions, DimensionsProps } from './css_helpers/dimensions'
 import { BORDER_RADIUS } from './css/Dimensions'
 import { SKELETON_ANIMATION_CSS } from 'components/css/Skeleton'
+import transparent from 'components/icons/transparent-pixel.png'
 
 export default function Picture({src, ...props}: PictureProps) {
-  return <Img {...props} skeleton={src === undefined} src={src || transparentPixel}/>
+  return <Img {...props} skeleton={src === undefined} src={src || transparent}/>
 }
 
 const Img = styled.img<PictureProps & {skeleton: boolean}>`
@@ -29,5 +30,3 @@ export type PictureProps = {
   src?: string
   alt?: string
 } & DimensionsProps
-
-const transparentPixel = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="

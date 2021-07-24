@@ -176,7 +176,6 @@ const SubItemName = styled.span`
   color: ${theme.colors.text};
 `
 
-
 const Icon = styled.img`
   width: 32px;
   height: 32px;

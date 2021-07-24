@@ -172,18 +172,18 @@ export default function ComboBox<T extends string = string>(props: InternalCombB
           buttons.map((x) => <ComboboxImageButton key={x.name} props={props} {...x} />)
         }
         {onChange && !unclearable &&
-        <ImageButton
-          src={close}
-          name='clear'
-          width='12px'
-          height='12px'
-          onPointerDown={(e: any) => {
-            updateOption(NULL_OPTION)
-            refInput.current?.blur()
-            e.stopPropagation()
-          }}
-          visible={text !== ''}
-        />
+          <ImageButton
+            src={close}
+            name='clear'
+            width='12px'
+            height='12px'
+            onPointerDown={(e: any) => {
+              updateOption(NULL_OPTION)
+              refInput.current?.blur()
+              e.stopPropagation()
+            }}
+            visible={text !== ''}
+          />
         }
       </ButtonsContainer>
     </ComboBoxContainer>
@@ -218,9 +218,10 @@ export type ComboBoxItem<T extends string = string> = {
 }
 
 function ComboboxImageButton<T extends string = string>({ name, src, onClick, props }: ButtonInfo<T> & { props: ComboBoxProps<T> }) {
+  console.log('src', src)
   return (
     <ImageButton
-      src={src}
+      src={''}
       name={name}
       width='18px'
       height='18px'

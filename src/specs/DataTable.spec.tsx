@@ -1,9 +1,8 @@
 import React from "react"
-import {render} from "@testing-library/react"
+import {render, screen, within} from "@testing-library/react"
 import DataTable from "components/DataTable"
 
-xdescribe("Data Table should", () => {
-	let screen: Element
+describe("Data Table should", () => {
 	let acum = 0
 	const next = (_: any) => (++acum).toString()
 
@@ -23,7 +22,7 @@ xdescribe("Data Table should", () => {
 
 	it("not be ordered by default", async () => {
 		const data = [["A", "2"], ["C", "1"], ["B", "3"]]
-		screen = render(
+		render(
 			<DataTable
 				columns={[
 					{header: "", format: (value: string) => value[0]},
@@ -31,14 +30,15 @@ xdescribe("Data Table should", () => {
 				]}
 				data={data}
 				identifier={next}
-			/>).baseElement
+			/>
+    )
 		await data_should_be_shown_in_rows_in_the_body(data)
 	})
 
 	it("be ordered by selected default if ascendant", async () => {
 		const data = [["A", "2"], ["C", "1"], ["B", "3"]]
 		const ordered = [["C", "1"], ["A", "2"], ["B", "3"]]
-		screen = render(
+		render(
 			<DataTable
 				columns={[
 					{header: "", format: (value: string) => value[0]},
@@ -46,14 +46,15 @@ xdescribe("Data Table should", () => {
 				]}
 				data={data}
 				identifier={next}
-			/>).baseElement
+			/>
+    )
 		await data_should_be_shown_in_rows_in_the_body(ordered)
 	})
 
 	it("be ordered by selected default if descendant", async () => {
 		const data = [["A", "2"], ["C", "1"], ["B", "3"]]
 		const ordered = [["B", "3"], ["A", "2"], ["C", "1"]]
-		screen = render(
+		render(
 			<DataTable
 				columns={[
 					{header: "", format: (value: string) => value[0]},
@@ -61,42 +62,43 @@ xdescribe("Data Table should", () => {
 				]}
 				data={data}
 				identifier={next}
-			/>).baseElement
+			/>
+    )
 		await data_should_be_shown_in_rows_in_the_body(ordered)
 	})
 
 	function given_an_empty_table_with_no_columns_and_no_data() {
-		screen = render(<DataTable columns={[]} data={[]} identifier={next}/>).baseElement
+		render(<DataTable columns={[]} data={[]} identifier={next}/>)
 	}
 
 	function given_a_table_with_headers_and_data(headers: Array<string>, data: Array<Array<string>>) {
-		screen = render(<DataTable columns={headers.map((x, i) => ({
+		render(<DataTable columns={headers.map((x, i) => ({
 			header: x, format: (value: string) => value[i]
 		}))} data={data} identifier={next}/>)
 	}
 
 	async function there_should_be_no_headers() {
-		const ths = await queryChildrenOf(screen, {tag: "th"})
+		const ths = screen.queryAllByRole("rowheader")
 		expect(ths).toHaveLength(0)
 	}
 
 	async function there_should_be_no_rows_in_the_body() {
-		const body = await findChildOf(screen, {tag: "tbody"})
-		const rows = await queryChildrenOf(body, {tag: "tr"})
+		const body = (await screen.findAllByRole("rowgroup"))[1]
+		const rows = await within(body).queryAllByRole("row")
 		expect(rows).toHaveLength(0)
 	}
 
 	async function headers_should_be_shown(headers: Array<string>) {
-		const ths = await findChildrenOf(screen, {tag: "th"})
+    const ths = await screen.findAllByRole("columnheader")
 		expect(ths.map(x => x.textContent)).toEqual(headers)
 	}
 
 	async function data_should_be_shown_in_rows_in_the_body(data: Array<Array<string>>) {
-		const body = await findChildOf(screen, {tag: "tbody"})
-		const rows = await findChildrenOf(body, {tag: "tr"})
+    const body = (await screen.findAllByRole("rowgroup"))[1]
+    const rows = await within(body).queryAllByRole("row")
 		const cells = []
 		for (const row of rows) {
-			const cell = await findChildrenOf(row, {tag: "td"})
+			const cell = await within(row).findAllByRole("cell")
 			cells.push(cell.map(x => x.textContent))
 		}
 		expect(cells).toEqual(data)
