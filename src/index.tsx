@@ -9,13 +9,12 @@ import ButtonsGroup from './components/ButtonsGroup'
 import Text from './components/Text'
 import Avatar from './components/Avatar'
 import ItemsModal from './components/ItemsModal'
-import { SKELETON_ANIMATION_CSS } from './components/css/Skeleton'
 import FlexItem from './components/FlexItem'
 import Picture from 'components/Picture'
 import Tag from './components/Tag'
 import Box from './components/Box'
 import DataTable from './components/DataTable'
-import Main from './components/Main'
+import Main from './components/main/Main'
 
 export {
   Button,

@@ -1,5 +1,5 @@
 import React from "react"
-import MainUnboxed, {MainProps, ScreenItem} from "components/Main"
+import MainUnboxed, {MainProps, ScreenItem} from "components/main/Main"
 import logo from './img/logo.png'
 import prayer from './img/prayer.png'
 import wicca from './img/wicca.png'
