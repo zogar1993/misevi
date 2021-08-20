@@ -30,8 +30,7 @@ describe("Data Table should", () => {
 				]}
 				data={data}
 				identifier={next}
-			/>
-    )
+			/>)
 		await data_should_be_shown_in_rows_in_the_body(data)
 	})
 
@@ -46,8 +45,7 @@ describe("Data Table should", () => {
 				]}
 				data={data}
 				identifier={next}
-			/>
-    )
+			/>).baseElement
 		await data_should_be_shown_in_rows_in_the_body(ordered)
 	})
 
@@ -62,8 +60,7 @@ describe("Data Table should", () => {
 				]}
 				data={data}
 				identifier={next}
-			/>
-    )
+			/>)
 		await data_should_be_shown_in_rows_in_the_body(ordered)
 	})
 
@@ -78,27 +75,27 @@ describe("Data Table should", () => {
 	}
 
 	async function there_should_be_no_headers() {
-		const ths = screen.queryAllByRole("rowheader")
+    const ths = screen.queryAllByRole("columnheader")
 		expect(ths).toHaveLength(0)
 	}
 
 	async function there_should_be_no_rows_in_the_body() {
-		const body = (await screen.findAllByRole("rowgroup"))[1]
-		const rows = await within(body).queryAllByRole("row")
+		const body = screen.getAllByRole("rowgroup")[1]
+		const rows = within(body).queryAllByRole("row")
 		expect(rows).toHaveLength(0)
 	}
 
 	async function headers_should_be_shown(headers: Array<string>) {
-    const ths = await screen.findAllByRole("columnheader")
+    const ths = screen.getAllByRole("columnheader")
 		expect(ths.map(x => x.textContent)).toEqual(headers)
 	}
 
 	async function data_should_be_shown_in_rows_in_the_body(data: Array<Array<string>>) {
-    const body = (await screen.findAllByRole("rowgroup"))[1]
-    const rows = await within(body).queryAllByRole("row")
+    const body = screen.getAllByRole("rowgroup")[1]
+    const rows = within(body).getAllByRole("row")
 		const cells = []
 		for (const row of rows) {
-			const cell = await within(row).findAllByRole("cell")
+			const cell = within(row).getAllByRole("cell")
 			cells.push(cell.map(x => x.textContent))
 		}
 		expect(cells).toEqual(data)
