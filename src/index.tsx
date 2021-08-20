@@ -1,4 +1,4 @@
-import Button from './components/Button'
+export { default as Button } from './components/Button'
 import Field from './components/Field'
 import Flex from './components/Flex'
 import CircularNumberInput from './components/CircularNumberInput'
@@ -9,15 +9,15 @@ import ButtonsGroup from './components/ButtonsGroup'
 import Text from './components/Text'
 import Avatar from './components/Avatar'
 import ItemsModal from './components/ItemsModal'
+import Tabs from "./components/Tabs"
 import FlexItem from './components/FlexItem'
 import Picture from 'components/Picture'
 import Tag from './components/Tag'
 import Box from './components/Box'
 import DataTable from './components/DataTable'
-import Main from './components/main/Main'
+import Main from './components/Main'
 
 export {
-  Button,
   ButtonsGroup,
   Flex,
   Field,
@@ -32,5 +32,6 @@ export {
   Tag,
   Box,
   DataTable,
-  Main
+  Main,
+  Tabs
 }

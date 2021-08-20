@@ -1,0 +1,20 @@
+import {Canvas, Meta, Story} from '@storybook/addon-docs/blocks';
+import Tabs from 'components/Tabs';
+import Template from "./TabsTemplate";
+
+<Meta title="Form/Tabs" component={Tabs}/>
+
+<Canvas>
+    <Story name="default" args={{size: "small", items: [
+      {code: "wea", name: "xuxa"},
+      {code: "mono", name: "report"},
+      {code: "mono", name: "report"},
+      {code: "mono", name: "report"},
+      {code: "mono", name: "report"},
+      {code: "mono", name: "report"},
+      {code: "mono", name: "report"},
+      {code: "mono", name: "report"},
+    ]}}>
+        {Template.bind({})}
+    </Story>
+</Canvas>

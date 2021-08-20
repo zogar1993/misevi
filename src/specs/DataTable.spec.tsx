@@ -45,7 +45,7 @@ describe("Data Table should", () => {
 				]}
 				data={data}
 				identifier={next}
-			/>).baseElement
+			/>)
 		await data_should_be_shown_in_rows_in_the_body(ordered)
 	})
 
