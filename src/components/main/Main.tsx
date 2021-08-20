@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { Route, Router, Switch } from 'react-router-dom'
 import * as H from 'history'
 import Article from '../Article'
-import Menu from "./Menu"
+import Menu, {isItemBranch, isItemRoutable, isMenuItem, RouteOnlyItem, ScreenItem} from "./Menu"
 
 export type MainProps = {
   logo: any
@@ -38,18 +38,6 @@ export default function Main({ screens, history, provider, ...props }: MainProps
   )
 }
 
-export function isItemBranch(item: ScreenItem): item is BranchItem {
-  return item.hasOwnProperty('items')
-}
-
-export function isItemRoutable(item: ScreenItem): item is RouteOnlyItem {
-  return item.hasOwnProperty('path')
-}
-
-export function isMenuItem(item: ScreenItem): item is MenuItem {
-  return item.hasOwnProperty('name')
-}
-
 const PageContent = styled.div`
   display: flex;
   width: 100%;
@@ -59,24 +47,3 @@ const PageContent = styled.div`
     flex-direction: column;
   }
 `
-
-export type RouteOnlyItem = {
-  path: string
-  component: (props?: any) => JSX.Element | null
-}
-
-export type BranchItem = {
-  icon: any
-  name: string
-  items: Array<LeafItem>
-  activePaths?: Array<string>
-}
-
-export type LeafItem = {
-  name: string
-  activePaths?: Array<string>
-  icon: any
-} & RouteOnlyItem
-
-export type ScreenItem = BranchItem | LeafItem | RouteOnlyItem
-export type MenuItem = BranchItem | LeafItem

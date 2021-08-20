@@ -1,6 +1,5 @@
 import React, {useState} from "react"
 import {useHistory} from "react-router-dom"
-import {isItemBranch, LeafItem, MenuItem} from "./Main"
 import * as H from "history"
 import styled from "styled-components"
 import theme from "../theme/Theme"
@@ -259,3 +258,37 @@ const ItemName = styled.span`
   width: calc(${WIDTH_EXTENDED} - ${WIDTH_COLLAPSED});
   color: ${theme.colors.text};
 `
+
+export type RouteOnlyItem = {
+  path: string
+  component: (props?: any) => JSX.Element | null
+}
+
+export type BranchItem = {
+  icon: any
+  name: string
+  items: Array<LeafItem>
+  activePaths?: Array<string>
+}
+
+export type LeafItem = {
+  name: string
+  activePaths?: Array<string>
+  icon: any
+} & RouteOnlyItem
+
+export type ScreenItem = BranchItem | LeafItem | RouteOnlyItem
+export type MenuItem = BranchItem | LeafItem
+
+export function isItemBranch(item: ScreenItem): item is BranchItem {
+  return item.hasOwnProperty('items')
+}
+
+export function isItemRoutable(item: ScreenItem): item is RouteOnlyItem {
+  return item.hasOwnProperty('path')
+}
+
+export function isMenuItem(item: ScreenItem): item is MenuItem {
+  return item.hasOwnProperty('name')
+}
+

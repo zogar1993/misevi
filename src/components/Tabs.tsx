@@ -5,7 +5,7 @@ import Button from './Button'
 import theme from './theme/Theme'
 
 export default function Tabs(props: TabsProps) {
-  const { items, selected, onChange, columns, size } = props
+  const { items, selected, onChange, columns } = props
   return (
     <Grid columns={columns} role="tablist">
       {
@@ -19,7 +19,6 @@ export default function Tabs(props: TabsProps) {
             has-buttons-bottom={columns === undefined ? false : index <= items.length - columns - 1}
             has-buttons-left={columns === undefined ? index > 0 : index % columns !== 0}
             z-index={items.length - index}
-            size={size}
             role="tab"
           >
             {item.name}
@@ -36,9 +35,6 @@ export type TabsProps = {
   onChange: (code: string) => void
 
   columns?: number
-  size?: 'small' | 'medium' | 'large'
-
-  bold?: boolean
 }
 
 type Item = {
@@ -86,8 +82,6 @@ const Grid = styled.div<{columns?: number}>`
 
 interface Props {
   active?: boolean
-  small?: boolean
-  large?: boolean
   font?: string
 
   vertical?: boolean
