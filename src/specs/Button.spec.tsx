@@ -22,7 +22,7 @@ describe("Button should", () => {
   })
 
   async function given_a_button_is_rendered() {
-    screen = render(<Button onClick={actions.onClick}>text</Button>)
+    screen = render(<Button onClick={actions.onClick}>{TEXT}</Button>)
   }
 
   async function when_the_button_is_clicked() {
@@ -33,5 +33,7 @@ describe("Button should", () => {
     verify(actionsMock.onClick(anything())).once()
   }
 
-  const getButton = () => screen.getByRole("button")
+  const getButton = () => screen.getByRole("button", {name: TEXT})
 })
+
+const TEXT = "Text"

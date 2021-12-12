@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react'
-import Flex, { XAlignType, YAlignType } from './Flex'
+import Flex from './Flex'
 import { DimensionsProps } from './css_helpers/dimensions'
 import Span, { TextSize } from './inner_components/Span'
 import styled from 'styled-components'
@@ -36,8 +36,6 @@ export type TextProps = {
   font?: string
   size?: TextSize
   bold?: boolean
-  'x-align'?: XAlignType
-  'y-align'?: YAlignType
   tooltip?: string
   mode?: TextMode
   handwritten?: boolean

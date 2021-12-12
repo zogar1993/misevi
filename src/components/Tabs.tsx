@@ -43,7 +43,7 @@ type Item = {
 }
 
 const SIDE_PADDING = '8px'
-const VERTICAL_PADDING = '8px'
+const VERTICAL_PADDING = '4px'
 const ACTIVE_BACKGROUND_COLOR = '#EAEAEA'
 const NOT_ACTIVE_BACKGROUND_COLOR = 'white'
 

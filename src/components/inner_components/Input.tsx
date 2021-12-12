@@ -28,8 +28,8 @@ export const onValueChangeAnimation = ({ 'animation-seed': seed }: { 'animation-
     animation-timing-function: ease-out;
     animation-duration: 0.3s;
 
-    @keyframes animation1
-    ${animation} @keyframes animation2 ${animation}
+    @keyframes animation1 ${animation}
+    @keyframes animation2 ${animation}
   `
 }
 

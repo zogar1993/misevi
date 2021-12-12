@@ -1,7 +1,6 @@
 import { Color } from './Color'
 // @ts-ignore
 import styleInject from 'style-inject'
-import { css } from 'styled-components'
 import {BORDER_RADIUS} from "../css/Dimensions"
 
 const light = {

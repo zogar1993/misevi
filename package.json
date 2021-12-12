@@ -34,8 +34,8 @@
     "build:ts": "npx rollup -c",
     "build:clean": "rm -rf ./dist/*",
     "test": "jest",
-    "storybook": "start-storybook -p 6006 --no-dll",
-    "build-storybook": "build-storybook --no-dll",
+    "storybook": "start-storybook -p 6006 --no-dll --no-manager-cache",
+    "build-storybook": "build-storybook --no-dll --no-manager-cache",
     "format": "prettier --write 'src/**/*.ts' './src/**/*.tsx'"
   },
   "peerDependencies": {
@@ -48,6 +48,7 @@
     "@babel/core": "7.12.17",
     "@babel/preset-env": "7.12.17",
     "@storybook/addon-actions": "6.3.7",
+    "@storybook/addon-a11y": "6.3.7",
     "@storybook/addon-docs": "6.3.7",
     "@storybook/addon-essentials": "6.3.7",
     "@storybook/addon-links": "6.3.7",
