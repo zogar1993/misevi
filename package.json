@@ -1,6 +1,6 @@
 {
   "name": "misevi",
-  "version": "0.3.28",
+  "version": "0.4.2",
   "description": "Misevi is a component library designed for creating tabletop rpg character sheets.",
   "license": "MIT",
   "main": "dist/index.js",
@@ -46,8 +46,8 @@
   "devDependencies": {
     "@babel/core": "7.12.17",
     "@babel/preset-env": "7.12.17",
-    "@storybook/addon-actions": "6.3.7",
     "@storybook/addon-a11y": "6.3.7",
+    "@storybook/addon-actions": "6.3.7",
     "@storybook/addon-docs": "6.3.7",
     "@storybook/addon-essentials": "6.3.7",
     "@storybook/addon-links": "6.3.7",
