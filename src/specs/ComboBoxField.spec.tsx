@@ -6,7 +6,7 @@ import Field from 'components/Field'
 
 describe('ComboBox should', () => {
   let screen: RenderResult
-  let _options: Array<ComboBoxItem>
+  let _options: Array<ComboBoxItem> | undefined
   let _value: string | null | undefined
   let _onChange: (() => void) | undefined
   let _buttons: Array<ButtonInfo> | undefined
@@ -121,6 +121,33 @@ describe('ComboBox should', () => {
     })
   })
 
+  describe('while undefined options are set', () => {
+    beforeEach(async () => {
+      await the_options_are(undefined)
+      await the_onChange_is(() => {})
+      await the_value_is(IRRELEVANT_VALUE)
+      await the_combobox_is_rendered()
+    })
+
+    it('be empty', async () => {
+      await the_select_should_display('')
+    })
+
+    it('be disabled', async () => {
+      await the_select_should_be_disabled()
+    })
+
+    it('hide the clear button', async () => {
+      await the_clear_button_should_be_hidden()
+    })
+
+    it('hide the clear button even when mouse enters the select', async () => {
+      await the_cursor_enters_the_combobox()
+
+      await the_clear_button_should_be_hidden()
+    })
+  })
+
   describe('while there is a custom button set', () => {
     const aCustomButton = {
       src: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=",
@@ -174,7 +201,7 @@ describe('ComboBox should', () => {
     })
   })
 
-  async function the_options_are(options: Array<ComboBoxItem>) {
+  async function the_options_are(options: Array<ComboBoxItem> | undefined) {
     _options = options
   }
 
@@ -271,6 +298,8 @@ const IRRELEVANT_OPTIONS = [
   { code: 'irrelevant_1', name: 'Irrelevant 1' },
   { code: 'irrelevant_2', name: 'Irrelevant 2' }
 ]
+
+const IRRELEVANT_VALUE = "irrelevant"
 
 const IRRELEVANT_FUNCTION = () => {}
 

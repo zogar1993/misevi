@@ -36,7 +36,13 @@ import {Template, ComboboxStoryTypes, items, long_items} from "./ComboBoxTemplat
 
 ### Skeleton
 <Canvas>
-  <Story name="skeleton" args={{label: "skeleton", options: items}}>
+  <Story name="no value and no options" args={{label: "no value and no options"}}>
+    {Template.bind({})}
+  </Story>
+  <Story name="no value" args={{label: "no value", options: items}}>
+    {Template.bind({})}
+  </Story>
+  <Story name="no options" args={{label: "no options", value: "irrelevant"}}>
     {Template.bind({})}
   </Story>
 </Canvas>

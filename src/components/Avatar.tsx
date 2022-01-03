@@ -6,7 +6,7 @@ import bandit from './icons/bandit.png'
 import { SKELETON_ANIMATION_CSS } from './css/Skeleton'
 
 //TODO not working properly at the moment
-export default function Avatar({ onChange, src, alt, area, width = '135px', height = '135px' }: AvatarProps) {
+export default function Avatar({ onChange, src, alt, area, width = '143px', height = '143px' }: AvatarProps) {
   const [imageShowed, setImageShowed] = useState<string>('')
   useEffect(() => setImageShowed(getImage(src)), [src])
   const showSkeleton = src === undefined

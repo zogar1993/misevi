@@ -4,12 +4,14 @@ import FieldContainer from './inner_components/FieldContainer'
 import NumberInput, { NumberInputProps } from './NumberInput'
 import TextInput, { TextInputProps } from './inner_components/TextInput'
 import ComboBox, { ComboBoxProps } from './inner_components/ComboBox'
-import uuid from "./uuid/uuid"
+import useUniqueId from "./uuid/uuid";
 
 export default function Field<T extends string = string>({ label, width, area, ...props }: FieldProps<T>) {
   const { value, disabled } = props
   const [isPlaceholder, setIsPlaceholder] = useState<boolean>(false)
   const [isFocused, setIsFocused] = useState<boolean>(false)
+  const uuid = useUniqueId()
+
   const onTextChange = useCallback((focus: boolean, text: string) => {
     setIsPlaceholder(!focus && text.trim() === '')
     setIsFocused(focus)
@@ -18,7 +20,8 @@ export default function Field<T extends string = string>({ label, width, area, .
   useEffect(() => {
     setIsPlaceholder(value === '' || value === null)
   }, [value])
-  const id = label ? `${label}-${uuid()}` : uuid()
+
+  const id = label ? `${label}-${uuid}` : uuid
 
   return (
     <FieldContainer width={width} area={area}>

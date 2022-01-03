@@ -133,7 +133,7 @@ export default function ComboBox<T extends string = string>(props: InternalCombB
       <TextInput
         id={id}
         ref={refInput}
-        value={text}
+        value={options === undefined ? "" : text}
         disabled={disabled || isLoading}
         onChange={(e) => updateText(e.target.value)}
         onBlur={onLoseFocus}
@@ -218,10 +218,9 @@ export type ComboBoxItem<T extends string = string> = {
 }
 
 function ComboboxImageButton<T extends string = string>({ name, src, onClick, props }: ButtonInfo<T> & { props: ComboBoxProps<T> }) {
-  console.log('src', src)
   return (
     <ImageButton
-      src={''}
+      src={src}
       name={name}
       width='18px'
       height='18px'

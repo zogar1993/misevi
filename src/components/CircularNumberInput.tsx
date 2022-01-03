@@ -2,9 +2,9 @@ import React from 'react'
 import NumberInput, { NumberInputProps } from './NumberInput'
 import styled from 'styled-components'
 
-const CircularNumberInput = styled(NumberInput)<NumberInputProps & {
-  'animation-seed'?: number
-}>`
+const CircularNumberInput = styled(NumberInput).attrs(() => ({ type: 'number' }))<
+  NumberInputProps & { 'animation-seed'?: number }
+>`
   text-align: center;
   width: 26px;
   height: 26px;
