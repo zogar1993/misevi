@@ -134,7 +134,7 @@ export default function ComboBox<T extends string = string>(props: InternalCombB
         id={id}
         ref={refInput}
         value={options === undefined ? "" : text}
-        disabled={disabled || isLoading}
+        disabled={disabled || isLoading || options?.length === 0}
         onChange={(e) => updateText(e.target.value)}
         onBlur={onLoseFocus}
         onFocus={() => {

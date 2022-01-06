@@ -148,9 +148,22 @@ describe('ComboBox should', () => {
     })
   })
 
+  describe('while empty options are set', () => {
+    beforeEach(async () => {
+      await the_options_are([])
+      await the_onChange_is(() => {})
+      await the_value_is(null)
+      await the_combobox_is_rendered()
+    })
+
+    it('be disabled', async () => {
+      await the_select_should_be_disabled()
+    })
+  })
+
   describe('while there is a custom button set', () => {
     const aCustomButton = {
-      src: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=",
+      src: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=',
       name: 'do_something',
       onClick: () => {}
     }
@@ -221,7 +234,7 @@ describe('ComboBox should', () => {
     screen = render(
       <Field
         label={A_LABEL}
-        type="combobox"
+        type='combobox'
         options={_options}
         value={_value}
         onChange={_onChange}
@@ -299,7 +312,7 @@ const IRRELEVANT_OPTIONS = [
   { code: 'irrelevant_2', name: 'Irrelevant 2' }
 ]
 
-const IRRELEVANT_VALUE = "irrelevant"
+const IRRELEVANT_VALUE = 'irrelevant'
 
 const IRRELEVANT_FUNCTION = () => {}
 
