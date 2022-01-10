@@ -15,7 +15,7 @@ export default function ComboBox<T extends string = string>(props: InternalCombB
   const [highlighted, setHighlighted] = useState<ComboBoxItem<T> | null>(null)
   const [dropdown, setDropdown] = useState<Array<ComboBoxItem<T>> | null>(null)
   const refInput = useRef<HTMLInputElement>(null)
-  const refOptions = useRef<HTMLOListElement>(null)
+  const refListbox = useRef<HTMLDataListElement>(null)
   const isLoading = value === undefined || options === undefined
   const isNotLoading = !isLoading
   const open = !!dropdown && dropdown.length > 0
@@ -25,83 +25,93 @@ export default function ComboBox<T extends string = string>(props: InternalCombB
   const findOptionByText = useCallback(() => {
     const trimmed = text.trim()
     if (trimmed === '') return NULL_OPTION
-    return getOptions().find(x => insensitiveCompare(trimmed, x.name))
+    return getOptions().find((x) => insensitiveCompare(trimmed, x.name))
   }, [text, getOptions])
 
   const setTextFromValue = useCallback(() => {
     if (value) {
-      const option = getOptions().find(x => x.code === value)
+      const option = getOptions().find((x) => x.code === value)
       setText(option ? option.name : value)
-    } else
-      setText('')
+    } else setText('')
   }, [value, getOptions])
 
-  const updateDropdown = useCallback((text: string) => {
-    const visibleOptions = getOptions().filter(x => insensitiveIncludes(x.name, text))
-    setDropdown(visibleOptions)
-  }, [getOptions])
+  const updateDropdown = useCallback(
+    (text: string) => {
+      const visibleOptions = getOptions().filter((x) => insensitiveIncludes(x.name, text))
+      setDropdown(visibleOptions)
+    },
+    [getOptions]
+  )
 
-  const updateText = useCallback((text: string) => {
-    setText(text)
-    updateDropdown(text)
-  }, [updateDropdown])
+  const updateText = useCallback(
+    (text: string) => {
+      setText(text)
+      updateDropdown(text)
+    },
+    [updateDropdown]
+  )
 
-  const updateOption = useCallback((option: ComboBoxItem<T> | typeof NULL_OPTION) => {
-    if (option.code !== value)
-      onChange && onChange(option.code)
-    else
-      updateText(option.name)
-  }, [value, onChange, updateText])
+  const updateOption = useCallback(
+    (option: ComboBoxItem<T> | typeof NULL_OPTION) => {
+      if (option.code !== value) onChange && onChange(option.code)
+      else updateText(option.name)
+    },
+    [value, onChange, updateText]
+  )
 
-  const handleOnKeyDown = useCallback((e: any) => {
-    function isInDropdown(highlighted: ComboBoxItem<T> | null): highlighted is ComboBoxItem<T> {
-      return !!(highlighted && dropdown?.includes(highlighted))
-    }
-
-    switch (e.key) {
-      case 'ArrowUp': {
-        if (dropdown === null) return
-        const index = isInDropdown(highlighted) ? dropdown.indexOf(highlighted) - 1 : dropdown.length - 1
-        if (index >= 0) {
-          setHighlighted(dropdown[index])
-          scrollToItemOfIndex(index, refOptions.current!)
-        }
-        e.preventDefault()
-        break
+  const handleOnKeyDown = useCallback(
+    (e: any) => {
+      function isInDropdown(highlighted: ComboBoxItem<T> | null): highlighted is ComboBoxItem<T> {
+        return !!(highlighted && dropdown?.includes(highlighted))
       }
-      case 'ArrowDown': {
-        if (dropdown === null) return
-        const index = isInDropdown(highlighted) ? dropdown.indexOf(highlighted) + 1 : 0
-        if (index < dropdown.length) {
-          setHighlighted(dropdown[index])
-          scrollToItemOfIndex(index, refOptions.current!)
-        }
-        e.preventDefault()
-        break
-      }
-      case 'Tab': {
-        const option = findOptionByText()
-        if (option) updateOption(option)
-        break
-      }
-      case 'Enter':
-        if (isInDropdown(highlighted)) {
-          updateOption(highlighted)
-          refInput.current?.blur()
+
+      switch (e.key) {
+        case 'ArrowUp': {
+          if (dropdown === null) return
+          const index = isInDropdown(highlighted)
+            ? dropdown.indexOf(highlighted) - 1
+            : dropdown.length - 1
+          if (index >= 0) {
+            setHighlighted(dropdown[index])
+            scrollToItemOfIndex(index, refListbox.current!)
+          }
           e.preventDefault()
+          break
         }
-        break
-      case 'Escape':
-        if (isInDropdown(highlighted))
-          setHighlighted(null)
-        else {
-          setTextFromValue()
-          refInput.current?.blur()
+        case 'ArrowDown': {
+          if (dropdown === null) return
+          const index = isInDropdown(highlighted) ? dropdown.indexOf(highlighted) + 1 : 0
+          if (index < dropdown.length) {
+            setHighlighted(dropdown[index])
+            scrollToItemOfIndex(index, refListbox.current!)
+          }
+          e.preventDefault()
+          break
         }
-        e.preventDefault()
-        break
-    }
-  }, [dropdown, highlighted, setTextFromValue, findOptionByText])
+        case 'Tab': {
+          const option = findOptionByText()
+          if (option) updateOption(option)
+          break
+        }
+        case 'Enter':
+          if (isInDropdown(highlighted)) {
+            updateOption(highlighted)
+            refInput.current?.blur()
+            e.preventDefault()
+          }
+          break
+        case 'Escape':
+          if (isInDropdown(highlighted)) setHighlighted(null)
+          else {
+            setTextFromValue()
+            refInput.current?.blur()
+          }
+          e.preventDefault()
+          break
+      }
+    },
+    [dropdown, highlighted, setTextFromValue, findOptionByText]
+  )
 
   const onLoseFocus = useCallback(() => {
     onFocusChange && onFocusChange(false, text)
@@ -129,11 +139,13 @@ export default function ComboBox<T extends string = string>(props: InternalCombB
     <ComboBoxContainer
       onMouseEnter={() => setHovering(true)}
       onMouseLeave={() => setHovering(false)}
+      role='combobox'
+      aria-expanded={open}
     >
       <TextInput
         id={id}
         ref={refInput}
-        value={options === undefined ? "" : text}
+        value={options === undefined ? '' : text}
         disabled={disabled || isLoading || options?.length === 0}
         onChange={(e) => updateText(e.target.value)}
         onBlur={onLoseFocus}
@@ -147,12 +159,13 @@ export default function ComboBox<T extends string = string>(props: InternalCombB
         readOnly={onChange === undefined}
         skeleton={isLoading}
         error={error}
-        type="text"
-        role="combobox"
+        type='text'
       />
-      <Options open={open} ref={refOptions}>
-        {
-          dropdown && dropdown.map((item) => (
+
+      {dropdown && dropdown.length > 0 && (
+        <Listbox open={open} ref={refListbox}>
+          {' '}
+          {dropdown.map((item) => (
             <Option
               key={item.code}
               onMouseDown={(e: any) => {
@@ -164,14 +177,14 @@ export default function ComboBox<T extends string = string>(props: InternalCombB
             >
               {item.name}
             </Option>
-          ))
-        }
-      </Options>
+          ))}
+        </Listbox>
+      )}
       <ButtonsContainer visible={hovering && isNotLoading && !disabled}>
-        {buttons === undefined ? null :
-          buttons.map((x) => <ComboboxImageButton key={x.name} props={props} {...x} />)
-        }
-        {onChange && !unclearable &&
+        {buttons === undefined
+          ? null
+          : buttons.map((x) => <ComboboxImageButton key={x.name} props={props} {...x} />)}
+        {onChange && !unclearable && (
           <ImageButton
             src={close}
             name='clear'
@@ -184,7 +197,7 @@ export default function ComboBox<T extends string = string>(props: InternalCombB
             }}
             visible={text !== ''}
           />
-        }
+        )}
       </ButtonsContainer>
     </ComboBoxContainer>
   )
@@ -217,7 +230,12 @@ export type ComboBoxItem<T extends string = string> = {
   to?: number
 }
 
-function ComboboxImageButton<T extends string = string>({ name, src, onClick, props }: ButtonInfo<T> & { props: ComboBoxProps<T> }) {
+function ComboboxImageButton<T extends string = string>({
+  name,
+  src,
+  onClick,
+  props
+}: ButtonInfo<T> & { props: ComboBoxProps<T> }) {
   return (
     <ImageButton
       src={src}
@@ -234,7 +252,8 @@ const OPTION_HEIGHT = 23
 const MAX_OPTION_AMOUNT = 5
 const BORDER_WIDTH = 1
 
-const Options = styled.ol<{ open: boolean }>`
+const Listbox = styled.datalist<{ open: boolean }>`
+  display: ${({ open }) => (open ? 'block' : 'none')};
   margin: 0;
   padding: 0;
   border-radius: ${BORDER_RADIUS};
@@ -244,7 +263,6 @@ const Options = styled.ol<{ open: boolean }>`
   list-style: none;
   background-color: whitesmoke;
   width: 100%;
-  ${({ open }) => open ? '' : 'display: none'};
   transition: 0.2s;
   max-height: calc(${OPTION_HEIGHT}px * ${MAX_OPTION_AMOUNT} + ${BORDER_WIDTH}px * 2);
   overflow-y: auto;
@@ -253,13 +271,13 @@ const Options = styled.ol<{ open: boolean }>`
   scroll-behavior: smooth;
 `
 
-const Option = styled.li<{ highlighted: boolean }>`
+const Option = styled.option<{ highlighted: boolean }>`
   font-family: ${HANDWRITTEN_FONT}, Times, serif;
   height: ${OPTION_HEIGHT}px;
   font-size: 13px;
   padding: 1px 5px 3px 8px;
   border-radius: ${BORDER_RADIUS};
-  border: 1px solid ${({ highlighted }) => highlighted ? 'dodgerblue' : 'transparent'};
+  border: 1px solid ${({ highlighted }) => (highlighted ? 'dodgerblue' : 'transparent')};
 
   :hover {
     background-color: powderblue;
@@ -274,22 +292,21 @@ const ComboBoxContainer = styled.div<{ $width?: string }>`
   position: relative;
 `
 
-const ButtonsContainer = styled.div<{visible: boolean}>`
+const ButtonsContainer = styled.div<{ visible: boolean }>`
   position: absolute;
   right: 9px;
   align-content: center;
   align-items: center;
-  ${({ visible }) => visible === false ? 'visibility: hidden' : ''};
+  ${({ visible }) => (visible === false ? 'visibility: hidden' : '')};
 `
 
 const TextInput = styled(Input)<{ error: boolean }>`
-  ${({ error }) => error ? 'border: 1px solid red' : ''};
+  ${({ error }) => (error ? 'border: 1px solid red' : '')};
 `
 
 function scrollToItemOfIndex(index: number, element: HTMLElement) {
   const scroll = element.scrollTop
-  if (index * OPTION_HEIGHT < scroll)
-    element.scrollTop = index * OPTION_HEIGHT
+  if (index * OPTION_HEIGHT < scroll) element.scrollTop = index * OPTION_HEIGHT
   else {
     const upperVisibleIndex = index + 1 - MAX_OPTION_AMOUNT
     if (upperVisibleIndex * OPTION_HEIGHT > scroll)

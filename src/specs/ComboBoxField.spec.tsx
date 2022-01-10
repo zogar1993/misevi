@@ -1,6 +1,6 @@
 import React from 'react'
 import '@testing-library/jest-dom/extend-expect'
-import { fireEvent, render, RenderResult, waitFor } from '@testing-library/react'
+import { fireEvent, render, RenderResult, waitFor, within } from '@testing-library/react'
 import { ButtonInfo, ComboBoxItem } from '../components/inner_components/ComboBox'
 import Field from 'components/Field'
 
@@ -15,7 +15,7 @@ describe('ComboBox should', () => {
   beforeEach(() => {
     _options = []
     _value = undefined
-    _onChange = () => {}
+    _onChange = IRRELEVANT_FUNCTION
     _buttons = undefined
     _unclearable = undefined
   })
@@ -42,24 +42,24 @@ describe('ComboBox should', () => {
     })
 
     it('display name when its matching value is set', async () => {
-      await the_select_should_display(AN_OPTION.name)
+      await the_textbox_should_display(AN_OPTION.name)
     })
 
     it('be enabled', async () => {
-      await the_select_should_be_enabled()
+      await the_textbox_should_be_enabled()
     })
 
     it('hide the clear button', async () => {
       await the_buttons_should_be_hidden()
     })
 
-    it('show the clear button when cursor enters the select', async () => {
+    it('show the clear button when cursor enters the textbox', async () => {
       await the_cursor_enters_the_combobox()
 
       await the_clear_button_should_be_visible()
     })
 
-    it('hide the clear button when cursor leaves the select', async () => {
+    it('hide the clear button when cursor leaves the textbox', async () => {
       await the_cursor_enters_the_combobox()
       await the_cursor_leaves_the_combobox()
 
@@ -76,18 +76,18 @@ describe('ComboBox should', () => {
     })
 
     it('be empty', async () => {
-      await the_select_should_display('')
+      await the_textbox_should_display('')
     })
 
     it('be enabled', async () => {
-      await the_select_should_be_enabled()
+      await the_textbox_should_be_enabled()
     })
 
     it('hide the clear button', async () => {
       await the_clear_button_should_be_hidden()
     })
 
-    it('hide the clear button even when mouse enters the select', async () => {
+    it('hide the clear button even when mouse enters the textbox', async () => {
       await the_cursor_enters_the_combobox()
 
       await the_clear_button_should_be_hidden()
@@ -97,24 +97,24 @@ describe('ComboBox should', () => {
   describe('while undefined value is set', () => {
     beforeEach(async () => {
       await the_options_are(IRRELEVANT_OPTIONS)
-      await the_onChange_is(() => {})
+      await the_onChange_is(IRRELEVANT_FUNCTION)
       await the_value_is(undefined)
       await the_combobox_is_rendered()
     })
 
     it('be empty', async () => {
-      await the_select_should_display('')
+      await the_textbox_should_display('')
     })
 
     it('be disabled', async () => {
-      await the_select_should_be_disabled()
+      await the_textbox_should_be_disabled()
     })
 
     it('hide the clear button', async () => {
       await the_clear_button_should_be_hidden()
     })
 
-    it('hide the clear button even when mouse enters the select', async () => {
+    it('hide the clear button even when mouse enters the textbox', async () => {
       await the_cursor_enters_the_combobox()
 
       await the_clear_button_should_be_hidden()
@@ -130,18 +130,18 @@ describe('ComboBox should', () => {
     })
 
     it('be empty', async () => {
-      await the_select_should_display('')
+      await the_textbox_should_display('')
     })
 
     it('be disabled', async () => {
-      await the_select_should_be_disabled()
+      await the_textbox_should_be_disabled()
     })
 
     it('hide the clear button', async () => {
       await the_clear_button_should_be_hidden()
     })
 
-    it('hide the clear button even when mouse enters the select', async () => {
+    it('hide the clear button even when mouse enters the textbox', async () => {
       await the_cursor_enters_the_combobox()
 
       await the_clear_button_should_be_hidden()
@@ -151,13 +151,13 @@ describe('ComboBox should', () => {
   describe('while empty options are set', () => {
     beforeEach(async () => {
       await the_options_are([])
-      await the_onChange_is(() => {})
+      await the_onChange_is(IRRELEVANT_FUNCTION)
       await the_value_is(null)
       await the_combobox_is_rendered()
     })
 
     it('be disabled', async () => {
-      await the_select_should_be_disabled()
+      await the_textbox_should_be_disabled()
     })
   })
 
@@ -210,8 +210,73 @@ describe('ComboBox should', () => {
     })
 
     it('not show the clear button when hovered', async () => {
-      await the_select_should_display(AN_OPTION.code)
+      await the_textbox_should_display(AN_OPTION.code)
     })
+  })
+
+  describe('while being operational', () => {
+    const onChangeMock = jest.fn()
+    const OPTIONS = [
+      { name: 'Option 1', code: 'option_1' },
+      { name: 'Option 2', code: 'option_2' }
+    ]
+    //TODO make options readonly
+    beforeEach(async () => {
+      onChangeMock.mockReset()
+      await the_options_are(OPTIONS)
+      await the_value_is(null)
+      await the_onChange_is(onChangeMock)
+      await the_combobox_is_rendered()
+    })
+
+    it('should not display options by default', async () => {
+      await options_should_not_show()
+    })
+
+    it('should display options when focused', async () => {
+      await the_textbox_is_focused()
+      await options_should_show(OPTIONS)
+    })
+
+    it('should call onChange with the option value when clicked', async () => {
+      await the_textbox_is_focused()
+
+      await option_is_clicked(OPTIONS[1])
+
+      await onChange_should_be_called_with(OPTIONS[1].code)
+    })
+
+    async function the_textbox_is_focused() {
+      getTextbox().focus()
+    }
+    //TODO Add accesibility tests (move with arrows and stuff)
+    // https://www.w3.org/TR/wai-aria-1.1/#combobox
+    async function option_is_clicked(item: ComboBoxItem) {
+      const option = screen.getByRole('option', { name: item.name })
+      fireEvent.mouseDown(option)
+    }
+
+    async function options_should_not_show() {
+      const combobox = getComboBox()
+      expect(combobox).toHaveAttribute('aria-expanded', 'false')
+      const listbox = queryListbox()
+      expect(listbox).not.toBeInTheDocument()
+    }
+
+    async function options_should_show(items: Array<ComboBoxItem>) {
+      const combobox = getComboBox()
+      expect(combobox).toHaveAttribute('aria-expanded', 'true')
+      const listbox = getListbox()
+      items.forEach((item) => {
+        within(listbox).getByRole('option', { name: item.name })
+      })
+    }
+
+    async function onChange_should_be_called_with(value: string) {
+      const calls = onChangeMock.mock.calls
+      expect(calls.length).toBe(1)
+      expect(calls[0][0]).toBe(value)
+    }
   })
 
   async function the_options_are(options: Array<ComboBoxItem> | undefined) {
@@ -244,29 +309,29 @@ describe('ComboBox should', () => {
     )
   }
 
-  async function the_select_should_display(value: string) {
-    const select = await getCombobox()
-    expect(select).toHaveDisplayValue(value)
+  async function the_textbox_should_display(value: string) {
+    const textbox = getTextbox()
+    await waitFor(() => expect(textbox).toHaveDisplayValue(value))
   }
 
-  async function the_select_should_be_disabled() {
-    const select = await getCombobox()
-    expect(select).toBeDisabled()
+  async function the_textbox_should_be_disabled() {
+    const textbox = getTextbox()
+    expect(textbox).toBeDisabled()
   }
 
   async function the_cursor_enters_the_combobox() {
-    const container = getComboBoxContainer()
+    const container = getComboBox()
     fireEvent.mouseEnter(container)
   }
 
   async function the_cursor_leaves_the_combobox() {
-    const container = getComboBoxContainer()
+    const container = getComboBox()
     fireEvent.mouseLeave(container)
   }
 
-  async function the_select_should_be_enabled() {
-    const select = await getCombobox()
-    expect(select).toBeEnabled()
+  async function the_textbox_should_be_enabled() {
+    const textbox = getTextbox()
+    expect(textbox).toBeEnabled()
   }
 
   async function the_custom_button_should_be_hidden(title: string) {
@@ -295,15 +360,17 @@ describe('ComboBox should', () => {
   }
 
   async function the_buttons_should_be_hidden() {
-    const buttonContainer = await getButtonsContainer()
+    const buttonContainer = getButtonsContainer()
     expect(buttonContainer).not.toBeVisible()
   }
 
-  const getButtonsContainer = async () => getClearButton().parentElement
-  const getComboBoxContainer = () => screen.getByRole('combobox').parentElement!
-  const getCombobox = async () => screen.findByRole('combobox')
-  const queryClearButton = () => screen.queryByTitle('clear')
   const getClearButton = () => screen.getByTitle('clear')
+  const getButtonsContainer = () => getClearButton().parentElement!
+  const getComboBox = () => screen.getByRole('combobox')
+  const getListbox = () => screen.getByRole('listbox')
+  const queryListbox = () => screen.queryByRole('listbox')
+  const getTextbox = () => screen.getByRole('textbox')
+  const queryClearButton = () => screen.queryByTitle('clear')
   const getButtonOfTitle = (title: string) => screen.getByTitle(title)
 })
 
