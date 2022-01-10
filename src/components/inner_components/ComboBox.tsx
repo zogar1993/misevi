@@ -97,6 +97,7 @@ export default function ComboBox<T extends string = string>(props: InternalCombB
           if (isInDropdown(highlighted)) {
             updateOption(highlighted)
             refInput.current?.blur()
+            //TODO maybe handle blur statefully to time with props (dunno if possible)
             e.preventDefault()
           }
           break
@@ -169,6 +170,10 @@ export default function ComboBox<T extends string = string>(props: InternalCombB
             <Option
               key={item.code}
               onMouseDown={(e: any) => {
+                //This prevents dropdown from disappearing before click happens.
+                e.preventDefault()
+              }}
+              onClick={(e: any) => {
                 updateOption(item)
                 refInput.current?.blur()
                 e.preventDefault()

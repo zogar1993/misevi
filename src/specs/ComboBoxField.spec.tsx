@@ -253,7 +253,7 @@ describe('ComboBox should', () => {
     // https://www.w3.org/TR/wai-aria-1.1/#combobox
     async function option_is_clicked(item: ComboBoxItem) {
       const option = screen.getByRole('option', { name: item.name })
-      fireEvent.mouseDown(option)
+      fireEvent.click(option)
     }
 
     async function options_should_not_show() {
