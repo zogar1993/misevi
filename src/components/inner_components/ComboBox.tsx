@@ -162,7 +162,6 @@ export default function ComboBox<T extends string = string>(props: InternalCombB
         error={error}
         type='text'
       />
-
       {dropdown && dropdown.length > 0 && (
         <Listbox open={open} ref={refListbox}>
           {' '}
