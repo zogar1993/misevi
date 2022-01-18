@@ -1,22 +1,46 @@
 import React from 'react'
 import { screen, render, within, fireEvent, waitFor } from '@testing-library/react'
+import { instance, mock, reset, verify } from "ts-mockito";
 import Dots from '../components/Dots'
 
 describe('Dots should', () => {
-  beforeEach(() => {})
+  let actionsMock = mock<{ onChange: (value: number) => void }>()
+  let actions = instance(actionsMock)
 
-  it('have value set', async () => {
-    render(<Dots total={5} value={2} aria-label='radiogroup label' />)
-    const group = screen.getByRole('radiogroup', { name: 'radiogroup label' })
-    const selected = within(group).getByRole('radio', { name: '2' })
-    const otherRadios = within(group)
-      .getAllByRole('radio')
-      .filter((x) => x !== selected) as Array<HTMLInputElement>
-    fireEvent.click(otherRadios[0])
-    // expect(group).toHaveValue('3')
-    await waitFor(() => expect(otherRadios[0].checked).toBeChecked())
-    //otherRadios.forEach((radio) => expect(radio).not.toBeChecked())
+  beforeEach(() => {
+    reset(actionsMock)
   })
 
-  const getDots = () => screen.getByRole('textbox') as HTMLInputElement
+  it('have value set', async () => {
+    await given_dots_render({ value: 2 })
+
+    const selected = getDot(2)
+
+    expect(selected).toBeChecked()
+  })
+
+  it('call onChange with value when a dot is clicked ', async () => {
+    await given_dots_render()
+
+    const selected = getDot(2)
+    fireEvent.click(selected)
+
+    verify(actionsMock.onChange(2)).once()
+  })
+
+  it('call onChange with value when the x is clicked ', async () => {
+    await given_dots_render({value: 2})
+
+    const selected = getDot(0)
+    fireEvent.click(selected)
+
+    verify(actionsMock.onChange(0)).once()
+  })
+
+  async function given_dots_render({ value }: { value?: number } = {}) {
+    render(<Dots total={5} value={value || 0} onChange={actions.onChange} />)
+  }
+
+  const getDot = (value: number) =>
+    screen.getByRole('radio', { name: value.toString() }) as HTMLInputElement
 })

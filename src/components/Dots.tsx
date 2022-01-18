@@ -83,3 +83,5 @@ const DotsGroup = styled.div<{
   ${({ height }) => (height ? `height: ${height}` : '')};
   ${({ width }) => (width ? `width: ${width}` : '')};
 `
+
+//TODO make accessible with a spinbutton role and some magic
