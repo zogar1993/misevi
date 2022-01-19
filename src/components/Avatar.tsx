@@ -1,32 +1,27 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { BORDER_RADIUS } from './css/Dimensions'
 import Resizer from 'react-image-file-resizer'
 import bandit from './icons/bandit.png'
 import { SKELETON_ANIMATION_CSS } from './css/Skeleton'
 
-//TODO not working properly at the moment
 export default function Avatar({ onChange, src, alt, area, width = '143px', height = '143px' }: AvatarProps) {
-  const [imageShowed, setImageShowed] = useState<string>('')
-  useEffect(() => setImageShowed(getImage(src)), [src])
   const showSkeleton = src === undefined
   const handleOnChange = async (e: React.ChangeEvent<HTMLInputElement>) =>
-    await changeDisplayedImage(e, setImageShowed, onChange)
+    await changeDisplayedImage(e, onChange)
   return (
     <Label width={width} height={height} area={area}>
       <Input type="file" onChange={handleOnChange} />
-      <Image src={imageShowed} alt={alt} width={width} height={height} skeleton={showSkeleton} />
+      <Image src={getImage(src)} alt={alt} width={width} height={height} skeleton={showSkeleton} />
     </Label>
   )
 }
 
 async function changeDisplayedImage(e: React.ChangeEvent<HTMLInputElement>,
-                                    setImageShowed: (value: string) => void,
                                     onChange: (base64: string, thumbnail: string) => void) {
   if (!e.target.files) return
   const file = e.target.files[0]
   const image = await createThumbnail(file)
-  setImageShowed(image.thumbnail)
   onChange(image.original, image.thumbnail)
 }
 
