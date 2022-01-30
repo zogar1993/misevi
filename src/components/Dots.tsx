@@ -85,3 +85,4 @@ const DotsGroup = styled.div<{
 `
 
 //TODO make accessible with a spinbutton role and some magic
+//TODO remove dist types from build

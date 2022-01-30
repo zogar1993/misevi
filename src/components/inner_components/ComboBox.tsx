@@ -210,7 +210,7 @@ export default function ComboBox<T extends string = string>(props: InternalCombB
 export type ComboBoxProps<T extends string = string> = {
   value: T | null | undefined
   options: Readonly<Array<ComboBoxItem<T>>> | undefined
-  buttons?: Array<ButtonInfo<T>>
+  buttons?: ReadonlyArray<ButtonInfo<T>>
   disabled?: boolean
   unclearable?: boolean
   onChange?: (value: T | null) => void

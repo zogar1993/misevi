@@ -220,7 +220,7 @@ describe('ComboBox should', () => {
       { name: 'Option 1', code: 'option_1' },
       { name: 'Option 2', code: 'option_2' }
     ]
-    //TODO make options readonly
+
     beforeEach(async () => {
       onChangeMock.mockReset()
       await the_options_are(OPTIONS)

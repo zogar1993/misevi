@@ -3,7 +3,9 @@ import Input from './inner_components/Input'
 
 export default function NumberInput(props: InternalNumberInputProps) {
   const { value, onBlur, min, max, disabled } = props
-  const [current, setCurrent] = useState<number>()
+  const [current, setCurrent] = useState<number | undefined>(
+    keepWithinBoundariesOrUndefined(value, min, max)
+  )
 
   const handleOnChange = useCallback((e: any) => {
     setCurrent(Number(e.target.value))
@@ -11,11 +13,10 @@ export default function NumberInput(props: InternalNumberInputProps) {
 
   const handleOnBlur = useCallback(() => {
     if (current === undefined) return
-    let newValue = keepWithinBoundaries(current, min, max)
-    if (value !== newValue) {
-      setCurrent(newValue)
-      if (onBlur) onBlur(newValue)
-    }
+    let bounded = keepWithinBoundaries(current, min, max)
+    if (value === bounded) return
+    setCurrent(bounded)
+    if (onBlur) onBlur(bounded)
   }, [value, min, max, onBlur, current])
 
   useEffect(() => {
@@ -28,7 +29,7 @@ export default function NumberInput(props: InternalNumberInputProps) {
   return (
     <Input
       {...props}
-      value={current || ''}
+      value={current === undefined ? '' : current}
       min={min}
       max={max}
       onChange={handleOnChange}
@@ -51,8 +52,12 @@ export type InternalNumberInputProps = {
   id?: string
 } & NumberInputProps
 
-export const keepWithinBoundaries = (value: number, min?: number, max?: number) => {
-  if (min && value < min) return min
-  if (max && value > max) return max
+const keepWithinBoundariesOrUndefined = (value?: number, min?: number, max?: number) => {
+  return value === undefined ? undefined : keepWithinBoundaries(value, min, max)
+}
+
+const keepWithinBoundaries = (value: number, min?: number, max?: number) => {
+  if (typeof min === 'number' && value < min) return min
+  if (typeof max === 'number' && value > max) return max
   return value
 }
