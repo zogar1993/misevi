@@ -214,7 +214,7 @@ describe('ComboBox should', () => {
     })
   })
 
-  describe('while being operational', () => {
+  describe('while being operational with string code values', () => {
     const onChangeMock = jest.fn()
     const OPTIONS = [
       { name: 'Option 1', code: 'option_1' },
@@ -276,6 +276,89 @@ describe('ComboBox should', () => {
       const calls = onChangeMock.mock.calls
       expect(calls.length).toBe(1)
       expect(calls[0][0]).toBe(value)
+    }
+  })
+
+  describe('while being operational with number code values', () => {
+    let _number_options: Array<ComboBoxItem<number>> | undefined
+    let _number_value: number | null | undefined
+    const onChangeMock = jest.fn()
+    const OPTIONS = [
+      { name: 'Option 1', code: 0 },
+      { name: 'Option 2', code: 1 }
+    ]
+
+    beforeEach(async () => {
+      onChangeMock.mockReset()
+      _number_options = OPTIONS
+      _number_value = null
+      await the_number_combobox_is_rendered()
+    })
+
+    it('should not display options by default', async () => {
+      await options_should_not_show()
+    })
+
+    it('should display options when focused', async () => {
+      await the_textbox_is_focused()
+      await options_should_show(OPTIONS)
+    })
+
+    it('should call onChange with the option value when clicked', async () => {
+      await the_textbox_is_focused()
+
+      await option_is_clicked(OPTIONS[1])
+
+      await onChange_should_be_called_with(OPTIONS[1].code)
+    })
+
+    async function the_textbox_is_focused() {
+      getTextbox().focus()
+    }
+
+    async function option_is_clicked(item: ComboBoxItem<number>) {
+      const option = screen.getByRole('option', { name: item.name })
+      fireEvent.click(option)
+    }
+
+    async function options_should_not_show() {
+      const combobox = getComboBox()
+      expect(combobox).toHaveAttribute('aria-expanded', 'false')
+      const listbox = queryListbox()
+      expect(listbox).not.toBeInTheDocument()
+    }
+
+    async function options_should_show(items: Array<ComboBoxItem<number>>) {
+      const combobox = getComboBox()
+      expect(combobox).toHaveAttribute('aria-expanded', 'true')
+      const listbox = getListbox()
+      items.forEach((item) => {
+        within(listbox).getByRole('option', { name: item.name })
+      })
+    }
+
+    async function onChange_should_be_called_with(value: number) {
+      const calls = onChangeMock.mock.calls
+      expect(calls.length).toBe(1)
+      expect(calls[0][0]).toBe(value)
+    }
+
+    async function the_number_options_are(options: Array<ComboBoxItem<number>> | undefined) {
+      _number_options = options
+    }
+
+    async function the_number_combobox_is_rendered() {
+      screen = render(
+        <Field
+          label={A_LABEL}
+          type='combobox'
+          options={_number_options}
+          value={_number_value}
+          onChange={onChangeMock}
+          buttons={undefined}
+          unclearable={_unclearable}
+        />
+      )
     }
   })
 

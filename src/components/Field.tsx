@@ -3,10 +3,10 @@ import FieldLabel from './inner_components/FieldLabel'
 import FieldContainer from './inner_components/FieldContainer'
 import NumberInput, { NumberInputProps } from './NumberInput'
 import TextInput, { TextInputProps } from './inner_components/TextInput'
-import ComboBox, { ComboBoxProps } from './inner_components/ComboBox'
+import ComboBox, { ComboBoxProps, ComboboxValidCode } from './inner_components/ComboBox'
 import useUniqueId from './uuid/uuid'
 
-export default function Field<T extends string = string>({
+export default function Field<T extends ComboboxValidCode = string>({
   label,
   width,
   area,
@@ -51,7 +51,7 @@ export default function Field<T extends string = string>({
   )
 }
 
-export type FieldProps<T extends string = string> =
+export type FieldProps<T extends ComboboxValidCode = string> =
   | FieldTextProps
   | FieldNumberProps
   | FieldComboProps<T>
@@ -64,5 +64,7 @@ type FieldBaseProps = {
 
 export type FieldTextProps = { type?: 'text' } & FieldBaseProps & TextInputProps
 export type FieldNumberProps = { type: 'number' } & FieldBaseProps & NumberInputProps
-export type FieldComboProps<T extends string = string> = { type: 'combobox' } & FieldBaseProps &
+export type FieldComboProps<T extends ComboboxValidCode = string> = {
+  type: 'combobox'
+} & FieldBaseProps &
   ComboBoxProps<T>

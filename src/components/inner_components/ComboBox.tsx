@@ -7,7 +7,9 @@ import close from '../icons/close.svg'
 import { HANDWRITTEN_FONT } from '../css/Fonts'
 import Input from './Input'
 
-export default function ComboBox<T extends string = string>(props: InternalCombBoxProps<T>) {
+export default function ComboBox<T extends ComboboxValidCode = string>(
+  props: InternalCombBoxProps<T>
+) {
   const { value, options, onChange, onFocusChange, buttons, id, disabled, unclearable } = props
   const [text, setText] = useState('')
   const [error, setError] = useState(false)
@@ -32,7 +34,7 @@ export default function ComboBox<T extends string = string>(props: InternalCombB
   const setTextFromValue = useCallback(() => {
     if (value) {
       const option = getOptions().find((x) => x.code === value)
-      setText(option ? option.name : value)
+      setText(option ? option.name : value.toString())
     } else setText('')
   }, [value, getOptions])
 
@@ -208,7 +210,7 @@ export default function ComboBox<T extends string = string>(props: InternalCombB
   )
 }
 
-export type ComboBoxProps<T extends string = string> = {
+export type ComboBoxProps<T extends ComboboxValidCode = string> = {
   value: T | null | undefined
   options: Readonly<Array<ComboBoxItem<T>>> | undefined
   buttons?: ReadonlyArray<ButtonInfo<T>>
@@ -217,25 +219,25 @@ export type ComboBoxProps<T extends string = string> = {
   onChange?: (value: T | null) => void
 }
 
-export type InternalCombBoxProps<T extends string = string> = {
+export type InternalCombBoxProps<T extends ComboboxValidCode = string> = {
   id?: string
   onFocusChange?: (focus: boolean, text: string) => void
 } & ComboBoxProps<T>
 
-export type ButtonInfo<T extends string = string> = {
+export type ButtonInfo<T extends ComboboxValidCode = string> = {
   name: string
   src: string
   onClick: (props: ComboBoxProps<T>) => void
 }
 
-export type ComboBoxItem<T extends string = string> = {
+export type ComboBoxItem<T extends ComboboxValidCode = string> = {
   name: string
   code: T
   from?: number
   to?: number
 }
 
-function ComboboxImageButton<T extends string = string>({
+function ComboboxImageButton<T extends ComboboxValidCode = string>({
   name,
   src,
   onClick,
@@ -330,4 +332,5 @@ function insensitiveIncludes(text: string, sub: string) {
 
 const NULL_OPTION = { name: '', code: null }
 
+export type ComboboxValidCode = string | number
 //TODO add clipping
