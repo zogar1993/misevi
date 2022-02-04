@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { BORDER_RADIUS, SEPARATION } from '../css/Dimensions'
 import { Z_INDEX_LEVEL } from '../css/ZIndexes'
@@ -32,7 +32,7 @@ export default function ComboBox<T extends ComboboxValidCode = string>(
   }, [text, getOptions])
 
   const setTextFromValue = useCallback(() => {
-    if (value) {
+    if (value !== null && value !== undefined) {
       const option = getOptions().find((x) => x.code === value)
       setText(option ? option.name : value.toString())
     } else setText('')
@@ -100,7 +100,6 @@ export default function ComboBox<T extends ComboboxValidCode = string>(
           if (isInDropdown(highlighted)) {
             updateOption(highlighted)
             refInput.current?.blur()
-            //TODO maybe handle blur statefully to time with props (dunno if possible)
             e.preventDefault()
           }
           break
@@ -125,7 +124,7 @@ export default function ComboBox<T extends ComboboxValidCode = string>(
   }, [onFocusChange, text])
 
   //text
-  useEffect(() => {
+  useLayoutEffect(() => {
     setTextFromValue()
   }, [setTextFromValue])
 

@@ -1,11 +1,14 @@
 import {Canvas, Meta, Story} from "@storybook/addon-docs/blocks";
-import {Template, ComboboxStoryTypes, items, long_items} from "./ComboBoxTemplate";
+import {Template, ComboboxStoryTypes, items, number_items, long_items} from "./ComboBoxTemplate";
 
 <Meta title="Form/Combobox" component={ComboboxStoryTypes}/>
 
 ### Default
 <Canvas>
   <Story name="with value" args={{label: "with value", value: "apostle", options: items}}>
+    {Template.bind({})}
+  </Story>
+  <Story name="with number value" args={{label: "with number value", value: 1, options: number_items}}>
     {Template.bind({})}
   </Story>
 </Canvas>
