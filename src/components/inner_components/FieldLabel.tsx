@@ -11,7 +11,6 @@ const FieldLabel = styled.label<Props>`
   top: ${props => props['as-placeholder'] ? '21px' : '2px'};
   left: 9px;
   user-select: none;
-  z-index: 2;
   ${({ disabled }) => disabled ? 'pointer-events: none' : '2px'};
 `
 export default FieldLabel

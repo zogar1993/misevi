@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { BORDER_RADIUS, SEPARATION } from '../css/Dimensions'
+import { Z_INDEX_LEVEL } from '../css/ZIndexes'
 import ImageButton from '../ImageButton'
 import close from '../icons/close.svg'
 import { HANDWRITTEN_FONT } from '../css/Fonts'
@@ -271,7 +272,7 @@ const Listbox = styled.datalist<{ open: boolean }>`
   max-height: calc(${OPTION_HEIGHT}px * ${MAX_OPTION_AMOUNT} + ${BORDER_WIDTH}px * 2);
   overflow-y: auto;
   overflow-x: hidden;
-  z-index: 20;
+  z-index: ${Z_INDEX_LEVEL.DROPDOWN};
   scroll-behavior: smooth;
 `
 

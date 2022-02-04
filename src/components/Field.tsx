@@ -30,6 +30,13 @@ export default function Field<T extends string = string>({
 
   return (
     <FieldContainer width={width} area={area}>
+      {props.type === 'number' ? (
+        <NumberInput {...props} id={id} />
+      ) : props.type === 'combobox' ? (
+        <ComboBox {...props} id={id} onFocusChange={onTextChange} />
+      ) : (
+        <TextInput {...props} id={id} onFocusChange={onTextChange} placeholder={label} />
+      )}
       <FieldLabel
         as-placeholder={isPlaceholder}
         htmlFor={id}
@@ -40,13 +47,6 @@ export default function Field<T extends string = string>({
       >
         {label}
       </FieldLabel>
-      {props.type === 'number' ? (
-        <NumberInput {...props} id={id} />
-      ) : props.type === 'combobox' ? (
-        <ComboBox {...props} id={id} onFocusChange={onTextChange} />
-      ) : (
-        <TextInput {...props} id={id} onFocusChange={onTextChange} placeholder={label} />
-      )}
     </FieldContainer>
   )
 }

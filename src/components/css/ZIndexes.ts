@@ -1,0 +1,7 @@
+export const Z_INDEX_LEVEL = {
+  COMPONENT: 0,
+  MENU: 100,
+  DROPDOWN: 200,
+  MODAL: 300,
+  POPUP: 400
+}
