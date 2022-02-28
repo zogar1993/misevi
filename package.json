@@ -81,7 +81,7 @@
   "dependencies": {
     "react-image-file-resizer": "0.4.2",
     "react-is": "17.0.1",
-    "style-inject": "^0.3.0",
+    "style-inject": "0.3.0",
     "yarn": "^1.22.17"
   }
 }
