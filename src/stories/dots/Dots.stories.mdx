@@ -17,6 +17,14 @@ import Dots from "components/Dots";
   </Story>
 </Canvas>
 
+
+### Disabled
+<Canvas>
+  <Story name="Disabled" args={{total: 5, value: 2, disabled: true}}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
 ### Zweihander Advancement
 <Canvas>
   <Story name="Lacking Advancement" args={{total: 5, value: 2, coloring: coloring}}>
@@ -26,6 +34,13 @@ import Dots from "components/Dots";
     {Template.bind({})}
   </Story>
   <Story name="Over Advancing" args={{total: 5, value: 4, coloring: coloring}}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+### Skeleton
+<Canvas>
+  <Story name="Skeleton" args={{total: 5}}>
     {Template.bind({})}
   </Story>
 </Canvas>

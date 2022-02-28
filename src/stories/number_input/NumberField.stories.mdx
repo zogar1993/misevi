@@ -10,6 +10,13 @@ import Template, {NumberFieldStoryTypes} from "./NumberFieldTemplate";
     </Story>
 </Canvas>
 
+### Disabled
+<Canvas>
+  <Story name="disabled" args={{label: "label", value: 5, disabled: true}}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
 ### Skeleton
 <Canvas>
     <Story name="without value" args={{}}>

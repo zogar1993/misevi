@@ -7,15 +7,22 @@ type DotZeroProps = {
   value: number | undefined
   setTentative: (value: number | null) => void
   onChange: undefined | ((value: number) => void)
+  disabled?: boolean
 }
 
-export default function DotZero({ tentative, setTentative, onChange, value }: DotZeroProps) {
+export default function DotZero({
+  tentative,
+  setTentative,
+  onChange,
+  value,
+  disabled
+}: DotZeroProps) {
   return (
     <DotZeroContainer>
       <IconX tentative={tentative} />
       <DotZeroElement
         value={0}
-        checked={0 === value}
+        checked={value === undefined ? undefined : 0 === value}
         type='radio'
         onChange={
           onChange &&
@@ -24,7 +31,7 @@ export default function DotZero({ tentative, setTentative, onChange, value }: Do
             setTentative(null)
           })
         }
-        disabled={onChange === undefined}
+        disabled={onChange === undefined || disabled}
         onMouseEnter={() => setTentative(0)}
         onMouseLeave={() => setTentative(null)}
         visible={tentative !== null}

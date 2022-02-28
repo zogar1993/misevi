@@ -5,9 +5,16 @@ import {Template, TextFieldStoryTypes} from "stories/text_field/TextFieldTemplat
 
 ### Default
 <Canvas>
-    <Story name="with value" args={{label: "label", value: 5}}>
+    <Story name="with value" args={{label: "label", value: "text"}}>
         {Template.bind({})}
     </Story>
+</Canvas>
+
+### Disabled
+<Canvas>
+  <Story name="disabled" args={{label: "label", value: "text", disabled: true}}>
+    {Template.bind({})}
+  </Story>
 </Canvas>
 
 ### Skeleton

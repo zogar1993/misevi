@@ -9,9 +9,18 @@ export interface DotsProps {
   onChange?: (value: number) => void
   rows?: number
   coloring?: (props: { number: number; value: number }) => string | undefined
+  disabled?: boolean
 }
 
-export default function Dots({ total, value, onChange, rows = 1, coloring, ...props }: DotsProps) {
+export default function Dots({
+  total,
+  value,
+  onChange,
+  rows = 1,
+  coloring,
+  disabled,
+  ...props
+}: DotsProps) {
   const [tentative, setTentative] = useState<number | null>(null)
   useEffect(() => setTentative(null), [value])
   const values = Array.from({ length: total }, (_, k) => k + 1) as Array<number>
@@ -53,17 +62,19 @@ export default function Dots({ total, value, onChange, rows = 1, coloring, ...pr
         tentative={tentative}
         setTentative={setTentative}
         onChange={onChange}
+        disabled={disabled}
       />
       {values.map((current) => (
         <Dot
           value={current}
           aria-label={current}
           onChange={onChange}
-          checked={current === value}
+          checked={value === undefined ? undefined : current === value}
           color={getColorFor(current)}
           onMouseEnter={() => setTentative(current)}
           onMouseLeave={() => setTentative(null)}
           key={current}
+          disabled={disabled}
         />
       ))}
     </DotsGroup>
