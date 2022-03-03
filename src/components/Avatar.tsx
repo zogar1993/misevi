@@ -1,10 +1,10 @@
 import React, { ChangeEvent } from 'react'
 import styled from 'styled-components'
-import { BORDER_RADIUS } from './css/Dimensions'
 import Resizer from 'react-image-file-resizer'
 import bandit from './icons/bandit.png'
 import transparent from './icons/transparent-pixel.png'
 import { SKELETON_ANIMATION_CSS } from './css/Skeleton'
+import theme from './theme/Theme'
 
 export default function Avatar({
   onChange,
@@ -93,7 +93,7 @@ const Image = styled.img<{
   skeleton: boolean
   disabled?: boolean
 }>`
-  border-radius: ${BORDER_RADIUS};
+  border-radius: ${theme.borders.radius};
   width: ${({ width }) => width};
   height: ${({ height }) => height};
   object-fit: scale-down;

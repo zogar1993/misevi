@@ -1,10 +1,9 @@
 import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
-import { BORDER_RADIUS, SEPARATION } from '../css/Dimensions'
 import { Z_INDEX_LEVEL } from '../css/ZIndexes'
 import ImageButton from '../ImageButton'
 import close from '../icons/close.svg'
-import { HANDWRITTEN_FONT } from '../css/Fonts'
+import theme from '../theme/Theme'
 import Input from './Input'
 
 export default function ComboBox<T extends ComboboxValidCode = string>(
@@ -249,7 +248,7 @@ function ComboboxImageButton<T extends ComboboxValidCode = string>({
       width='18px'
       height='18px'
       onClick={() => onClick(props)}
-      margin-right={SEPARATION}
+      margin-right={theme.spacing.separation}
     />
   )
 }
@@ -262,12 +261,12 @@ const Listbox = styled.datalist<{ open: boolean }>`
   display: ${({ open }) => (open ? 'block' : 'none')};
   margin: 0;
   padding: 0;
-  border-radius: ${BORDER_RADIUS};
+  border-radius: ${theme.borders.radius};
   position: absolute;
   top: 30px;
-  border: ${BORDER_WIDTH}px solid lightgray;
+  border: ${BORDER_WIDTH}px solid lightgray; //TODO apply theme
   list-style: none;
-  background-color: whitesmoke;
+  background-color: whitesmoke; //TODO apply theme
   width: 100%;
   transition: 0.2s;
   max-height: calc(${OPTION_HEIGHT}px * ${MAX_OPTION_AMOUNT} + ${BORDER_WIDTH}px * 2);
@@ -278,15 +277,15 @@ const Listbox = styled.datalist<{ open: boolean }>`
 `
 
 const Option = styled.option<{ highlighted: boolean }>`
-  font-family: ${HANDWRITTEN_FONT}, Times, serif;
+  font-family: ${theme.fonts.handwritten};
   height: ${OPTION_HEIGHT}px;
   font-size: 13px;
   padding: 1px 5px 3px 8px;
-  border-radius: ${BORDER_RADIUS};
-  border: 1px solid ${({ highlighted }) => (highlighted ? 'dodgerblue' : 'transparent')};
+  border-radius: ${theme.borders.radius};
+  border: 1px solid ${({ highlighted }) => (highlighted ? 'dodgerblue' : 'transparent')}; //TODO apply theme
 
   :hover {
-    background-color: powderblue;
+    background-color: powderblue; //TODO apply theme
   }
 
   transition: background-color 0.2s;
@@ -307,7 +306,7 @@ const ButtonsContainer = styled.div<{ visible: boolean }>`
 `
 
 const TextInput = styled(Input)<{ error: boolean }>`
-  ${({ error }) => (error ? 'border: 1px solid red' : '')};
+  ${({ error }) => (error ? 'border: 1px solid red' : '')}; //TODO apply theme
 `
 
 function scrollToItemOfIndex(index: number, element: HTMLElement) {
@@ -332,4 +331,4 @@ function insensitiveIncludes(text: string, sub: string) {
 const NULL_OPTION = { name: '', code: null }
 
 export type ComboboxValidCode = string | number
-//TODO add clipping
+//TODO P4 add clipping

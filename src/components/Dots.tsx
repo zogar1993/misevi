@@ -34,15 +34,15 @@ export default function Dots({
         const wouldBeMarked = (current: number) =>
           tentative > value && current > value && current <= tentative
 
-        if (wouldBeCleared(current)) return 'lightgray'
-        if (wouldBeMarked(current)) return 'dimgray'
-        return isMarked(current) ? 'black' : 'white'
+        if (wouldBeCleared(current)) return 'lightgray'//TODO apply theme
+        if (wouldBeMarked(current)) return 'dimgray'//TODO apply theme
+        return isMarked(current) ? 'black' : 'white'//TODO apply theme
       }
 
       const color = coloring && coloring({ number: current, value: value })
       if (color) return color
 
-      return isMarked(current) ? 'black' : 'white'
+      return isMarked(current) ? 'black' : 'white'//TODO apply theme
     },
     [value, tentative, coloring]
   )
@@ -87,5 +87,5 @@ const DotsGroup = styled.div<{
   ${({ width }) => (width ? `width: ${width}` : '')};
 `
 
-//TODO make accessible with a spinbutton role and some magic
-//TODO remove dist types from build
+//TODO P1 make accessible with a spinbutton role and some magic
+//TODO P1 remove dist types from build

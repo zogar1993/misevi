@@ -1,19 +1,20 @@
 import styled, { css } from 'styled-components'
-import { BORDER_RADIUS } from '../css/Dimensions'
+import theme from '../theme/Theme'
 import { NoStyleInput } from './NoStyleInput'
 import { SKELETON_ANIMATION_CSS } from '../css/Skeleton'
-import { HANDWRITTEN_FONT, FONT_SIZE } from '../css/Fonts'
 import React from 'react'
 
-const animation = css`{
-  from {
-    font-size: 150%
-  }
+const animation = css`
+   {
+    from {
+      font-size: 150%;
+    }
 
-  to {
-    font-size: 100%
+    to {
+      font-size: 100%;
+    }
   }
-}`
+`
 
 const getAnimation = (seed?: number) => {
   if (seed === undefined) return
@@ -21,7 +22,11 @@ const getAnimation = (seed?: number) => {
   return seed % 2 ? 'animation1' : 'animation2'
 }
 
-export const onValueChangeAnimation = ({ 'animation-seed': seed }: { 'animation-seed'?: number }) => {
+export const onValueChangeAnimation = ({
+  'animation-seed': seed
+}: {
+  'animation-seed'?: number
+}) => {
   if (seed === undefined) return ''
   return css`
     animation-name: ${getAnimation(seed)};
@@ -29,7 +34,7 @@ export const onValueChangeAnimation = ({ 'animation-seed': seed }: { 'animation-
     animation-duration: 0.3s;
 
     @keyframes animation1 ${animation}
-    @keyframes animation2 ${animation}
+    @keyframes animation2 ${animation};
   `
 }
 
@@ -37,15 +42,15 @@ const Input = styled(NoStyleInput).attrs<InputProps>(() => ({
   autoComplete: 'off'
 }))<InputProps>`
   padding: 5px 5px 5px 8px;
-  border: 1px solid lightgray;
-  background-color: whitesmoke;
+  border: 1px solid lightgray; //TODO apply theme
+  background-color: whitesmoke; //TODO apply theme
 
-  font-family: ${HANDWRITTEN_FONT}, Times, serif;
-  font-size: ${FONT_SIZE};
+  font-family: ${theme.fonts.handwritten};
+  font-size: 16px;
 
   width: 100%;
   height: 30px;
-  border-radius: ${BORDER_RADIUS};
+  border-radius: ${theme.borders.radius};
 
   -moz-appearance: textfield;
 
@@ -56,12 +61,12 @@ const Input = styled(NoStyleInput).attrs<InputProps>(() => ({
   ${onValueChangeAnimation};
 
   :disabled {
-    background-color: whitesmoke;
+    background-color: whitesmoke; //TODO apply color
     border: 1px solid transparent;
   }
 
-  ${({ disabled }) => disabled ? 'cursor: not-allowed' : ''};
-  ${({ skeleton }) => skeleton ? SKELETON_ANIMATION_CSS : ''};
+  ${({ disabled }) => (disabled ? 'cursor: not-allowed' : '')};
+  ${({ skeleton }) => (skeleton ? SKELETON_ANIMATION_CSS : '')};
 `
 export default Input
 

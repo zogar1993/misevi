@@ -32,15 +32,15 @@ const DotElement = styled(NoStyleInput).attrs(() => ({
 }))<DotProps & { skeleton: boolean }>`
   width: 14px;
   height: 14px;
-  border: 1px solid black;
+  border: 1px solid black; //TODO apply theme
   border-radius: 50%;
   background-color: ${({ color }) => color || 'black'};
   :hover {
-    border: 1px solid dodgerblue;
+    border: 1px solid dodgerblue; //TODO apply theme
   }
 
   :disabled {
-    border: 1px solid grey;
+    border: 1px solid grey; //TODO apply theme
     cursor: not-allowed;
   }
 

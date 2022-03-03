@@ -1,7 +1,6 @@
 import { Color } from './Color'
 // @ts-ignore
 import styleInject from 'style-inject'
-import {BORDER_RADIUS} from "../css/Dimensions"
 
 const light = {
   colors: {
@@ -30,13 +29,19 @@ const light = {
     hovers: {
       text: Color.Black,
       primary: Color.Gray
-    },
+    }
   },
   fonts: {
     handwritten: 'Patrick Hand, Times, serif',
     option: 'Almendra SC, Times, serif',
     title: 'Almendra, Times, serif',
     common: 'Arial, Times, serif'
+  },
+  borders: {
+    radius: '6px'
+  },
+  spacing: {
+    separation: '4px'
   }
 }
 
@@ -52,8 +57,8 @@ styleInject(
   `
     ${themeToCssWithoutSelector()}
     ${Object.keys(themes)
-    .map((theme) => themeToCssWithSelector(theme))
-    .join('')}
+      .map((theme) => themeToCssWithSelector(theme))
+      .join('')}
 
     * {
       margin: 0;
@@ -76,7 +81,7 @@ styleInject(
 
     *::-webkit-scrollbar-thumb {
       background: darkgrey;
-      border-radius: ${BORDER_RADIUS};
+      border-radius: ${theme.borders.radius};
     }
 
     *::-webkit-scrollbar-thumb:hover {
@@ -95,13 +100,14 @@ styleInject(
 
 export default theme
 
-//TODO move repeated styles here
+//TODO P1 move repeated styles here
 
 // converts any nested theme object into one with the css variables as the value
 export function toVarNames<T>(obj: T, prefix = '-'): T {
   const vars: any = {}
   for (const [key, value] of Object.entries(obj)) {
-    vars[key] = typeof value === 'object' ? toVarNames(value, `${prefix}-${key}`) : `var(${prefix}-${key})`
+    vars[key] =
+      typeof value === 'object' ? toVarNames(value, `${prefix}-${key}`) : `var(${prefix}-${key})`
   }
   return vars as T
 }
@@ -152,4 +158,3 @@ function themeToCssWithSelector(theme: string) {
     }
   `
 }
-

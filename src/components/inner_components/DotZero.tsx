@@ -60,7 +60,7 @@ const DotZeroElement = styled(NoStyleInput)<{ visible: boolean }>`
   cursor: pointer;
 
   :hover {
-    border: 1px solid darkred;
+    border: 1px solid darkred; //TODO apply theme
   }
 `
 
