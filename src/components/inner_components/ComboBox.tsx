@@ -242,14 +242,7 @@ function ComboboxImageButton<T extends ComboboxValidCode = string>({
   props
 }: ButtonInfo<T> & { props: ComboBoxProps<T> }) {
   return (
-    <ImageButton
-      src={src}
-      name={name}
-      width='18px'
-      height='18px'
-      onClick={() => onClick(props)}
-      margin-right={theme.spacing.separation}
-    />
+    <ImageButton src={src} name={name} width='18px' height='18px' onClick={() => onClick(props)} />
   )
 }
 
@@ -304,6 +297,7 @@ const ButtonsContainer = styled.div<{ visible: boolean }>`
   align-content: center;
   align-items: center;
   ${({ visible }) => (visible === false ? 'visibility: hidden' : '')};
+  gap: ${theme.spacing.separation};
 `
 
 const TextInput = styled(Input)<{ error: boolean }>`
