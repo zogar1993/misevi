@@ -1,8 +1,6 @@
 import './styles/Fonts.css'
 export { default as CircularNumberInput } from './components/CircularNumberInput'
 export { default as Dots } from './components/Dots'
-export { default as RadioButton } from './components/RadioButton'
 export { default as Avatar } from './components/Avatar'
-export { default as Picture } from './components/Picture'
 export { default as Field } from './components/Field'
 export { SKELETON_ANIMATION_CSS } from './components/css/Skeleton'

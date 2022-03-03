@@ -264,9 +264,9 @@ const Listbox = styled.datalist<{ open: boolean }>`
   border-radius: ${theme.borders.radius};
   position: absolute;
   top: 30px;
-  border: ${BORDER_WIDTH}px solid lightgray; //TODO apply theme
+  border: ${BORDER_WIDTH}px solid ${theme.colors.border};
   list-style: none;
-  background-color: whitesmoke; //TODO apply theme
+  background-color: ${theme.colors.input.background};
   width: 100%;
   transition: 0.2s;
   max-height: calc(${OPTION_HEIGHT}px * ${MAX_OPTION_AMOUNT} + ${BORDER_WIDTH}px * 2);
@@ -282,10 +282,11 @@ const Option = styled.option<{ highlighted: boolean }>`
   font-size: 13px;
   padding: 1px 5px 3px 8px;
   border-radius: ${theme.borders.radius};
-  border: 1px solid ${({ highlighted }) => (highlighted ? 'dodgerblue' : 'transparent')}; //TODO apply theme
+  border: 1px solid
+    ${({ highlighted }) => (highlighted ? theme.colors.hovers.border : 'transparent')};
 
   :hover {
-    background-color: powderblue; //TODO apply theme
+    background-color: ${theme.colors.combobox.selected_item};
   }
 
   transition: background-color 0.2s;
@@ -306,7 +307,7 @@ const ButtonsContainer = styled.div<{ visible: boolean }>`
 `
 
 const TextInput = styled(Input)<{ error: boolean }>`
-  ${({ error }) => (error ? 'border: 1px solid red' : '')}; //TODO apply theme
+  ${({ error }) => (error ? `border: 1px solid ${theme.colors.error2}` : '')};
 `
 
 function scrollToItemOfIndex(index: number, element: HTMLElement) {

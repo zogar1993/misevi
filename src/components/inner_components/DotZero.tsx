@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import { NoStyleInput } from 'components/inner_components/NoStyleInput'
 import React from 'react'
+import theme from '../theme/Theme'
 
 type DotZeroProps = {
   tentative: number | null
@@ -54,13 +55,13 @@ const DotZeroContainer = styled.div`
 const DotZeroElement = styled(NoStyleInput)<{ visible: boolean }>`
   width: 14px;
   height: 14px;
-  border: 1px ${({ visible }) => (visible ? 'solid' : 'hidden')} black;
+  border: 1px ${({ visible }) => (visible ? 'solid' : 'hidden')} ${theme.colors.secondary};
   ${({ disabled }) => (disabled ? 'display: none;' : '')}
   border-radius: 50%;
   cursor: pointer;
 
   :hover {
-    border: 1px solid darkred; //TODO apply theme
+    border: 1px solid ${theme.colors.error};
   }
 `
 

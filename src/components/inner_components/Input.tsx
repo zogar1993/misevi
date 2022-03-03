@@ -42,8 +42,8 @@ const Input = styled(NoStyleInput).attrs<InputProps>(() => ({
   autoComplete: 'off'
 }))<InputProps>`
   padding: 5px 5px 5px 8px;
-  border: 1px solid lightgray; //TODO apply theme
-  background-color: whitesmoke; //TODO apply theme
+  border: 1px solid ${theme.colors.border};
+  background-color: ${theme.colors.input.background};
 
   font-family: ${theme.fonts.handwritten};
   font-size: 16px;
@@ -61,7 +61,7 @@ const Input = styled(NoStyleInput).attrs<InputProps>(() => ({
   ${onValueChangeAnimation};
 
   :disabled {
-    background-color: whitesmoke; //TODO apply color
+    background-color: ${theme.colors.input.background};
     border: 1px solid transparent;
   }
 

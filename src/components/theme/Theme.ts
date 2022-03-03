@@ -6,19 +6,32 @@ const light = {
   colors: {
     text: Color.Black,
     muted: Color.DarkGrey,
-    background1: Color.White,
-    primary: Color.White,
 
-    menu: {
-      background: Color.LighterGray,
-      open_item: Color.LightGray,
-      focus: Color.Gray,
-      border: Color.Gray
+    background1: Color.White,
+    border: Color.LightGray,
+
+    primary: Color.White,
+    secondary: Color.Black,
+    error: Color.Red,
+    error2: Color.Red2,
+
+    input: {
+      background: Color.LighterGray
+    },
+
+    combobox: {
+      selected_item: 'powderblue'
+    },
+
+    dots: {
+      to_be_cleared: Color.LightGray,
+      to_be_marked: Color.DarkGrey
     },
 
     disabled: {
       text: Color.DarkGrey,
-      primary: Color.LighterGray
+      primary: Color.LighterGray,
+      border: Color.LightGray
     },
 
     actives: {
@@ -28,7 +41,8 @@ const light = {
 
     hovers: {
       text: Color.Black,
-      primary: Color.Gray
+      primary: Color.Gray,
+      border: Color.Blue
     }
   },
   fonts: {
@@ -99,8 +113,6 @@ styleInject(
 )
 
 export default theme
-
-//TODO P1 move repeated styles here
 
 // converts any nested theme object into one with the css variables as the value
 export function toVarNames<T>(obj: T, prefix = '-'): T {

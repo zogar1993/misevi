@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import Dot from './inner_components/Dot'
 import styled from 'styled-components'
 import DotZero from './inner_components/DotZero'
+import theme from './theme/Theme'
 
 export interface DotsProps {
   value: number
@@ -34,15 +35,15 @@ export default function Dots({
         const wouldBeMarked = (current: number) =>
           tentative > value && current > value && current <= tentative
 
-        if (wouldBeCleared(current)) return 'lightgray'//TODO apply theme
-        if (wouldBeMarked(current)) return 'dimgray'//TODO apply theme
-        return isMarked(current) ? 'black' : 'white'//TODO apply theme
+        if (wouldBeCleared(current)) return theme.colors.dots.to_be_cleared
+        if (wouldBeMarked(current)) return theme.colors.dots.to_be_marked
+        return isMarked(current) ? theme.colors.secondary : theme.colors.primary
       }
 
       const color = coloring && coloring({ number: current, value: value })
       if (color) return color
 
-      return isMarked(current) ? 'black' : 'white'//TODO apply theme
+      return isMarked(current) ? theme.colors.secondary : theme.colors.primary
     },
     [value, tentative, coloring]
   )

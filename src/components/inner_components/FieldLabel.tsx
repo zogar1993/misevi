@@ -6,7 +6,7 @@ const FieldLabel = styled.label<Props>`
   transition-timing-function: ease-in;
   transition: 0.2s;
   font-size: ${(props) => (props['as-placeholder'] ? '16px' : '11px')};
-  color: ${(props) => (props['as-placeholder'] ? 'grey' : 'black')}; //TODO apply theme
+  color: ${(props) => (props['as-placeholder'] ? theme.colors.muted : theme.colors.text)};
   font-family: ${theme.fonts.common};
   top: ${(props) => (props['as-placeholder'] ? '21px' : '2px')};
   left: 9px;

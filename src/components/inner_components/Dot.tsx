@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import React from 'react'
+import theme from '../theme/Theme'
 import { NoStyleInput } from './NoStyleInput'
 import { SKELETON_ANIMATION_CSS } from '../css/Skeleton'
 
@@ -32,17 +33,17 @@ const DotElement = styled(NoStyleInput).attrs(() => ({
 }))<DotProps & { skeleton: boolean }>`
   width: 14px;
   height: 14px;
-  border: 1px solid black; //TODO apply theme
+  border: 1px solid ${theme.colors.secondary};
   border-radius: 50%;
-  background-color: ${({ color }) => color || 'black'};
+  background-color: ${({ color }) => color || theme.colors.secondary};
   :hover {
-    border: 1px solid dodgerblue; //TODO apply theme
+    border: 1px solid ${theme.colors.hovers.border};
   }
 
   :disabled {
-    border: 1px solid grey; //TODO apply theme
+    border: 1px solid ${theme.colors.disabled.border};
     cursor: not-allowed;
+    ${({ skeleton }) => (skeleton ? SKELETON_ANIMATION_CSS : '')};
+    ${({ skeleton }) => (skeleton ? 'border-width: 0' : '')};
   }
-
-  ${({ skeleton }) => (skeleton ? SKELETON_ANIMATION_CSS : '')};
 `
