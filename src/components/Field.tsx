@@ -1,15 +1,13 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import FieldLabel from './inner_components/FieldLabel'
-import FieldContainer from './inner_components/FieldContainer'
+import styled from 'styled-components'
 import NumberInput, { NumberInputProps } from './NumberInput'
 import TextInput, { TextInputProps } from './inner_components/TextInput'
 import ComboBox, { ComboBoxProps, ComboboxValidCode } from './inner_components/ComboBox'
+import theme from './theme/Theme'
 import useUniqueId from './uuid/uuid'
 
 export default function Field<T extends ComboboxValidCode = string>({
   label,
-  width,
-  area,
   ...props
 }: FieldProps<T>) {
   const { value, disabled } = props
@@ -29,7 +27,7 @@ export default function Field<T extends ComboboxValidCode = string>({
   const id = label ? `${label}-${uuid}` : uuid
 
   return (
-    <FieldContainer width={width} area={area}>
+    <FieldContainer>
       {props.type === 'number' ? (
         <NumberInput {...props} id={id} />
       ) : props.type === 'combobox' ? (
@@ -38,7 +36,7 @@ export default function Field<T extends ComboboxValidCode = string>({
         <TextInput {...props} id={id} onFocusChange={onTextChange} placeholder={label} />
       )}
       <FieldLabel
-        as-placeholder={isPlaceholder}
+        isPlaceholder={isPlaceholder}
         htmlFor={id}
         disabled={disabled}
         onMouseDown={(e) => {
@@ -58,8 +56,6 @@ export type FieldProps<T extends ComboboxValidCode = string> =
 
 type FieldBaseProps = {
   label: string
-  width?: string
-  area?: string
 }
 
 export type FieldTextProps = { type?: 'text' } & FieldBaseProps & TextInputProps
@@ -68,3 +64,28 @@ export type FieldComboProps<T extends ComboboxValidCode = string> = {
   type: 'combobox'
 } & FieldBaseProps &
   ComboBoxProps<T>
+
+const FieldContainer = styled.div<{ width?: string; area?: string }>`
+  display: flex;
+  flex-direction: column-reverse;
+  position: relative;
+  width: ${({ width }) => width || 'auto'};
+  height: 45px;
+  padding-top: 15px;
+`
+
+const FieldLabel = styled.label<{
+  isPlaceholder?: boolean
+  disabled?: boolean
+}>`
+  position: absolute;
+  transition-timing-function: ease-in;
+  transition: 0.2s;
+  font-size: ${({ isPlaceholder }) => (isPlaceholder ? '16px' : '11px')};
+  color: ${({ isPlaceholder }) => (isPlaceholder ? theme.colors.muted : theme.colors.text)};
+  font-family: ${theme.fonts.common};
+  top: ${({ isPlaceholder }) => (isPlaceholder ? '21px' : '2px')};
+  left: 9px;
+  user-select: none;
+  ${({ disabled }) => (disabled ? 'pointer-events: none' : '')};
+`
