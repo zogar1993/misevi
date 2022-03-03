@@ -11,7 +11,10 @@ import Template from "stories/avatar/AvatarTemplate"
     <Story name="null" args={{src: null}}>
         {Template.bind()}
     </Story>
-    <Story name="custom" args={{src: 'https://s3.envato.com/files/217490121/1.jpg'}}>
-        {Template.bind()}
-    </Story>
+  <Story name="custom" args={{src: 'https://s3.envato.com/files/217490121/1.jpg'}}>
+    {Template.bind()}
+  </Story>
+  <Story name="disabled" args={{src: 'https://s3.envato.com/files/217490121/1.jpg', disabled: true}}>
+    {Template.bind()}
+  </Story>
 </Canvas>

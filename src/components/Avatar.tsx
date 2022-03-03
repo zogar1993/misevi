@@ -13,17 +13,24 @@ export default function Avatar({
   area,
   width = '143px',
   height = '143px',
-  resizes = []
+  resizes = [],
+  disabled
 }: AvatarProps) {
   const showSkeleton = src === undefined
+  const isDisabled = showSkeleton || disabled
   const handleOnChange = async (e: ChangeEvent<HTMLInputElement>) =>
     await changeDisplayedImage(e, onChange, resizes)
   return (
     <Label width={width} height={height} area={area}>
-      <Input type='file' onChange={handleOnChange} />
-      <>
-        <Image src={getImage(src)} alt={alt} width={width} height={height} skeleton={showSkeleton} />
-      </>
+      <Input type='file' onChange={handleOnChange} disabled={isDisabled} />
+      <Image
+        src={getImage(src)}
+        alt={alt}
+        width={width}
+        height={height}
+        skeleton={showSkeleton}
+        disabled={isDisabled}
+      />
     </Label>
   )
 }
@@ -77,16 +84,22 @@ export type AvatarProps = {
   height?: string
   area?: string
   resizes?: Array<number>
+  disabled?: boolean
 }
 
-const Image = styled.img<{ width?: string; height?: string; skeleton: boolean }>`
+const Image = styled.img<{
+  width?: string
+  height?: string
+  skeleton: boolean
+  disabled?: boolean
+}>`
   border-radius: ${BORDER_RADIUS};
   width: ${({ width }) => width};
   height: ${({ height }) => height};
   object-fit: scale-down;
-  cursor: pointer;
   border: none;
-  ${({ skeleton }) => (skeleton ? SKELETON_ANIMATION_CSS : '')}
+  cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
+  ${({ skeleton }) => (skeleton ? SKELETON_ANIMATION_CSS : '')};
 `
 
 const Input = styled.input`
