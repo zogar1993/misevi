@@ -50,13 +50,7 @@ export default function Dots({
   const width = Math.ceil(total / rows) * 14 + 'px'
   const height = rows * 14 + 'px'
   return (
-    <DotsGroup
-      {...props}
-      width={width}
-      height={height}
-      no-pointer-events={value === undefined}
-      role='radiogroup'
-    >
+    <DotsGroup {...props} width={width} height={height} role='radiogroup'>
       <DotZero
         value={value}
         tentative={tentative}
@@ -82,7 +76,6 @@ export default function Dots({
 }
 
 const DotsGroup = styled.div<{
-  'no-pointer-events'?: boolean
   width?: string
   height?: string
 }>`
@@ -90,7 +83,6 @@ const DotsGroup = styled.div<{
   position: relative;
   flex-wrap: wrap;
   margin-bottom: 1px;
-  ${(props) => (props['no-pointer-events'] ? 'pointer-events: none' : '')};
   ${({ height }) => (height ? `height: ${height}` : '')};
   ${({ width }) => (width ? `width: ${width}` : '')};
 `
