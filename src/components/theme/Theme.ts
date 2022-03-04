@@ -20,7 +20,7 @@ const light = {
     },
 
     combobox: {
-      selected_item: 'powderblue'
+      active_option: 'powderblue'
     },
 
     dots: {

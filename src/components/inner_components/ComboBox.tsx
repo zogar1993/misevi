@@ -14,13 +14,15 @@ export default function ComboBox<T extends ComboboxValidCode = string>(
   const [error, setError] = useState(false)
   const [hovering, setHovering] = useState(false)
   const [focused, setFocused] = useState(false)
-  const [highlighted, setHighlighted] = useState<ComboBoxItem<T> | null>(null)
+  const [active, setActive] = useState<ComboBoxItem<T> | null>(null)
   const [dropdown, setDropdown] = useState<Array<ComboBoxItem<T>> | null>(null)
-  const refInput = useRef<HTMLInputElement>(null)
+  const refTextbox = useRef<HTMLInputElement>(null)
   const refListbox = useRef<HTMLDataListElement>(null)
   const isLoading = value === undefined || options === undefined
   const isNotLoading = !isLoading
-  const open = !!dropdown && dropdown.length > 0
+  const expanded = !!dropdown && dropdown.length > 0
+  const popupId = `${id}-popup`
+  const activeId = active ? `${id}-option-${active.code}` : undefined
 
   const getOptions = useCallback(() => options || [], [options])
 
@@ -70,11 +72,9 @@ export default function ComboBox<T extends ComboboxValidCode = string>(
       switch (e.key) {
         case 'ArrowUp': {
           if (dropdown === null) return
-          const index = isInDropdown(highlighted)
-            ? dropdown.indexOf(highlighted) - 1
-            : dropdown.length - 1
+          const index = isInDropdown(active) ? dropdown.indexOf(active) - 1 : dropdown.length - 1
           if (index >= 0) {
-            setHighlighted(dropdown[index])
+            setActive(dropdown[index])
             scrollToItemOfIndex(index, refListbox.current!)
           }
           e.preventDefault()
@@ -82,9 +82,9 @@ export default function ComboBox<T extends ComboboxValidCode = string>(
         }
         case 'ArrowDown': {
           if (dropdown === null) return
-          const index = isInDropdown(highlighted) ? dropdown.indexOf(highlighted) + 1 : 0
+          const index = isInDropdown(active) ? dropdown.indexOf(active) + 1 : 0
           if (index < dropdown.length) {
-            setHighlighted(dropdown[index])
+            setActive(dropdown[index])
             scrollToItemOfIndex(index, refListbox.current!)
           }
           e.preventDefault()
@@ -96,29 +96,31 @@ export default function ComboBox<T extends ComboboxValidCode = string>(
           break
         }
         case 'Enter':
-          if (isInDropdown(highlighted)) {
-            updateOption(highlighted)
-            refInput.current?.blur()
+          if (isInDropdown(active)) {
+            updateOption(active)
+            console.log(refTextbox.current)
+            refTextbox.current!.blur()
             e.preventDefault()
           }
           break
         case 'Escape':
-          if (isInDropdown(highlighted)) setHighlighted(null)
+          if (isInDropdown(active)) setActive(null)
           else {
             setTextFromValue()
-            refInput.current?.blur()
+            refTextbox.current!.blur()
           }
           e.preventDefault()
           break
       }
     },
-    [dropdown, highlighted, setTextFromValue, findOptionByText]
+    [dropdown, active, setTextFromValue, findOptionByText]
   )
 
   const onLoseFocus = useCallback(() => {
+  console.log("fome")
     onFocusChange && onFocusChange(false, text)
     setDropdown(null)
-    setHighlighted(null)
+    setActive(null)
     setFocused(false)
   }, [onFocusChange, text])
 
@@ -142,17 +144,17 @@ export default function ComboBox<T extends ComboboxValidCode = string>(
       onMouseEnter={() => setHovering(true)}
       onMouseLeave={() => setHovering(false)}
       role='combobox'
-      aria-expanded={open}
+      aria-expanded={expanded}
     >
       <TextInput
         id={id}
-        ref={refInput}
+        ref={refTextbox}
         value={options === undefined ? '' : text}
         disabled={disabled || isLoading || options?.length === 0}
         onChange={(e) => updateText(e.target.value)}
         onBlur={onLoseFocus}
         onFocus={() => {
-          refInput.current?.select()
+          refTextbox.current!.select()
           updateDropdown('')
           setFocused(true)
           onFocusChange && onFocusChange(true, text)
@@ -162,12 +164,16 @@ export default function ComboBox<T extends ComboboxValidCode = string>(
         skeleton={isLoading}
         error={error}
         type='text'
+        aria-controls={popupId}
+        aria-autocomplete='list'
+        aria-activedescendant={activeId}
       />
       {dropdown && dropdown.length > 0 && (
-        <Listbox open={open} ref={refListbox}>
+        <Listbox open={expanded} ref={refListbox} id={popupId}>
           {' '}
           {dropdown.map((item) => (
             <Option
+              id={`${id}-option-${item.code}`}
               key={item.code}
               onMouseDown={(e: any) => {
                 //This prevents dropdown from disappearing before click happens.
@@ -175,10 +181,10 @@ export default function ComboBox<T extends ComboboxValidCode = string>(
               }}
               onClick={(e: any) => {
                 updateOption(item)
-                refInput.current?.blur()
+                refTextbox.current!.blur()
                 e.preventDefault()
               }}
-              highlighted={item === highlighted}
+              active={item === active}
             >
               {item.name}
             </Option>
@@ -197,7 +203,7 @@ export default function ComboBox<T extends ComboboxValidCode = string>(
             height='12px'
             onPointerDown={(e: any) => {
               updateOption(NULL_OPTION)
-              refInput.current?.blur()
+              refTextbox.current!.blur()
               e.stopPropagation()
             }}
             visible={text !== ''}
@@ -269,17 +275,16 @@ const Listbox = styled.datalist<{ open: boolean }>`
   scroll-behavior: smooth;
 `
 
-const Option = styled.option<{ highlighted: boolean }>`
+const Option = styled.option<{ active: boolean }>`
   font-family: ${theme.fonts.handwritten};
   height: ${OPTION_HEIGHT}px;
   font-size: 13px;
   padding: 1px 5px 3px 8px;
   border-radius: ${theme.borders.radius};
-  border: 1px solid
-    ${({ highlighted }) => (highlighted ? theme.colors.hovers.border : 'transparent')};
+  border: 1px solid ${({ active }) => (active ? theme.colors.hovers.border : 'transparent')};
 
   :hover {
-    background-color: ${theme.colors.combobox.selected_item};
+    background-color: ${theme.colors.combobox.active_option};
   }
 
   transition: background-color 0.2s;

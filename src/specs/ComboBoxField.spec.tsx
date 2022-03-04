@@ -13,8 +13,8 @@ describe('ComboBox should', () => {
   let _unclearable: boolean | undefined
 
   beforeEach(() => {
-    _options = []
-    _value = undefined
+    _options = IRRELEVANT_OPTIONS
+    _value = null
     _onChange = IRRELEVANT_FUNCTION
     _buttons = undefined
     _unclearable = undefined
@@ -343,10 +343,6 @@ describe('ComboBox should', () => {
       expect(calls[0][0]).toBe(value)
     }
 
-    async function the_number_options_are(options: Array<ComboBoxItem<number>> | undefined) {
-      _number_options = options
-    }
-
     async function the_number_combobox_is_rendered() {
       screen = render(
         <Field
@@ -360,6 +356,84 @@ describe('ComboBox should', () => {
         />
       )
     }
+  })
+
+  describe('possess full accessibility functionality', () => {
+    const onChangeMock = jest.fn()
+    const OPTIONS = [
+      { name: 'Option 1', code: 'option_1' },
+      { name: 'Option 2', code: 'option_2' },
+      { name: 'Option 3', code: 'option_3' },
+      { name: 'Option 4', code: 'option_4' },
+      { name: 'Option 5', code: 'option_5' }
+    ]
+
+    beforeEach(async () => {
+      onChangeMock.mockReset()
+      _options = OPTIONS
+      _onChange = onChangeMock
+      await the_combobox_is_rendered()
+    })
+
+    it('has correct aria attributes when idle', async () => {
+      const combobox = screen.getByRole('combobox')
+      const textbox = within(combobox).getByRole('textbox')
+      expect(within(combobox).queryByRole('listbox')).not.toBeInTheDocument()
+      expect(combobox).toHaveAttribute('aria-expanded', 'false')
+      expect(textbox).not.toHaveAttribute('aria-multiline')
+      expect(textbox).toHaveAttribute('aria-autocomplete', 'list')
+    })
+
+    it('has correct aria attributes when focused', async () => {
+      const combobox = screen.getByRole('combobox')
+      const textbox = within(combobox).getByRole('textbox')
+
+      fireEvent.focus(textbox)
+
+      const popup = await within(combobox).findByRole('listbox')
+      expect(textbox).toHaveAttribute('aria-controls', popup.id)
+      expect(combobox).toHaveAttribute('aria-expanded', 'true')
+      expect(combobox).not.toHaveAttribute('aria-haspopup')
+      expect(textbox).not.toHaveAttribute('aria-activedescendant')
+    })
+
+    it('is keyboard accessible', async () => {
+      const combobox = screen.getByRole('combobox')
+      const textbox = within(combobox).getByRole('textbox')
+      fireEvent.focus(textbox)
+      const popup = await within(combobox).findByRole('listbox')
+
+      const options = within(popup).getAllByRole('option')
+
+      fireEvent.keyDown(textbox, { key: 'ArrowDown' })
+      await waitFor(() => expect(textbox).toHaveAttribute('aria-activedescendant', options[0].id))
+
+      fireEvent.keyDown(textbox, { key: 'Enter' })
+      await waitFor(() => expect(textbox).not.toHaveFocus())
+      //this is a hack because .blur does not call onBlur on jsdom for a reason
+      fireEvent.blur(textbox)
+
+      const calls = onChangeMock.mock.calls
+      expect(calls.length).toBe(1)
+      expect(calls[0][0]).toBe(OPTIONS[0].code)
+
+      fireEvent.focus(textbox)
+      //await waitFor(() => expect(textbox).toHaveFocus())
+      fireEvent.keyDown(textbox, { key: 'ArrowDown' })
+      fireEvent.keyDown(textbox, { key: 'ArrowDown' })
+      fireEvent.keyDown(textbox, { key: 'ArrowDown' })
+      fireEvent.keyDown(textbox, { key: 'ArrowUp' })
+      await waitFor(() => expect(textbox).toHaveAttribute('aria-activedescendant', options[1].id))
+
+      fireEvent.keyDown(textbox, { key: 'Escape' })
+      fireEvent.keyDown(textbox, { key: 'Escape' })
+      //this is a hack because .blur does not call onBlur on jsdom for a reason
+      fireEvent.blur(textbox)
+      //await waitFor(() => expect(textbox).toHaveFocus())
+      expect(within(combobox).queryByRole('listbox')).not.toBeInTheDocument()
+      await waitFor(() => expect(textbox).not.toHaveFocus())
+      expect(calls.length).toBe(1) //No new call was made
+    })
   })
 
   async function the_options_are(options: Array<ComboBoxItem> | undefined) {
