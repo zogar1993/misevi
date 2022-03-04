@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import React, { useCallback, useLayoutEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { Z_INDEX_LEVEL } from '../css/ZIndexes'
 import ImageButton from '../ImageButton'
@@ -120,13 +120,12 @@ export default function ComboBox<T extends ComboboxValidCode = string>(
   )
 
   const onLoseFocus = useCallback(() => {
-  console.log("fome")
     onFocusChange && onFocusChange(false, text)
     setDropdown(null)
     setActive(null)
     setFocused(false)
-    if (isError()) setText(value ? value.toString() : '')
-  }, [onFocusChange, text, isError, value])
+    if (isError()) setTextFromValue()
+  }, [onFocusChange, text, isError, setTextFromValue])
 
   //text
   useLayoutEffect(() => {
