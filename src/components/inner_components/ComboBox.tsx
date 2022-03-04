@@ -6,9 +6,7 @@ import close from '../icons/close.svg'
 import theme from '../theme/Theme'
 import Input from './Input'
 
-export default function ComboBox<T extends ComboboxValidCode = string>(
-  props: InternalCombBoxProps<T>
-) {
+export default function ComboBox<T extends ComboboxCode = string>(props: InternalCombBoxProps<T>) {
   const { value, options, onChange, onFocusChange, buttons, id, disabled, unclearable } = props
   const [text, setText] = useState('')
   const [error, setError] = useState(false)
@@ -24,31 +22,31 @@ export default function ComboBox<T extends ComboboxValidCode = string>(
   const popupId = `${id}-popup`
   const activeId = active ? `${id}-option-${active.code}` : undefined
 
-  const getOptions = useCallback(() => options || [], [options])
-
   const findOptionByText = useCallback(() => {
     const trimmed = text.trim()
     if (trimmed === '') return NULL_OPTION
-    return getOptions().find((x) => insensitiveCompare(trimmed, x.name))
-  }, [text, getOptions])
+    if (options === undefined) return NULL_OPTION
+    return options.find((x) => insensitiveCompare(trimmed, x.name))
+  }, [text, options])
 
   const isError = useCallback(() => {
     return findOptionByText() === undefined
   }, [text, findOptionByText])
 
   const setTextFromValue = useCallback(() => {
-    if (value !== null && value !== undefined) {
-      const option = getOptions().find((x) => x.code === value)
+    if (value !== null && value !== undefined && options !== undefined) {
+      const option = options.find((x) => x.code === value)
       setText(option ? option.name : value.toString())
     } else setText('')
-  }, [value, getOptions])
+  }, [value, options])
 
   const updateDropdown = useCallback(
     (text: string) => {
-      const visibleOptions = getOptions().filter((x) => insensitiveIncludes(x.name, text))
+      if (options === undefined) return
+      const visibleOptions = options.filter((x) => insensitiveIncludes(x.name, text))
       setDropdown(visibleOptions)
     },
-    [getOptions]
+    [options]
   )
 
   const updateText = useCallback(
@@ -213,7 +211,7 @@ export default function ComboBox<T extends ComboboxValidCode = string>(
   )
 }
 
-export type ComboBoxProps<T extends ComboboxValidCode = string> = {
+export type ComboBoxProps<T extends ComboboxCode = string> = {
   value: T | null | undefined
   options: Readonly<Array<ComboBoxItem<T>>> | undefined
   buttons?: ReadonlyArray<ButtonInfo<T>>
@@ -222,25 +220,25 @@ export type ComboBoxProps<T extends ComboboxValidCode = string> = {
   onChange?: (value: T | null) => void
 }
 
-export type InternalCombBoxProps<T extends ComboboxValidCode = string> = {
+export type InternalCombBoxProps<T extends ComboboxCode = string> = {
   id?: string
   onFocusChange?: (focus: boolean, text: string) => void
 } & ComboBoxProps<T>
 
-export type ButtonInfo<T extends ComboboxValidCode = string> = {
+export type ButtonInfo<T extends ComboboxCode = string> = {
   name: string
   src: string
   onClick: (props: ComboBoxProps<T>) => void
 }
 
-export type ComboBoxItem<T extends ComboboxValidCode = string> = {
+export type ComboBoxItem<T extends ComboboxCode = string> = {
   name: string
   code: T
   from?: number
   to?: number
 }
 
-function ComboboxImageButton<T extends ComboboxValidCode = string>({
+function ComboboxImageButton<T extends ComboboxCode = string>({
   name,
   src,
   onClick,
@@ -329,5 +327,5 @@ function insensitiveIncludes(text: string, sub: string) {
 
 const NULL_OPTION = { name: '', code: null }
 
-export type ComboboxValidCode = string | number
+export type ComboboxCode = string | number
 //TODO P4 add clipping

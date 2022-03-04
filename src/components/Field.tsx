@@ -2,14 +2,11 @@ import React, { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import NumberInput, { NumberInputProps } from './NumberInput'
 import TextInput, { TextInputProps } from './inner_components/TextInput'
-import ComboBox, { ComboBoxProps, ComboboxValidCode } from './inner_components/ComboBox'
+import ComboBox, { ComboBoxProps, ComboboxCode } from './inner_components/ComboBox'
 import theme from './theme/Theme'
 import useUniqueId from './uuid/uuid'
 
-export default function Field<T extends ComboboxValidCode = string>({
-  label,
-  ...props
-}: FieldProps<T>) {
+export default function Field<T extends ComboboxCode = string>({ label, ...props }: FieldProps<T>) {
   const { value, disabled } = props
   const [isPlaceholder, setIsPlaceholder] = useState<boolean>(value === '' || value === null)
   const [isFocused, setIsFocused] = useState<boolean>(false)
@@ -49,7 +46,7 @@ export default function Field<T extends ComboboxValidCode = string>({
   )
 }
 
-export type FieldProps<T extends ComboboxValidCode = string> =
+export type FieldProps<T extends ComboboxCode = string> =
   | FieldTextProps
   | FieldNumberProps
   | FieldComboProps<T>
@@ -60,7 +57,7 @@ type FieldBaseProps = {
 
 export type FieldTextProps = { type?: 'text' } & FieldBaseProps & TextInputProps
 export type FieldNumberProps = { type: 'number' } & FieldBaseProps & NumberInputProps
-export type FieldComboProps<T extends ComboboxValidCode = string> = {
+export type FieldComboProps<T extends ComboboxCode = string> = {
   type: 'combobox'
 } & FieldBaseProps &
   ComboBoxProps<T>
