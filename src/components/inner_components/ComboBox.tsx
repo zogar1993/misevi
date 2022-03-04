@@ -98,7 +98,6 @@ export default function ComboBox<T extends ComboboxValidCode = string>(
         case 'Enter':
           if (isInDropdown(active)) {
             updateOption(active)
-            console.log(refTextbox.current)
             refTextbox.current!.blur()
             e.preventDefault()
           }
