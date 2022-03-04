@@ -32,6 +32,10 @@ export default function ComboBox<T extends ComboboxValidCode = string>(
     return getOptions().find((x) => insensitiveCompare(trimmed, x.name))
   }, [text, getOptions])
 
+  const isError = useCallback(() => {
+    return findOptionByText() === undefined
+  }, [text, findOptionByText])
+
   const setTextFromValue = useCallback(() => {
     if (value !== null && value !== undefined) {
       const option = getOptions().find((x) => x.code === value)
@@ -121,7 +125,8 @@ export default function ComboBox<T extends ComboboxValidCode = string>(
     setDropdown(null)
     setActive(null)
     setFocused(false)
-  }, [onFocusChange, text])
+    if (isError()) setText(value ? value.toString() : '')
+  }, [onFocusChange, text, isError, value])
 
   //text
   useLayoutEffect(() => {
@@ -129,14 +134,10 @@ export default function ComboBox<T extends ComboboxValidCode = string>(
   }, [setTextFromValue])
 
   //error
-  useEffect(() => {
-    if (focused) {
-      if (error) setError(false)
-    } else {
-      const option = findOptionByText()
-      setError(option === undefined)
-    }
-  }, [focused, error, findOptionByText])
+  useLayoutEffect(() => {
+    if (focused) setError(false)
+    else setError(isError())
+  }, [focused, error, isError])
 
   return (
     <ComboBoxContainer

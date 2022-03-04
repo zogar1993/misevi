@@ -358,7 +358,7 @@ describe('ComboBox should', () => {
     }
   })
 
-  describe('possess full accessibility functionality', () => {
+  describe('possess accessibility functionality', () => {
     const onChangeMock = jest.fn()
     const OPTIONS = [
       { name: 'Option 1', code: 'option_1' },
