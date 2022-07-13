@@ -31,8 +31,8 @@ export type DotProps = {
 const DotElement = styled(NoStyleInput).attrs(() => ({
   type: 'radio'
 }))<DotProps & { skeleton: boolean }>`
-  width: 14px;
-  height: 14px;
+  width: ${theme.sizes.dot.size};
+  height: ${theme.sizes.dot.size};
   border: 1px solid ${theme.colors.secondary};
   border-radius: 50%;
   background-color: ${({ color }) => color || theme.colors.secondary};

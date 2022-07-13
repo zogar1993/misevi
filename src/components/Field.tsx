@@ -67,7 +67,7 @@ const FieldContainer = styled.div<{ width?: string; area?: string }>`
   flex-direction: column-reverse;
   position: relative;
   width: ${({ width }) => width || 'auto'};
-  height: 45px;
+  height: ${theme.sizes.field.height};
   padding-top: 15px;
 `
 

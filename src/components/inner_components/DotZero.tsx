@@ -43,18 +43,18 @@ export default function DotZero({
 }
 
 const DotZeroContainer = styled.div`
-  width: 14px;
-  height: 14px;
+  width: ${theme.sizes.dot.size};
+  height: ${theme.sizes.dot.size};
   display: flex;
   justify-content: center;
   align-items: center;
-  left: -14px;
+  left: calc(${theme.sizes.dot.size} * -1);
   position: absolute;
 `
 
 const DotZeroElement = styled(NoStyleInput)<{ visible: boolean }>`
-  width: 14px;
-  height: 14px;
+  width: ${theme.sizes.dot.size};
+  height: ${theme.sizes.dot.size};
   border: 1px ${({ visible }) => (visible ? 'solid' : 'hidden')} ${theme.colors.secondary};
   ${({ disabled }) => (disabled ? 'display: none;' : '')}
   border-radius: 50%;

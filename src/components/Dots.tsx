@@ -9,7 +9,7 @@ export interface DotsProps {
   value: number
   total: number
   onChange?: (value: number) => void
-  rows?: number
+  columns?: number
   coloring?: (props: { number: number; value: number }) => string | undefined
   disabled?: boolean
 }
@@ -18,7 +18,7 @@ export default function Dots({
   total,
   value,
   onChange,
-  rows = 1,
+  columns = total,
   coloring,
   disabled,
   ...props
@@ -49,19 +49,16 @@ export default function Dots({
     [value, tentative, coloring]
   )
 
-  const width = Math.ceil(total / rows) * 14 + 'px'
-  const height = rows * 14 + 'px'
   return (
-    <DotsContainer width={width} height={height}>
-      <AccessibleSpinButton value={value} min={0} max={total} />
-      <DotsGroup {...props} role='radiogroup'>
-        <DotZero
-          value={value}
-          tentative={tentative}
-          setTentative={setTentative}
-          onChange={onChange}
-          disabled={disabled}
-        />
+    <DotsContainer>
+      <DotZero
+        value={value}
+        tentative={tentative}
+        setTentative={setTentative}
+        onChange={onChange}
+        disabled={disabled}
+      />
+      <DotsGroup {...props} columns={columns} role='radiogroup'>
         {values.map((current) => (
           <Dot
             value={current}
@@ -76,32 +73,29 @@ export default function Dots({
           />
         ))}
       </DotsGroup>
+      <AccessibleSpinButton value={value} min={0} max={total} />
     </DotsContainer>
   )
 }
 
-const DotsGroup = styled.div`
-  display: flex;
-  flex-wrap: wrap;
+const DotsGroup = styled.div<{ columns: number }>`
+  display: grid;
+  grid-template-columns: repeat(${({ columns }) => columns}, ${theme.sizes.dot.size});
+  gap: ${theme.spacing.separation};
   margin-bottom: 1px;
 `
 
-const DotsContainer = styled.div<{
-  width?: string
-  height?: string
-}>`
+const DotsContainer = styled.div`
   position: relative;
-  ${({ height }) => (height ? `height: ${height}` : '')};
-  ${({ width }) => (width ? `width: ${width}` : '')};
 `
 
 const AccessibleSpinButton = styled(NoStyleInput).attrs({
   type: 'number'
 })`
   visibility: hidden;
+  position: absolute;
 `
 
 //TODO P1 make accessible with a spinbutton role and some magic and fix tests on zweb and add for defaults
 //TODO P1 remove dist types from build
 //TODO P1 label can be 2 lines sometimes?
-//TODO P1 themes need to be exported
