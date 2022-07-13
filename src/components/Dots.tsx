@@ -73,7 +73,12 @@ export default function Dots({
           />
         ))}
       </DotsGroup>
-      <AccessibleSpinButton value={value} min={0} max={total} />
+      <AccessibleSpinButton
+        value={value}
+        min={0}
+        max={total}
+        onChange={(e) => Number(e.target.value)}
+      />
     </DotsContainer>
   )
 }
