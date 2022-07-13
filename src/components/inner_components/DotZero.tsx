@@ -23,7 +23,7 @@ export default function DotZero({
       <IconX tentative={tentative} />
       <DotZeroElement
         value={0}
-        checked={value === undefined ? undefined : 0 === value}
+        checked={value === undefined ? false : 0 === value}
         type='radio'
         onChange={
           onChange &&
