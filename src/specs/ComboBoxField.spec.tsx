@@ -249,8 +249,7 @@ describe('ComboBox should', () => {
     async function the_textbox_is_focused() {
       getTextbox().focus()
     }
-    //TODO P1 Add accesibility tests (move with arrows and stuff)
-    // https://www.w3.org/TR/wai-aria-1.1/#combobox
+
     async function option_is_clicked(item: ComboBoxItem) {
       const option = screen.getByRole('option', { name: item.name })
       fireEvent.click(option)
