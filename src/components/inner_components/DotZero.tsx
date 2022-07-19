@@ -28,7 +28,7 @@ export default function DotZero({
         onChange={
           onChange &&
           ((e: any) => {
-            onChange(Number(e.target.value))
+            onChange(e)
             setTentative(null)
           })
         }

@@ -4,7 +4,7 @@ import theme from '../theme/Theme'
 import { NoStyleInput } from './NoStyleInput'
 import { SKELETON_ANIMATION_CSS } from '../css/Skeleton'
 
-export default function Dot({ onChange, checked, disabled, ...props }: DotProps) {
+export default function Dot<T>({ onChange, checked, disabled, ...props }: DotProps) {
   const showSkeleton = checked === undefined
   return (
     <DotElement
@@ -12,7 +12,7 @@ export default function Dot({ onChange, checked, disabled, ...props }: DotProps)
       checked={checked === true}
       skeleton={showSkeleton}
       disabled={showSkeleton || disabled}
-      onChange={onChange && ((e: any) => onChange(Number(e.target.value)))}
+      onChange={onChange}
       readOnly={onChange === undefined}
     />
   )
@@ -20,10 +20,10 @@ export default function Dot({ onChange, checked, disabled, ...props }: DotProps)
 
 export type DotProps = {
   color?: string
-  onChange?: (value: number) => void
+  onChange?: (e: any) => void
   onMouseEnter?: () => void
   onMouseLeave?: () => void
-  value?: number
+  value?: any
   checked?: boolean
   disabled?: boolean
 }

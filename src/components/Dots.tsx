@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import Dot from './inner_components/Dot'
 import styled from 'styled-components'
+import Dot from './inner_components/Dot'
 import DotZero from './inner_components/DotZero'
 import { NoStyleInput } from './inner_components/NoStyleInput'
 import theme from './theme/Theme'
@@ -49,21 +49,16 @@ export default function Dots({
     [value, tentative, coloring]
   )
 
+  const onChangeHandler = useCallback((e) => onChange?.(Number(e.target.value)), [onChange])
+
   return (
     <DotsContainer>
-      <DotZero
-        value={value}
-        tentative={tentative}
-        setTentative={setTentative}
-        onChange={onChange}
-        disabled={disabled}
-      />
       <DotsGroup {...props} columns={columns} role='radiogroup'>
         {values.map((current) => (
           <Dot
             value={current}
             aria-label={current}
-            onChange={onChange}
+            onChange={onChangeHandler}
             checked={value === undefined ? false : current === value}
             color={getColorFor(current)}
             onMouseEnter={() => setTentative(current)}
@@ -72,13 +67,15 @@ export default function Dots({
             disabled={disabled}
           />
         ))}
+        <DotZero
+          value={value}
+          tentative={tentative}
+          setTentative={setTentative}
+          onChange={onChangeHandler}
+          disabled={disabled}
+        />
       </DotsGroup>
-      <AccessibleSpinButton
-        value={value}
-        min={0}
-        max={total}
-        onChange={(e) => Number(e.target.value)}
-      />
+      <AccessibleSpinButton value={value} min={0} max={total} onChange={onChangeHandler} />
     </DotsContainer>
   )
 }
