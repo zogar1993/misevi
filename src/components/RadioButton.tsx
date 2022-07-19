@@ -1,8 +1,16 @@
 import React from 'react'
 import Dot from './inner_components/Dot'
+import theme from './theme/Theme'
 
 export default function RadioButton<T>(props: RadioButtonProps<T>) {
-  return <Dot {...props} onChange={(e) => props.onChange?.(e.target.value)} />
+  const { checked } = props
+  return (
+    <Dot
+      {...props}
+      onChange={(e) => props.onChange?.(e.target.value)}
+      color={checked ? theme.colors.secondary : theme.colors.primary}
+    />
+  )
 }
 
 export type RadioButtonProps<T> = {

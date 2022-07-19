@@ -1,0 +1,22 @@
+import {Canvas, Meta, Story} from "@storybook/addon-docs/blocks";
+import RadioButton from "components/RadioButton";
+import Template from './RadioButtonTemplate'
+
+<Meta title="Form/RadioButton" component={RadioButton}/>
+
+### Simple
+<Canvas>
+  <Story name="Checked" args={{checked: true}}>
+    {Template.bind({})}
+  </Story>
+  <Story name="Unchecked" args={{checked: false}}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+### Skeleton
+<Canvas>
+  <Story name="Skeleton" args={{checked: undefined}}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
