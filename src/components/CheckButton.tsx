@@ -85,3 +85,5 @@ const Label = styled.label<{ checked: boolean; $loading: boolean }>`
 
   ${({ $loading }) => ($loading ? SKELETON_ANIMATION_CSS : '')};
 `
+
+//TODO style disabled

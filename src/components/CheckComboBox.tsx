@@ -4,3 +4,5 @@ import ComboBox, { ComboboxCode, ComboBoxProps } from './inner_components/ComboB
 export default function CheckComboBox<T extends ComboboxCode = string>(props: ComboBoxProps<T>) {
   return <ComboBox {...props} highlightSelected={true} />
 }
+
+//TODO style green bit
