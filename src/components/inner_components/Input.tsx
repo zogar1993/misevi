@@ -49,7 +49,7 @@ const Input = styled(NoStyleInput).attrs<InputProps>(() => ({
   font-size: 16px;
 
   width: 100%;
-  height: 30px;
+  height: ${theme.sizes.input.height};
   border-radius: ${theme.borders.radius};
 
   -moz-appearance: textfield;

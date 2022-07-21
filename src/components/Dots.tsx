@@ -49,7 +49,7 @@ export default function Dots({
     [value, tentative, coloring]
   )
 
-  const onChangeHandler = useCallback((e) => onChange?.(Number(e.target.value)), [onChange])
+  const onChangeHandler = useCallback((e: any) => onChange?.(Number(e.target.value)), [onChange])
 
   return (
     <DotsContainer>

@@ -6,8 +6,13 @@ import close from '../icons/close.svg'
 import theme from '../theme/Theme'
 import Input from './Input'
 
-export default function ComboBox<T extends ComboboxCode = string>(props: InternalCombBoxProps<T>) {
-  const { value, options, onChange, onFocusChange, buttons, id, disabled, unclearable } = props
+export default function ComboBox<T extends ComboboxCode = string>({
+  id,
+  onFocusChange,
+  highlightSelected,
+  ...props
+}: InternalCombBoxProps<T>) {
+  const { value, options, onChange, buttons, disabled, unclearable } = props
   const [text, setText] = useState('')
   const [error, setError] = useState(false)
   const [hovering, setHovering] = useState(false)
@@ -136,6 +141,8 @@ export default function ComboBox<T extends ComboboxCode = string>(props: Interna
     else setError(isError())
   }, [focused, error, isError])
 
+  const highlight = !!(highlightSelected && active)
+
   return (
     <ComboBoxContainer
       onMouseEnter={() => setHovering(true)}
@@ -160,6 +167,7 @@ export default function ComboBox<T extends ComboboxCode = string>(props: Interna
         readOnly={onChange === undefined}
         skeleton={isLoading}
         error={error}
+        highlight={highlight}
         type='text'
         aria-controls={popupId}
         aria-autocomplete='list'
@@ -223,6 +231,7 @@ export type ComboBoxProps<T extends ComboboxCode = string> = {
 export type InternalCombBoxProps<T extends ComboboxCode = string> = {
   id?: string
   onFocusChange?: (focus: boolean, text: string) => void
+  highlightSelected?: boolean
 } & ComboBoxProps<T>
 
 export type ButtonInfo<T extends ComboboxCode = string> = {
@@ -302,8 +311,9 @@ const ButtonsContainer = styled.div<{ visible: boolean }>`
   gap: ${theme.spacing.separation};
 `
 
-const TextInput = styled(Input)<{ error: boolean }>`
+const TextInput = styled(Input)<{ error: boolean; highlight: boolean }>`
   ${({ error }) => (error ? `border: 1px solid ${theme.colors.error2}` : '')};
+  ${({ highlight }) => (highlight ? `background-color: ${theme.colors.checked.primary}` : '')};
 `
 
 function scrollToItemOfIndex(index: number, element: HTMLElement) {

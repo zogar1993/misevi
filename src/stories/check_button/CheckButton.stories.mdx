@@ -1,0 +1,32 @@
+import { Canvas, Meta, Story } from "@storybook/addon-docs/blocks";
+import CheckButton from "components/CheckButton";
+import Template from "./CheckButtonTemplate";
+
+<Meta title="Form/CheckButton" component={CheckButton} />
+
+### Simple
+<Canvas>
+  <Story name="Checked" args={{ checked: true, text: "Omatopopih" }}>
+    {Template.bind({})}
+  </Story>
+  <Story name="Unchecked" args={{ checked: false, text: "Omatopopih" }}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+### Disabled
+<Canvas>
+  <Story name="Checked Disabled" args={{ checked: true, disabled: true, text: "Omatopopih" }}>
+    {Template.bind({})}
+  </Story>
+  <Story name="Unchecked Disabled" args={{ checked: false, disabled: true, text: "Omatopopih" }}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+### Skeleton
+<Canvas>
+  <Story name="Skeleton" args={{ checked: undefined }}>
+    {Template.bind({})}
+  </Story>
+</Canvas>

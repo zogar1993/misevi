@@ -43,6 +43,10 @@ const light = {
       text: Color.Black,
       primary: Color.Gray,
       border: Color.Blue
+    },
+
+    checked: {
+      primary: 'palegreen'
     }
   },
   fonts: {
@@ -62,6 +66,9 @@ const light = {
     },
     field: {
       height: '45px'
+    },
+    input: {
+      height: '30px'
     }
   }
 }
