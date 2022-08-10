@@ -75,7 +75,12 @@ export default function Dots({
           disabled={disabled}
         />
       </DotsGroup>
-      <AccessibleSpinButton value={value} min={0} max={total} onChange={onChangeHandler} />
+      <AccessibleSpinButton
+        value={value || 0}
+        min={0}
+        max={total}
+        onChange={onChangeHandler}
+      />
     </DotsContainer>
   )
 }
