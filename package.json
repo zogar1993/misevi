@@ -1,6 +1,6 @@
 {
   "name": "misevi",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "Misevi is a component library designed for creating tabletop rpg character sheets.",
   "license": "MIT",
   "main": "dist/index.js",
@@ -30,7 +30,6 @@
   ],
   "scripts": {
     "start": "yarn storybook",
-
     "build": "npm run build:ts",
     "build:ts": "npx rollup -c",
     "build:clean": "rm -rf ./dist/*",
