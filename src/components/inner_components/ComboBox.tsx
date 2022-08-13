@@ -172,6 +172,8 @@ export default function ComboBox<T extends ComboboxCode = string>({
         aria-controls={popupId}
         aria-autocomplete='list'
         aria-activedescendant={activeId}
+        aria-label={(props as any)["aria-label"]}
+        aria-labelledby={(props as any)["aria-labelledby"]}
       />
       {dropdown && dropdown.length > 0 && (
         <Listbox open={expanded} ref={refListbox} id={popupId}>
